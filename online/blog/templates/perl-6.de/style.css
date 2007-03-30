@@ -66,6 +66,12 @@ padding-top:20px;
 font-size:1.6em;
 }
 
+#sitename h1 a, #sitename h2 a {
+	text-decoration: none;
+	color: inherit;
+	font-weight: normal;
+}
+
 /*** Horizontal menu ***/
 
 #mainmenu {
