@@ -17,6 +17,7 @@
 		[[[item pugs <li><a href="/pugs" class="nav{{ active}}">Pugs</a></li>]]]
 		[[[item parrot <li><a href="/parrot" class="nav{{ active}}">Parrot</a></li>]]]
 		[[[item pge <li><a href="/parrot-grammer-engine" class="nav{{ active}}">Parrot Grammer Engine</a></li>]]]
+		[[[item kp6 <li><a href="/kp6" class="nav{{ active}}">kp6</a>]]]
 	</ul>
 	</div>
 
