@@ -1,0 +1,58 @@
+[[[menu main home pugs]]]
+[[[setvar title Pugs - Ein Perl 6-Interpreter in Haskell]]]
+<div id="content">
+
+<h1>Pugs</h1>
+
+<p>Pugs, offiziell "<strong>P</strong>erl 6 <strong>U</strong>ser's
+<strong>G</strong>olfing <strong>S</strong>ystem", war eigentlich ein Projekt
+von <a href="http://en.wikipedia.org/wiki/Audrey_Tang">Audrey Tang</a> um
+Haskell zu lernen, und ist inzwischen ein recht weit fortgeschrittenere Perl
+6-Interpreter.</p>
+
+<h2>Status</h2>
+<p>Pugs ist zur Zeit die kompletteste Perl 6-Implementierung.</p>
+
+<p>Kontrollkonstrukte (if, unless, Schleifen etc.) funktionieren, genauso wie
+Funktionsdefinitionen, die meisten Mutli-Methoden, sowie die meisten
+Objektorientierten Funktionen wie Vererbung.</p>
+
+<p>Über den in pugs gelinkten perl5-Interpreter werden perl5-regexes korrekt
+implementiert, und Perl 5-Module können in Perl 6-Programmen verwendet
+werden.</p>
+
+<p>Viele, aber längst nicht alle Operatoren und Metaoperatoren sind in Pugs
+implementiert.</p>
+
+<h3>Backends</h3>
+
+<p>Wenn Pugs Quellcode interpretiert, wird er erst in einen AST (Abstract
+Syntax Tree) übersetzt.</p>
+
+<p>Die Ausführung dieses ASTs wird von verschiedenen Backends übernommen.</p>
+
+<p>Am besten funtkioniert zur Zeit das eingebaute Haskell-Backend, das wie ein
+klassischer Interpreter funktioniert.</p>
+
+<p>Weitere Backends übersetzen den Perl 6-Code nach <a
+href="/parrot">Parrot</a>-Code, perl5 oder Javascript. Diese alternativen
+Backends sind dem "Bit Rot" zum Opfer gefallen, werden aber in Zukunft sicher
+wieder reaktiviert werden.</p>
+
+<h3>Tests und Beispiele</h3>
+
+<p>Im <a href="http://svn.pugscode.org/pugs">SVN-Repository</a> von Pugs
+liegen über zwanzigtausend Tests für Pugs und Perl 6, die beim Release von
+Perl 6 zur offiziellen Testsuite von Perl 6 werden sollen.</p>
+
+<p>Auch viele Perl 6-Programme sind im SVN-Repository, die schon jetzt mit
+pugs ausgeführt werden können.</p>
+
+<h2>Links</h2>
+<ul>
+	<li><a href="http://www.pugscode.org/">Offizielle Homepage</a></li>
+	<li><a href="http://pugs.blogs.com/">Pugs-Blog von Audrey Tang</a></li>
+	<li><a href="http://dev.pugscode.org/">Webseite der Entwickler</a></li>
+	<li><a href="http://moritz.faui2k3.org/debian/pugs/">Debian-Pakete</a> für
+	Pugs, häufig aktualisiert (etwa 3 mal pro Woche)</a></li>
+</ul>

@@ -1,0 +1,72 @@
+[[[setvar title Perl 6 - Programmieren für Faule]]]
+[[[menu main home home]]]
+<div id="content">
+<h1>Perl 6 - Programmieren für Faule</h1>
+
+<p>Wilkommen auf perl-6.de, der deutschsprachigen Resource für Perl6-Programmierer.</p>
+
+<h2>Was ist Perl 6?</h2>
+
+<p>Perl 6 ist die sechste Version der bekannten und verbreiteten Programmiersprache <a href="http://www.perl.org/">Perl</a>, und zur Zeit noch in der Entwicklung.</p>
+
+<h2>Status</h2>
+
+<p>Die <a href="http://perlcabal.org/syn/?">Offizielle Spezifikation</a> für Perl 6, im Jargon "Synopsys" genannt, ist bereits recht vollständig.</p>
+
+<p>Die Implementierung ist noch nicht so weit. perl 6 wird in Perl 6
+geschrieben sein und <a href="http://www.parrotcode.org/">The Parrot</a> als
+Virtuelle Maschine einsetzen. Die perl6-in-Perl6-Implementierung ist bisher
+noch nicht sehr weit gediehen, The Parrot ist zwar schon benutzbar, aber
+manche wichtigen Features sowie fast alle Optimierungen fehlen noch.</p>
+
+<p>Doch man kann jetzt schon Perl 6-Code ausführen: mit <a
+href="/pugs">Pugs</a>, einem in Haskell geschriebenen Perl
+6-Interpreter.</p>
+
+<p>Es gibt noch keinen Release-Termin für Perl 6, nur einen Running Gag unter
+den Entwicklern: Perl 6 kommt an Weihnachten heraus, denn wenn es erstmal
+fertig ist ist jeder Tag Weihnachten.</p>
+
+
+<h2>Beispiel</h2>
+<p>Das folgende kleine Programm liest eine Datei (hier: sich selbst) ein und
+überprüft, ob die Klammern in diesem Programm balanciert sind, also ob sie
+korrekt verschachtelt sind.</p>
+<pre> [[[syntax perl6]]]
+use v6;
+
+my $fn = $*PROGRAM_NAME;
+
+my $file = open($fn) err die "Can't read file '$fn': $!";
+my %braces = ( '('  => ')',
+        '{'         => '}',
+        '['         => ']',
+        );
+my @stack;
+
+my $line;
+while defined ($line = $file.readline()) {
+    for ($line.comb(m/<[()\[\]\{\}]>/)) -> my $match {
+        if %braces{$match} {
+            # öffnende Klammer gefunden
+            push @stack, ~$match;
+        } else {
+            # schliessende Klammer gefunden
+            my $expected = %braces{pop @stack};
+            if $expected ne $match {
+                die "File '$fn' is not balanced: expected '" ~ 
+                    $expected ~ "', found '$match'\n";
+            }
+        }
+    }
+}
+
+
+$file.close;
+
+if @stack.elems == 0 {
+    say "File $fn is balanced";
+} else {
+    say "File $fn is not balanced, more opening braces than closing...";
+}[[[endsyntax]]]
+</pre>

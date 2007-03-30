@@ -1,0 +1,39 @@
+<div id="mainmenu">
+	<ul>
+		[[[item home <li><a {{class="current"}} href="/">Perl 6</a></li>]]]
+		[[[item blog <li><a {{class="current"}} href="/blog/">Blog</a></li>]]]
+		[[[item links <li><a {{class="current"}} href="/links/">Links</a></li>]]]
+	</ul>
+</div>
+<div id="wrap">
+
+[[[item home {{
+	<div id="leftside">
+	<ul>
+	[[[item home <li><a href="/" class="nav{{ active}}">Home</a></li>]]]
+	</ul>
+	<h1 style="margin-top:2ex">Perl 6 Projekte</h1>
+	<ul>
+		[[[item pugs <li><a href="/pugs" class="nav{{ active}}">Pugs</a></li>]]]
+		[[[item parrot <li><a href="/parrot" class="nav{{ active}}">Parrot</a></li>]]]
+		[[[item pge <li><a href="/parrot-grammer-engine" class="nav{{ active}}">Parrot Grammer Engine</a></li>]]]
+	</ul>
+	</div>
+
+}}]]]
+
+<!--
+<div id="leftside">
+<h1>Included layouts</h1>
+<p>
+<a class="nav active" href="index.html">3 columns</a><span class="hide"> | </span>
+<a class="nav" href="2col.html">2 columns</a><span class="hide"> | </span>
+<a class="nav" href="no-img.html">No images</a><span class="hide"> | </span>
+<a class="nav" href="#">Example menu</a><span class="hide"> | </span>
+<a class="nav sub" href="#">Sub-page 1</a><span class="hide"> | </span>
+<a class="nav sub" href="#">Active sub-page</a><span class="hide"> | </span>
+<a class="nav sub" href="#">Sub-page 2</a>
+</p>
+-->
+
+</div>
