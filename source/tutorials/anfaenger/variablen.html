@@ -90,7 +90,7 @@ say "Die Summe von ", $a, " und ", $b, " ist: ", $summe;
 	<code>$b</code> ausgegeben, zusammen mit dem Ergebnis der Addtion,
 	<code>$summe</code>, zusammen mit ein bisschen Text.</p>
 
-	<h2>Zahlen und Zeichenketten</h2>
+	<h2>Fließkommazahlen</h2>
 
 	<p>Die Variablen können natürlich nicht nur ganze Zahlen speichern,
 	sondern auch sogenannte "Fließkommzahlen":</p>
@@ -100,8 +100,31 @@ my $flaeche = $radius * $radius * pi;
 say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
 [[[endsyntax]]]</pre>
 	<p>Die Ausgabe davon wird etwa so aussehen:</p>
-<pre>Ein Kreis mit Radius 0.2 hat die Fläche 0.12566370614359172</pre>
+<pre>Ein Kreis mit Radius 0.2 hat die Fläche 0.125663706</pre>
 	<p>wobei die Anzahl der Nachkommstellen auch anders sein kann.</p>
 	<p>Kommazstellen werden in Perl, wie im englischsprachigen Raum, mit
 	einem Punkt '.' statt einem Komma abgetrennt, daher <code>0.2</code>
 	anstatt <code>0,2</code>.</p>
+
+	<h2>Zeichenketten</h2>
+
+	<p>Natürlich können Variablen nicht nur Zahlen enthalten, sondern auch
+	Zeichenketten, also Text, auf Englisch "Strings".</p>
+
+	<p>Tatsächlich ist die Verarbeitung von Text traditionell eine der
+	großen Stärken von Perl gewesen, und ist es auch jetzt noch. Hier ein
+	Beispiel, wie man Strings einer Variable zuweisen kann:</p>
+
+<pre>[[[syntax perl6]]]
+use v6;
+
+my $name = "Larry Wall";
+say $name, " ist der Erfinder von Perl";
+[[[endsyntax]]]</pre>
+
+	<p>Dem aufmerksamen Leser fällt an dieser Stelle vielleicht auf, dass
+	wir schon vorher Strings verwendet haben, z. B. in der Zeile</p>
+<pre>[[[syntax perl6]]]
+say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
+[[[endsyntax]]]</pre>
+
