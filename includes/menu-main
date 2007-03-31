@@ -28,10 +28,12 @@
 	<div id="leftside">
 		<h1><a href="/tutorials/">Tutorials</a></h1>
 		<ul>
-			<li><a href="/tutorials/anfaenger/" class="nav{{ active}}">Für Anfänger</a></li>
-			<li><a href="/tutorials/umsteiger/" class="nav{{ active}}">Für Umsteiger</a></li>
-			<li><a href="/tutorials/p5/" class="nav{{ active}}">Für Perl 5-
-			Programmierer</a></li>
+			[[[item anfaenger <li><a href="/tutorials/anfaenger/" class="nav{{ active}}">Für Anfänger</a></li>
+			{{[[[include anfaenger-toc]]]}}
+			]]]
+			[[[item umsteiger <li><a href="/tutorials/umsteiger/" class="nav{{ active}}">Für Umsteiger</a></li>]]]
+			[[[item p5 <li><a href="/tutorials/p5/" class="nav{{ active}}">Für Perl 5-
+			Programmierer</a></li>]]]
 		</ul>
 	</div>
 }}]]]

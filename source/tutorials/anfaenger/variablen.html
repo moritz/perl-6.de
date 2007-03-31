@@ -1,0 +1,107 @@
+[[[menu main tut anfaenger]]]
+[[[setvar title Variablen]]]
+<div id="content">
+	<h1>Variablen</h1>
+
+	<p>In den Programmen der vorherigen Kapitel hat sich noch nicht so
+	viel bewegt, alle vorkommenden Werte waren konstant. Das soll sich in
+	diesem Kapitel &auml;ndern.</p>
+
+	<p>Alle Werte, die sich in einem Programm &auml;ndern k&ouml;nnen
+	w&auml;hrend es ausgef&uuml;hrt wird, werden in <em>Variablen</em>
+	gespeichert.</p>
+
+	<p>In Perl starten alle Variablen mit einem Sonderzeichen (sogenanntem
+	<em>Sigil</em>):</p>
+<pre>[[[syntax perl6]]]
+use v6;
+
+my $a;
+$a = =<>;
+my $b = =<>;
+
+my $summe = $a + $b;
+
+say "Die Summe von ", $a, " und ", $b, " ist: ", $summe;
+[[[endsyntax]]]
+</pre>
+	<p>Wenn man dieses Programm startet, erwartet es die Eingabe von zwei
+	Zahlen, jeweils gefolgt von Enter, also dem Zeilenende. Wenn man z. B.
+	4 und -10 eingibt, lautet die Ausgabe:</p>
+<pre >
+Die Summe von 4 und -10 ist -6
+</pre>
+	<h2>Das Programm im Detail</h2>
+
+	<p>Die erste Zeile sind die selben wie immer, dann wird es
+	interessant:</p>
+<pre>[[[syntax perl6]]]
+my $a;
+[[[endsyntax]]]</pre>
+	<p><code>my $a</code> sagt dem Perl-Interpreter, dass ab jetzt in dem
+	Programm eine Variable namens <code>$a</code> vorkommt. Man sagt man
+	"deklariert" die Variable.</p>
+
+	<p>Eine Variable besteht aus einem Sonderzeichen (Sigil), in diesem
+	Fall <code>$</code>, und dem eigentlich Namen, der aus Buchstaben,
+	Ziffern und Unterstrichen bestehen kann, wobei er nicht mit einer
+	Ziffer anfangen sollte.</p>
+
+	<p>G&uuml;ltige Variablennamen w&auml;hren zum Beispiel
+	<code>$summe</code>, <code>$anzahl_haeuser</code> oder
+	<code>$MeinAuto</code>. Zwischen Gro&szlig;- und Kleinschreibung wird
+	unterschieden, das heisst <code>$a</code> und <code>$A</code> sind
+	verschiedene Variablen.</p>
+
+<pre>[[[syntax perl6]]]
+$a = =<>;
+[[[endsyntax]]]</pre>
+	<p>Hier wird der Variable <code>$a</code> ein Wert zugewiesen. Der
+	Wert steht auf der rechten Seite des Gleichheitszeichens, hier
+	<code>=&lt;&gt;</code>. 
+	Die Konstruktion <code>=&lt;&gt;</code>weist perl an, eine Zeile von
+	der Tastatur zu lesen, d.h. das Programm pausiert so lange, bis der
+	Benutzer etwas eingegeben hat und dann auf Enter gedrück hat.</p>
+
+<pre>[[[syntax perl6]]]
+my $b = =<>;
+[[[endsyntax]]]</pre>
+	<p>Diese beiden Zeilen machen das gleiche wie die drei Zeilen davor,
+	nur dass die Eingabe dismal in der Variablen <code>$b</code>
+	gespeichert wird.</p>
+
+	<p>Die Deklaration <code>my $b;</code> und die Zuweiseung <code>$b =
+	=&lt;&gt;;</code> wurden diesmal in eine Zeile zusammengezogen,
+	die das gleiche macht wie die beiden einzelnen Zeilen.</p>
+
+<pre>[[[syntax perl6]]]
+my $summe = $a + $b;
+[[[endsyntax]]]</pre>
+
+	<p>Hier wurde wieder eine neue Variable deklariert,
+	<code>$summe</code>, und ihr <code>$a + $b</code> zugewiesen, also die
+	Summe von <code>$a</code> und <code>$b</code>.</p>
+
+<pre>[[[syntax perl6]]]
+say "Die Summe von ", $a, " und ", $b, " ist: ", $summe;
+[[[endsyntax]]]</pre>
+
+	<p>In dieser Zeile werden die beiden Variablen <code>$a</code> und
+	<code>$b</code> ausgegeben, zusammen mit dem Ergebnis der Addtion,
+	<code>$summe</code>, zusammen mit ein bisschen Text.</p>
+
+	<h2>Zahlen und Zeichenketten</h2>
+
+	<p>Die Variablen können natürlich nicht nur ganze Zahlen speichern,
+	sondern auch sogenannte "Fließkommzahlen":</p>
+<pre>[[[syntax perl6]]]
+my $radius = 0.2;
+my $flaeche = $radius * $radius * pi;
+say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
+[[[endsyntax]]]</pre>
+	<p>Die Ausgabe davon wird etwa so aussehen:</p>
+<pre>Ein Kreis mit Radius 0.2 hat die Fläche 0.12566370614359172</pre>
+	<p>wobei die Anzahl der Nachkommstellen auch anders sein kann.</p>
+	<p>Kommazstellen werden in Perl, wie im englischsprachigen Raum, mit
+	einem Punkt '.' statt einem Komma abgetrennt, daher <code>0.2</code>
+	anstatt <code>0,2</code>.</p>

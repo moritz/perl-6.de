@@ -805,9 +805,11 @@ regex perl6_variable { <sigil> <twigil>? <identifier> };
 
 	<p>Es demonstriert, wie man Rules mit dem Schl&uuml;sselwörtern
 	<code>token</code> und <code>regex</code> Namen geben kann, und dann mit
-	<code>&lt;name_der_rule&gt;</code> angesprochen werden kann. Tokens
-	sind dabei einfache Regexes, die keine weiteren Token enthalten
-	können.</p>
+	<code>&lt;name_der_rule&gt;</code> angesprochen werden kann.</p>
+
+	<p>Der Unterschied zwischen <code>token</code> und <code>regex</code>
+	ist, dass in einem <code>token</code> kein Backtracking stattfindet,
+	was die mögliche Komplexität einschränkt.</p>
 
 	<p>Damit kann man ganze Grammatiken aufbauen und mit rules
 	&uuml;berpr&uuml;fen.</p>
