@@ -128,3 +128,32 @@ say $name, " ist der Erfinder von Perl";
 say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
 [[[endsyntax]]]</pre>
 
+	<p>Der Text zwischen den Anführungszeichen ist jeweils ein String,
+	hier ein konstanter.</p>
+
+	<p>Obige Zeile hätte man auch anders schreiben können:</p>
+<pre>[[[syntax perl6]]]
+say "Ein Kreis mit Radius $radius hat die Fläche $flaeche";
+[[[endsyntax]]]</pre>
+	<p>Was passiert hier? In einem String, der von doppelten
+	Anführungszeichen <code>"</code> begrenzt ist, werden Variablen, die
+	mit einem Dollarzeichen <code>$</code> anfangen, durch ihren Wert
+	ersetzt. Man sagt der String werde <em>interpoliert</em>.</p>
+
+	<p>Wenn man das verhindern möchte, z.B. weil man Dollarzeichen
+	ausgeben möchte, kann man den String stattdessen in einfache
+	Anführungszeichen setzen:</p>
+<pre>[[[syntax perl6]]]
+my $zahl = 12;
+
+my $s1 = "Interpolierter String: $zahl";
+my $s2 = 'Nicht-interpolierter String: $zahl';
+
+say $s1;
+say $s2;
+[[[endsyntax]]]</pre>
+	<p>ergibt folgende Ausgabe:</p>
+<pre>
+Interpolierter String: 12
+Nicht-interpolierter String: $zahl
+</pre>

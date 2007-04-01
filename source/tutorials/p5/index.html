@@ -1,0 +1,151 @@
+[[[menu main tut p5 index]]]
+[[[setvar title Perl 6-Tutorial für Perl 5-Programmierer]]]
+<div id="content">
+	<h1>Perl 6 für Perl 5-Programmierer</h1>
+
+	<p>Trotz vieler Änderungen von p5 zu p6 ist auch vieles gleich
+	geblieben, was es alt eingesessenen Perl 5-Programmieren sicher
+	leichter macht Perl 6 zu lernen als anderen.</p>
+
+	<p>Das hier ist ein Versuch, die wichtigsten Änderungen
+	zusammenzufassen, die häufigsten am Anfang, danach grob nach
+	Kategorien.</p>
+
+	<h2>Verschiedenes</h2>
+
+	<p><code>use strict;</code> ist per default angeschaltet, Ausnahme
+	sind Einzeiler die mit <code>perl -e '$code'</code> ausgeführt
+	werden.</p>
+
+	<p>Für viele Funktionen gibt es jetzt die <code>.</code>-Notation:</p>
+
+<pre>[[[syntax perl6]]]
+my @list;
+@list.push "foo"	# wie push @list, "foo"
+"foo".print		# wie print "foo";
+[[[endsyntax]]]</pre>
+	<p>Die alte Notation ist immer noch unterstützt.</p>
+
+	<p>Die <code>print</code>-Funktion hat eine eine Schwester, die ein
+	Newline am Ende anhängt:<code>say</code></p>
+<pre>[[[syntax perl6]]]
+my $answer  = 7 * 6;
+# alle folgenden Varianten sind äquivalent:
+print $answer, "\n";
+say $answer;
+$answer.say;
+[[[endsyntax]]]</pre>
+
+	<h2>Sigils, Arrays und Hashes</h2>
+
+	<p>Wie bisher fangen Skalare mit <code>$</code>, Arrays mit
+	<code>@</code> und Hashes mit <code>%</code> an.</p>
+	
+	<p>Allerdings bleibt bei Arrays und Hashes der Sigil beim Zugriff auf
+	Elemente erhalten:</p>
+<pre> [[[syntax perl6]]]
+my @list = 1, 3, 5, 1, 2;
+my %hash = (
+	'foo' => 'bar',
+	'baz' => 'qox',
+	);
+@list[0]	#früher: $list[0]
+%hash{'foo'}	#früher $hash{foo}
+[[[endsyntax]]]</pre>
+
+	<p>Das Autoquoting beim Zugriff auf Hashes funktioniert in
+	geschweiften Klammern nicht mehr, statt dessen gibt es jetzt
+	<code>&lt;...&gt;</code>:</p>
+
+<pre>[[[syntax perl6]]]
+my $str = "foo";
+%hash{$str} 	# wie bisher
+%hash<foo>	# anstatt %hash{foo}
+%hash{'foo'}	# wie bisher
+[[[endsyntax]]]</pre>
+
+	<p>Man kann jetzt auch auf Elemente von Array- und Hashreferenzen ohne
+	den Pfeil-Operator zugreifen:</p>
+<pre>[[[syntax perl6]]]
+my $a = [1, 2, [3, 4, 5], 6];
+$a[0]		# früher: $a->[0]
+$a[2][0]	# früher $a->[0]->[0] oder $a->[0][0]
+my $b = { 'a' => 'b', 'c' => [1, 2, 3]};
+$b{'a'} 	# früher $b->{a}
+$b<a>		# das gleiche
+$b<c>[0]	# früher: $b->{c}[0] oder $b->{c}->[0]
+[[[endsyntax]]]</pre>
+	<p>Auch beim Zugriff auf Objekte ist der Pfeil dem Punkt gewichen.</p>
+
+	<p>Die Anzahl der Elemente eines Arrays bekommt man nun nicht mehr
+	über <code>scalar @list</code>, sondern mit elems:</p>
+<pre>[[[syntax perl6]]]
+# man beachte, dass hier keine Klammern mehr nötig sind:
+my @list = 1, 2, 4, 5	
+
+my $num = @list.elems; 		# früher: scalar @list;
+$num = elems @list;		# das gleiche
+my $last_index = @list.end; 	# früher: $#list
+my $last_elem = @list[@list.end]; # früher: $list[$#list]
+$last_eleme = @list[-1];	# das gleiche
+[[[endsyntax]]]</pre>
+	<p><code>qw()</code> wird durch <code>&lt;...&gt;</code> ersetzt und
+	hat auch eine interpolierende Form:</p>
+<pre>[[[syntax perl6]]]
+my @list = <bla blubb>		# früher: qw(bla blubb)
+my $str = "bla blubb"
+my @l2 = <<foo $str bar>>	# liefert ['foo', 'bla', 'blubb', 'bar']
+[[[endsyntax]]]</pre>
+
+	<h2>Twigils</h2>
+	<p>Globale Variablen (und ein paar andere) haben ein sekundäres Sigil,
+	Twigil genannt:</p>
+<pre>[[[syntax perl6]]]
+%*ENV			# früher %ENV
+@*ARGS			# früher @ARGV
+$*IN, $*OUT, $ERR	# früher STDIN, STDOUT, STDERR
+
+# zur Kompilezeit bekannte Symbole:
+$?LINE			# früher __LINE__
+$?FILE			# früher __FILE__
+$?PACKAGE		# früher __PACKAGE__
+
+# Formale Parameter haben ein ^ als twigl:
+# in absteigender Reihenfolge sortieren:
+sort {$^b <=> $^a}, @list # bisher sort {$b <=> $a} @list
+[[[endsyntax]]]</pre>
+
+	<h2>Kontrollstrukturen</h2>
+
+	<p><code>if</code> und <code>unless</code> benötigen jetzt keine
+	Klammern mehr um die Bedingung:</p>
+
+<pre>[[[syntax perl6]]]
+if $a < 0 {		# if ($a < 0) {
+	say "Negativ";	#	print "Negativ\n";
+}			# }
+[[[endsyntax]]]</pre>
+	<p><code>foreach</code> wird zu <code>for</code>, <code>for</code> zu
+	<code>loop</code>:</p>
+
+<pre>[[[syntax perl6]]]
+my @nums = 1, 2, 3, 23, 42;
+
+for @nums -> my $i {
+	# tolle Berechnung mit $i hier
+}
+
+# über Hashes iteriern:
+for %hash.kv -> my $key, $val {
+	say "$key corresponds to $val";
+}
+
+# C-Style for-Schleife:
+loop (my $i = 0; $i < 10; $i++){
+	# tolle Berechnung mit $i hier
+}
+[[[endsyntax]]]</pre>
+	<p><code>while</code> bleibt unverändert (außer dass es auch keine
+	runden Klammern mehr um die Bedingung braucht), <code>eval { ...
+		}</code> ist jetzt <code>try { ... }</code>.</p>
+
