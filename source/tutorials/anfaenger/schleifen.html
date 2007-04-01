@@ -1,0 +1,127 @@
+[[[menu main tut anfaenger schleifen]]]
+[[[setvar title Schleifen]]]
+
+<div id="content">
+	<h1>Schleifen - Anweisungen wiederholen</h1>
+
+	<p>Angenommen, Sie wollen (oder müßen) ein Programm schreiben, dass
+	eine Zahl so oft verdoppelt, bis sie größer als 100 ist, und dann das
+	Ergebnis ausgibt.</p>
+
+	<p>Mit dem bisherigen Wissen könnte das so aussehen:
+<pre>[[[syntax perl6]]]
+use v6;
+
+my $zahl = =<>;
+
+if $zahl > 100 {
+	say $zahl;
+} else {
+	$zahl = $zahl * 2;
+	if $zahl > 100 {
+		say $zahl;
+	} else {
+		$zahl = $zahl * 2;
+		if $zahl > 100 {
+			say $zahl
+		} else {
+			...
+		}
+	}
+}
+[[[endsyntax]]]</pre>
+	<p>Diese Lösung ist einfach nur hässlich: es ist viel Schreibaufwand,
+	Fehleranfällig und, noch schlimmer: sie ist falsch. Denn egal wie
+	häufig man diese Konstruktion verschachtelt, man kann sich nie sicher
+	sein, dass man es oft genug hat (der Benutzer kann ja 0.00000001
+	eingeben, oder noch kleine Zahlen).</p>
+
+	<p>Perl hat natürlich eine bessere Lösung für dieses Problem:
+	Schleifen:</p>
+
+<pre>[[[syntax perl6]]]
+use v6;
+my $zahl = =<>;
+
+while $zahl <= 100 {
+	$zahl = $zahl * 2;
+}
+say $zahl;
+[[[endsyntax]]] </pre>
+
+	<p><code>while</code> prüft die Bedingung, die direkt hinter  dem Wort
+	<code>while</code> steht, und falls sie erfüllt ist, wird der Block
+	dahinter ausgeführt. Dann wird die Bedingung wieder überprüft, wenn
+	sie immer noch erfüllt ist, wird der Block wieder ausgeführt, und so
+	weiter. Und zwar so lange, bis die Bedingung nicht mehr erfüllt
+	ist.</p>
+
+	<p>Wenn der Benutzer z.B. <code>5</code> eingibt, wird beim ersten
+	durchlaufen der Schleife überprüft, ob <code>5 &lt;= 100</code> ist - 
+	ist es.</p>
+	<p>Dann wird <code>$zahl</code> auf 10 gesetzt.</p>
+
+	<p>Dann wird wieder überprüft, ob <code>$zahl &lt;= 100</code> ist.
+	<code>$zahl</code> hat den Wert 10, die Bedingung ist immer noch
+	erfüllt.</p>
+	<p>Deshalb wird <code>$zahl = $zahl * 2</code> ausgführt, dieses Mal
+	mit dem Ergebnis 20.</p>
+
+	<p>Nach dem nächsten Durchauf hat <code>$zahl</code> den Wert 40, dann
+	80, und dann 160.</p>
+
+	<p>Und wenn <code>$zahl</code> den Wert 160 hat, wird ist die
+	Bedingung <code>$zahl &lt;= 100</code> nicht mehr erfüllt.</p>
+
+	<h2>Die ewige Gefahr: Endlosschleifen</h2>
+
+	<p>Was passiert, wenn der Benutzer "0" eingibt?</p>
+
+	<p>Die Bedingung <code>0 &lt; 100</code> ist sicherlich erfüllt, also
+	wird <code>$zahl</code> verdoppelt - und bleibt 0. Und nochmal. Und
+	nochmal.</p>
+
+	<p>Diese Schleife wird nie abbrechen, wenn man sie mit
+	<code>$zahl == 0</code> oder mit negativen Zahlen startet - eine
+	sogenannte Endlosschleife.</p>
+
+	<p>Zum Glück kann man das Programm leicht abbrechen, wenn man
+	Steuerung+C drückt.</p>
+
+	<p>Und was tut man dagegen? Für manche Anwendungen reicht es sicher,
+	ein <code>if</code> davor zu packen:</p>
+
+<pre>[[[syntax perl6]]]
+use v6;
+my $zahl = =<>;
+
+if $zahl > 0 {
+
+	while $zahl <= 100 {
+		$zahl = $zahl * 2;
+	}
+	say $zahl;
+} else {
+	say "unmöglich";
+}
+[[[endsyntax]]] </pre>
+
+	<p>Aber was tun, wenn es eine Anwendung ist, bei der man unbedingt eine
+	positive Zahl braucht? Die Antwort ist: eine
+	<code>while</code>-Schleife:</p>
+
+<pre>[[[syntax perl6]]]
+use v6;
+my $zahl = =<>;
+while $zahl <= 0 {
+	say "bitte POSITIVE Zahl eingeben:";
+	$zahl = =<>
+}
+
+# hier ist $zahl auf jeden Fall > 0
+
+while $zahl <= 100 {
+	$zahl = $zahl * 2;
+}
+say $zahl;
+[[[endsyntax]]] </pre>

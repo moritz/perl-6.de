@@ -157,3 +157,25 @@ say $s2;
 Interpolierter String: 12
 Nicht-interpolierter String: $zahl
 </pre>
+	<p>Perl hat viele eingebaute Funktionen, die Strings verarbeiten. Hier
+	werden ein paar vorgestellt, die die Groß- und Kleinschreibung
+	(Englisch: Lower Case und Upper Case) beeinflussen. Die meisten
+	wirklich mächtigen Funktionen werden aber erst später vorgestellt.</p>
+
+<pre>[[[syntax perl6]]]
+my $str = "hEUTe NACht";
+say uc $str;
+# HEUTE NACHT
+
+say lc $str;
+# heute nacht
+
+say ucfirst $str;
+# HEUTe NACht
+
+say lcfirst $str;
+# hEUTe NACht
+
+say capitalize $str;
+# Heute Nacht
+[[[endsyntax]]]</pre>

@@ -192,3 +192,31 @@ my $m = ' $foo bar' ~~ m/ <sigil> <ident>/;
 say $m<sigil>;		# gibt $
 say $m<ident>;		# gibt foo
 [[[endsyntax]]]</pre>
+
+	<h2>Text ersetzen</h2>
+
+	<p>Die alte Form des Text-Ersetzens mit <code>s///</code> geht auch
+	unter Perl 6, neue Formen sind dazu gekommen:</p>
+<pre>[[[syntax perl6]]]
+my $s1 = "klein";
+$s1 tr ~~ s/^kl/k/;
+# $s1 tr eq "kein"
+# oder: $s.subst(m/^kl/, "k");
+
+#neu (entspricht dem p5 /e Flag): 
+my $s2 = "7 drunken nights";
+$s2 ~~ s[(\d+)] = 2 * $0;
+# jetzt "14 drunken nights"
+
+# alle Flags kommen an den Anfang:
+my $s3 = "35 beers, 7 drunken nights";
+$s3 ~~ s:g[(\d+)] = 2 * $0;
+[[[endsyntax]]]</pre>
+
+	<p>Man beachte im letzten Beispiel, dass das keine normale Zuweisung
+	ist, sondern dass die rechte Seite bei jedem Match neu ausgwertet
+	wird.</p>
+
+	<!-- TODO: Backslash-Reform, unterschied regex-rx etc., Zuweisungen a
+	la my $foo = regex / ... / -->
+

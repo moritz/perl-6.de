@@ -19,6 +19,14 @@ text-decoration:none;
 	text-decoration: underline;
 }
 
+pre {
+	font-size: 110%;
+	background-color: #e5e5fe;
+	border-color: gray;
+	border-style: dotted;
+	border-width: 1px;
+}
+
 a:hover {
 color:#808080;
 text-decoration:underline;
@@ -51,10 +59,10 @@ text-align:left;
 }
 
 #sitename h1,#sitename h2 {
-font-weight:400;
-letter-spacing:-2px;
-margin:0;
-padding:0;
+	font-weight:400;
+	letter-spacing:-2px;
+	margin:0;
+	padding:0;
 }
 
 #sitename h1 {
