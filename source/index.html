@@ -32,8 +32,7 @@ fertig ist ist jeder Tag Weihnachten.</p>
 <p>Das folgende kleine Programm liest eine Datei (hier: sich selbst) ein und
 überprüft, ob die Klammern in diesem Programm balanciert sind, also ob sie
 korrekt verschachtelt sind.</p>
-<pre> [[[syntax perl6]]]
-use v6;
+<pre>[[[syntax perl6]]]use v6;
 
 my $fn = $*PROGRAM_NAME;
 
@@ -44,8 +43,7 @@ my %braces = ( '('  => ')',
         );
 my @stack;
 
-my $line;
-while defined ($line = $file.readline()) {
+for =<$file> -> my $line {
     for ($line.comb(m/<[()\[\]\{\}]>/)) -> my $match {
         if %braces{$match} {
             # öffnende Klammer gefunden
@@ -67,6 +65,5 @@ $file.close;
 if @stack.elems == 0 {
     say "File $fn is balanced";
 } else {
-    say "File $fn is not balanced, more opening braces than closing...";
-}[[[endsyntax]]]
-</pre>
+    say "File $fn is not balanced, more opening braces than closing ones";
+}[[[endsyntax]]]</pre>
