@@ -13,9 +13,6 @@
       anderen Programmiersprache etwas programmieren k&ouml;nnen, aber bisher
       kein Perl k&ouml;nnen.</p>
 
-      <p>F&uuml;r Umsteiger von Perl5 auf Perl 6 sei <a
-      href="http://faq.perl-community.de/bin/view/Wissensbasis/Perl 6Tutorial">dieses
-      hervoragende Perl 6-Tutorial</a> empfohlen.</p>
 
       <p>Dieses Tutorial ist recht kompakt gehalten. F&uuml;r eine
       ausf&uuml;hrlichere Einf&uuml;hrung gibt es ein Tutorial auf <a
@@ -189,7 +186,7 @@ my $alphabet = ("a" .. "z").join;
 say $alphabet; # `abcdefghijklmnopqrstuvwxyz'
 say $alphabet.substr(2); # alles ab dem 3. Zeichen, also
 #`cdefghijklmnopqrstuvwxyz' 
-say $alphabet.substr(2, 5); # F¸nf Zeichen ab dem 3. Zeichen, also `cdefg'
+say $alphabet.substr(2, 5); # F√ºnf Zeichen ab dem 3. Zeichen, also `cdefg'
 # negative Indizes werden von hinten gez&auml;hlt, mit dem letzen Element als
 # -1:
 say $alphabet.substr(2, -2);  # Alles ausser den ersten beiden und den letzten
@@ -306,7 +303,7 @@ my @b = 0, \@a, 3;
 say @b.elems;
 # `3'
 
-# oder k¸rzer:
+# oder k√ºrzer:
 @b = 0, [1, 2], 3;
 [[[endsyntax]]]</pre>
 	<p>Die Kurzschreibweise f&uuml;r Arrayreferenzen sind eckige
@@ -335,7 +332,7 @@ my %leader = ( 	'USA'		=> 'G. W. Bush',
 
 my $country = "USA";
 say $country , " wird zur Zeit von ",  %leader{$country}, "regiert";
-# Elemente im Nachhinein ‰ndern oder hinzuf¸gen:
+# Elemente im Nachhinein √§ndern oder hinzuf√ºgen:
 %leader{'Transsylvanien'} = 'Dracula';
 [[[endsyntax]]]</pre>
 
@@ -350,7 +347,7 @@ say $country , " wird zur Zeit von ",  %leader{$country}, "regiert";
 
 <pre>[[[syntax perl6]]]
 my %regie = (
-		'Steven Spielberg' => ['Die Vˆgel', 'M¸nchen', 'Psycho'],
+		'Steven Spielberg' => ['Die V√∂gel', 'M√ºnchen', 'Psycho'],
 		'Alfred Hitchcock' => ['The Kid', 'Goldrausch'],
 	    );
 my $regisseur = "Alfred Hitchcok";
@@ -541,13 +538,13 @@ sub factorial {
 	erwartet.</p>
 <pre>[[[syntax perl6]]]
 sub wisdom {
-	my @w = "Besser nie als sp‰t",
-	   "Stoﬂstange ist aller Laster Anfang";
+	my @w = "Besser nie als sp√§t",
+	   "Sto√üstange ist aller Laster Anfang";
 	if (want.List){
 		return @w;
 	} else {
-		return "Wenn du zuhˆren w¸rdest, h‰tte ich "
-			~ @w.elems ~ "Weisheiten f¸r dich";
+		return "Wenn du zuh√∂ren w√ºrdest, h√§tte ich "
+			~ @w.elems ~ "Weisheiten f√ºr dich";
 	}
 [[[endsyntax]]]</pre>
 
@@ -559,7 +556,7 @@ sub wisdom {
 sub swap($x is rw, $y is rw){
 	($x, $y) = ($y, $x);
 }
-# vertauscht die beiden ¸bergeben Argumente
+# vertauscht die beiden √ºbergeben Argumente
 [[[endsyntax]]]</pre>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
@@ -571,10 +568,10 @@ sub swap($x is rw, $y is rw){
 
 <pre>[[[syntax perl6]]]
 multi foo(Str $x){
-	# ... Behandlung f¸r Strings
+	# ... Behandlung f√ºr Strings
 }
 multi foo(Int $x){
-	# Behandlung f¸r ganze Zahlen
+	# Behandlung f√ºr ganze Zahlen
 }
 [[[endsyntax]]]</pre>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
@@ -634,11 +631,11 @@ sub wurzel(Num $x){
 my $test_string = "Larry Wall hat Perl erfunden";
 
 if $test_string ~~ m/ll/ {
-	say 'Der Teststring enth‰lt ein Doppel-l';
+	say 'Der Teststring enth√§lt ein Doppel-l';
 }
 
 if $test_string ~~ m/ar+y/ {
-	say 'Der Teststring enth‰lt ein a, mindestens ein r und dann ein y';
+	say 'Der Teststring enth√§lt ein a, mindestens ein r und dann ein y';
 }
 [[[endsyntax]]]</pre>
 
@@ -706,18 +703,21 @@ m/^Genau diese Zeile$/
 	<table summary="Charakterklassen von Perl 6-regexes">
 	<tr><th>Symbol</th><th>Bedeutung</th></tr>
 	<tr><td>.</td><td>Beliebiges Zeichen</td></tr>
-	<tr><td>\s</td><td>Whitespaces, also Lehrzeichen, Tabs,
+	<tr><td>\s</td><td>Whitespaces, also Leerzeichen, Tabs,
 	Zeilenumbruch</td></tr>
 	<tr><td>\S</td><td>Alles ausser Whitespaces</td></tr>
+	<tr><td>&lt;sp&gt;</td><td>Ein Leerzeichen</td></tr>
 	<tr><td>\d</td><td>Eine Ziffer</td></tr>
 	<tr><td>\D</td><td>Alles ausser einer Ziffer</td></tr>
 	<tr><td>\w</td><td>Ein Buchstabe</td></tr>
 	<tr><td>\W</td><td>Alles ausser einem Buchstaben</td></tr>
+	<tr><td>\n</td><td>Ein Zeilenumbruch</td></tr>
+	<tr><td>\N</td><td>Alle au√üer einem Zeilenumbruch</td></tr>
 	<tr><td>&lt;alpha&gt;</td><td>Buchstabe (alternative Schreibweise)</td></tr>
-	<tr><td>TODO</td><td>Mehr von dem Zeugs</td></tr>
+	<tr><td>&lt;digit&gt;</td><td>Ziffer (alternative Schreibweise)</td></tr>
 	</table>
 
-	<p>Wenn man eine ganze Zahl, gefolgt von einem oder mehr Lehrzeichen
+	<p>Wenn man eine ganze Zahl, gefolgt von einem oder mehr Leerzeichen
 	und einem Wort finden will, kann man das mit folgender Regex
 	machen:</p>
 
@@ -809,7 +809,7 @@ regex perl6_variable { <sigil> <twigil>? <identifier> };
 
 	<p>Der Unterschied zwischen <code>token</code> und <code>regex</code>
 	ist, dass in einem <code>token</code> kein Backtracking stattfindet,
-	was die mˆgliche Komplexit‰t einschr‰nkt.</p>
+	was die m√∂gliche Komplexit√§t einschr√§nkt.</p>
 
 	<p>Damit kann man ganze Grammatiken aufbauen und mit rules
 	&uuml;berpr&uuml;fen.</p>
@@ -836,14 +836,28 @@ say $match[0];
 say $match.from, " ", $match.to
 # liefert `1 3', also Anfangs- und Endposition des Matches
 if ($match){
-	# Im logik-Kontext (True/False) wird True zur¸ckgegeben,
+	# Im logik-Kontext (True/False) wird True zur√ºckgegeben,
 	# wenn die rexep auf den String gepasst hat
 	...
 }
 [[[endsyntax]]]</pre>
 
+	<p>Man kann auch mit regexes/rules Text ersetzen:</p>
 
+<pre>[[[syntax perl6]]]
+my $text = "foo 123 bar 42";
+$text ~~ s/^f../blubb/;
+# $text enth√§lt jetzt "blubb 123 bar 42"
 
+# jede Zahl im String verdoppeln:
+
+$text ~~ s:g[(\d+)] = 2 * $0;
+# das :g sorgt daf√ºr, dass alle Vorkommnisse der Regex 
+# ersetzt werden (g = global)
+
+say $text;
+# blubb 246 bar 84
+[[[endsyntax]]]</pre>
 
 
 	<h2>Input/Output</h2>
@@ -857,7 +871,7 @@ if ($match){
 print "Text";
 print ", und mehr Text\n";
 # liefert `Text, und mehr Text' und dann einen Zeilenumbruch, d.h. die
-# n‰chste Ausgabe findet auf der n‰chsten Zeile statt.
+# n√§chste Ausgabe findet auf der n√§chsten Zeile statt.
 [[[endsyntax]]]</pre>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
@@ -933,63 +947,8 @@ for =$f -> my $line {
       Allerdings ist das vollkommen optional, wenn man nicht will, muss man
       auch nicht.</p>
 
-      <p>Die Idee der Objektorientierung ist, Daten und Funktionen, die mit
-      diesen Daten zu hantieren, zusammenzufassen.</p>
-
-      <h3>Klassen</h3>
-
-      <p>Eine Klasse beschreibt, welche Daten und welche Funktionen zusammen
-      geh&ouml;ren, und wie man von au&szlig;en darauf zugreift.</p>
-
-<pre>[[[syntax perl6]]]
-class Tree {
-	has $.height;
-	has $.age;
-	has @.leaves;
-
-	method grow() {
-		# B&auml;ume wachsen sehr langsam:
-		$.heigth += 0.001;
-	}
-}
-[[[endsyntax]]]</pre>
-
-	<p>Eine Klasse beginnt mit dem Schl&uuml;sselwort <code>class</code>,
-	gefolgt von dem Namen der Klasse.</p>
-
-	<p>Die Daten der Klasse werden mit dem Schl&uuml;sselwort
-	<code>has</code> deklariert, Funktionen innerhalb von Klassen sind
-	<code>method</code>s.</p>
-
-	<p>Der Punkt hinter dem Variablennamen bedeutet, dass diese Variable
-	von au&szlig;en sichtbar ist. Wenn man das nicht m&ouml;chte, kann man
-	anstatt des Punktes ein Ausrufezeichen <code>!</code> verwenden.</p>
-
-	<p>Wenn man der Aussenwelt erlauben will, die Daten direkt zu
-	&auml;ndern, kann man das mit dem Schl&uuml;sselwort <code>is
-	rw</code> erreichen:</p>
-
-<pre>[[[syntax perl6]]]
-class Tree {
-	has $.height;
-	has $.age;
-	has $.stands is rw;
-	has @.leaves;
-
-	method grow() {
-		# B‰ume wachsen sehr langsam:
-		$.heigth += 0.001;
-	}
-}
-
-Tree $t .= new();
-# lasst uns den Baum f&auml;llen:
-$t.stands = 0;
-[[[endsyntax]]]</pre>
-
-	<h3>Objekte</h3>
-
-	<p>TODO</p>
+      <p>Das Objektmodell von Perl 6 ist ausf√ºhrlich <a
+      href="/tutorials/objektmodell">hier</a> beschrieben.</p>
 
 
 	<h2>Funktionen</h2>
@@ -1016,10 +975,97 @@ $t.stands = 0;
 	<code>n</code>-te komplexe Wurzeln) und <code>sign</code>
 	(Vorzeichen).</p>
 
-	<h3>Array-Behandlung</h3>
-	<p>TODO</p>
+	<h3>Listen-Behandlung</h3>
+	<p><code>push</code>, <code>pop</code>, <code>shift</code> und
+	<code>unshift</code> f√ºgen an Anfang und Ende eines Arrays Elemente
+	hinzu und entfernen sie:</p>
 
-	<h2>Timtowtdi: "There is more than one way to do it</h2>
+<pre>[[[syntax perl6]]]
+my @a = 1, 2, 3, 4, 5;
+
+my $b = @a.shift;
+# $b enth√§lt 1, @a = (2, 3, 4, 5);
+
+@a.unshift(7);
+# @a ist jetzt (7, 2, 3, 4, 5)
+
+my $last =  @a.pop;
+# @a ist (7, 2, 3, 4), $last ist 5
+
+@a.push(23, 42);
+# @a ist jetzt (7, 2, 3, 4, 23, 42)
+[[[endsyntax]]]</pre>
+
+	<p><code>splice</code> entfernt Elemente aus einem Array, und f√ºgt
+	optional welche an. Der erste Parameter f√ºr <code>splice</code> ist
+	die Position, der zweite die L√§nge, der dritte (optional) die neuen
+	Elemente:</p>
+<pre>[[[syntax perl6]]]
+my @a = 1 .. 4;
+my @b = @s.splice(1, 2);
+# @b = (2, 3); @a = 1, 4;
+
+@a.splice(1, 0, @b);
+# @a ist wieder (1, 2, 3, 4); 0 Elemente ersetzen ist wie Elemente einf√ºgen
+[[[endsyntax]]]</pre>
+
+	<p><code>grep</code> liefert die Elemente einer Liste, die einer
+	bestimmten Bedinung gen√ºgen:</p>
+	
+<pre>[[[syntax perl6]]]
+my @l = grep { $_ % 3 == 0}, 1 .. 10;
+# alle durch drei teilbaren Zahlen, also (3, 6, 9)
+
+#das gleiche:
+my @l = grep { $^a % 3 == 0}, 1 .. 10;
+[[[endsyntax]]]</pre>
+	<p><code>first</code> funktioniert wie <code>grep</code>, nur dass nur
+	das erste passende Element zur√ºckgeliefert wird.</p>
+
+	<p><code>pick</code> liefert eine zuf√§llige Auswahl an
+	Elementen:</p>
+
+<pre>[[[syntax perl6]]]
+(1 .. 10).pick(3)
+# (6, 1, 2)
+(1 .. 10).pick(3)
+# (7, 4, 9)
+(1 .. 10).pick(3)
+# (3, 5, 10)
+[[[endsyntax]]]</pre>
+
+	<p><code>map</code> wendet eine Funktion auf jedes Element einer Liste
+	an, die zur√ºckgegebenen Elemente bauen wieder eine Liste auf:</p>
+
+<pre>[[[syntax perl6]]]
+# Quadrate berechnen:
+(1 .. 10).map( {$_ * $_ })
+# (1, 4, 9, 16, 25, 36, 49, 64, 81, 100)
+[[[endsyntax]]]</pre>
+	<p><code>sort</code> sortiert listen, optional mit einem
+	Vergleichs-Block:</p>
+<pre>[[[syntax perl6]]]
+(1 .. 20).pick(5).sort         
+# (1, 2, 6, 15, 18)
+(1 .. 20).pick(5).sort
+# (5, 6, 15, 16, 19)
+
+# mit einem Vergleichsblock, der explit nach String-Reihenfolge 
+# sortiert, d.h. "1" < "10" < "2":
+(1 .. 20).sort( {~$^a cmp ~$^b }
+# (1, 10, 11, 12 .. 19, 2, 20, 3, 4 .. 9)
+[[[endsyntax]]]</pre>
+	<p>In dem letzten Beispiel werden dem Vergleichsblock von
+	<code>sort</code> zwei Parameter √ºbergeben, die in <code>$^a</code>
+	und <code>$^b</code> gespeichert werden.</p>
+
+	<p><code>min</code> und <code>max</code> liefern das kleinste/gr√∂√üte
+	Element einer Liste, <code>reverse</code> ergibt die Liste in
+	umgekehrte Reihenfolge.</p>
+
+
+
+	<h2>Timtowtdi: "There is more than one way to do it"</h2>
 
 	<p>Eine von Perls Philosophien war schon immer, dem Programmierer
 	m&ouml;glichst  viele Freiheiten zu lassen, und ihn damit so
@@ -1040,7 +1086,7 @@ for @a -> my $i {
 	push @b, $i + $n;
 }
 
-# oder so, wie man das in C machen w¸rde:
+# oder so, wie man das in C machen w√ºrde:
 my @c = @a;
 loop(my $i = 0; $i < @a.elems; $i++){
 	@c[$i] += $n;

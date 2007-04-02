@@ -94,7 +94,7 @@ $str ~~ m:P5:i/^foo\d{3}$/;
 
 	<p>Wenn direkt innerhalb der spitzen Klammern eckige Klammern stehen,
 	steht das für eine Klasse von Zeiche, so wie früher
-	<code>[...]</code> (nur dass jetzt Lehrzeichen ignoriert werden):</p>
+	<code>[...]</code> (nur dass jetzt Leerzeichen ignoriert werden):</p>
 <pre>[[[syntax perl6]]]
 regex buchstabe { <[a..z A..Z]> };
 [[[endsyntax]]]</pre>
@@ -112,7 +112,7 @@ regex p5_var	 { <sigil> <identifier>};
 [[[endsyntax]]]</pre>
 	<p>Es gibt auch schon fertige Regexes, so steht
 	<code>&lt;alpha&gt;</code> für Buchstaben, <code>&lt;sp&gt;</code> für
-	das Lehrzeichen und <code>&lt;ws&gt;</code> für ein "magisches"
+	das Leerzeichen und <code>&lt;ws&gt;</code> für ein "magisches"
 	Leerzeichen, d.h. für <code>\s+</code> zwischen alphanumerischen
 	Zeichen und für <code>\s*</code> sonst.</p>
 

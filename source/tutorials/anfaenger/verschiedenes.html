@@ -1,0 +1,210 @@
+[[[menu main tut anfaenger verschiedenes]]]
+[[[setvar title Verschiedenes]]]
+<div id="content">
+
+	<h1>Verschiedenes</h1>
+
+	<p>Wer bis hierhin gefolgt ist, der ist schon in der Lage, kleine oder
+	nicht mehr ganz so kleine Programme zu schreiben. Das ist ein guter
+	Zeitpunkt, um auf ein paar Dinge hinzuweisen.</p>
+
+	<h2>Coding Style</h2>
+
+	<p>Perl erlaubt es einem, an fast beliebigen Stellen Lehrzeichen und
+	Zeilenumbrüche einzufügen oder weg zu lassen - das sollte aber kein
+	Grund sein, das zu tun.</p>
+
+	<p>Tatsächlich hängt die Lesbarkeit eines Programms ganz stark davon
+	ab, wie es formatiert ist, und dass Variablen (und später auch
+	Funktionen) aussagekräftige Namen haben.</p>
+
+	<p>Das bedeutet aber nicht nicht, dass alle Variablen sich selbst
+	beschreiben müssen:</p>
+<pre>[[[syntax perl6]]]
+for (my $schleifen_variable = 1; $schleifen_variable < 10; $schleifen_variable++){
+	say $schleifen_variable, " zum Quadrat ist ", $schleifen_variable * $schleifen_variable;
+}
+[[[endsyntax]]]</pre>
+	<p>Ist sicherlich übertrieben. Als Grundregel sollte man nehmen: Je
+	größer der Bereich eines Programms ist, in dem eine Variable benutzt
+	wird, desto aussagekräftiger sollte der Name sein.</p>
+
+	<p>In obiger Schleife wäre es vollkommen in Ordnung gewesen, der
+	Variablen einen Namen mit einem Buchstaben, wie z.B. <code>$i</code>
+	zu geben, aber wer in einem mehrere tausend Zeilen langem Programm
+	eine Variable verwendet, die überall gültig ist, und nur aus einem
+	Buchstaben besteht, gehört erschossen.</p>
+
+	<p>Auch sollte man sich angewöhnen, nach jeder öffnenden geschweiften
+	Klammer den Code einen Tab weiter einzurücken (alternativ 4 oder 8
+	Leerzeichen), und nach der entsprechenden schliessenden Klammer wieder
+	ausrücken, so wie das hier in den Beispielen immer der Fall ist:</p>
+
+<pre>[[[syntax perl6]]]
+if $a < $b {
+	# nach 'if' ging eine Klammer auf, deswegen 
+	# ist der Text hier eingerückt
+}
+# nach der schliessenden Klammer ist der Code nicht mehr 
+# eingerückt.
+[[[endsyntax]]]</pre>
+	<p>Ausserdem sollte man darauf achten, dass Zeilen nicht mehr als 80
+	Zeichen lang sind.</p>
+
+	<p>Wenn man sich nicht an solche Regeln hält, kann z.B. so etwas
+	heraus kommen:</p>
+
+<pre>[[[syntax perl]]]
+s''$/=\2048;while(<>){G=29;R=142;if((@a=unqT="C*",_)[20]&48){D=89;_=unqb24,qT,@
+b=map{ord qB8,unqb8,qT,_^$a[--D]}@INC;s/...$/1$&/;Q=unqV,qb25,_;H=73;O=$b[4]<<9
+|256|$b[3];Q=Q>>8^(P=(E=255)&(Q>>12^Q>>4^Q/8^Q))<<17,O=O>>8^(E&(F=(S=O>>14&7^O)
+^S*8^S<<6))<<9,_=(map{U=_%16orE^=R^=110&(S=(unqT,"\xb\ntd\xbz\x14d")[_/16%8]);E
+^=(72,@z=(64,72,G^=12*(U-2?0:S&17)),H^=_%64?12:0,@z)[_%8]}(16..271))[_]^((D>>=8
+)+=P+(~F&E))for@a[128..$#a]}print+qT,@a}';s/[D-HO-U_]/\$$&/g;s/q/pack+/g;eval
+[[[endsyntax]]]</pre>
+	<p>Das ist Perl 5-Code, und auch wenn nicht alles so funktionert wie
+	in Perl 6, können Sie sicher sehen, dass Sie auch kaum etwas verstehen
+	würden, wenn Sie Perl 5 kennen würden.</p>
+
+	<p>Tatsächlich macht dieser Code etwas sinnvolles: Er umgeht die CSS
+	("Content Scrambling System")-Verschlüsselung von DVDs - in nur 6
+	Zeilen Perl-Code. Quelle: <a
+	href="http://www.cs.cmu.edu/~dst/DeCSS/Gallery/qrpff.pl">Keith
+	Winstein und Marc Horowitz</a>.</p>
+
+	<p>Also: formatieren Sie Ihren Quellcode lesbar und konsequent, 
+	geben Sie Variablen ordentliche Namen und fügen Sie Kommentare ein, wo
+	es sinnvoll ist. Es wird Ihnen letztendlich helfen, Zeit zu sparen.</p>
+
+	<h2>Zusammengesetzte Zuweisungen</h2>
+
+	<p>In den bisherigen Beispielen kam ab und zu mal eine Anweisung
+	dieser Form vor:</p>
+
+<pre>[[[syntax perl6]]]
+$a = $a + $b;
+[[[endsyntax]]]</pre>
+	<p>Tatsächlich kommt es relativ häufig vor, dass eine Variable auf
+	beiden Seiten einer Zuweisung vorkommt. Deswegen gibt es unter Perl
+	(und in ein paar anderen Programmiersprachen auch, wie z.B. in C) eine
+	Kurzschreibweise dafür:</p>
+<pre>[[[syntax perl6]]]
+$a += $b;	# das gleiche wie $a = $a + b;
+$a -= $b;	# das gleiche wie $a = $a - b;
+$a *= $b;	# das gleiche wie $a = $a * b;
+$a /= $b;	# das gleiche wie $a = $a / b;
+[[[endsyntax]]]</pre>
+
+	<p>Das geht noch mit anderen Operatoren, wie <code>%</code> (Modulo,
+	also Rest einer Division), <code>**</code> (Potenzierung) und noch
+	mehr Operatoren, die bisher noch gar nicht hier aufgetaucht sind.</p>
+
+	<h3>Inkrementierung und Dekrementierung</h3>
+
+	<p>Programmierer sind notorisch schreibfaul, und weil Variablen so
+	häufig um 1 erhöht oder erniedrigt werden müssen, gibt es dafür eine
+	weitere Schreibweise:</p>
+
+<pre>[[[syntax perl6]]]
+my $i = 3;
+$i++;		# das gleiche wie $i = $i + 1; oder $i += 1;
+$i--;		# das gleiche wie $i = $i - 1; oder $i -= 1;
+[[[endsyntax]]]</pre>
+
+	<p>Diese Operatoren heißen Inkrement- (<code>++</code>) und Dekremt-
+	 Operator (<code>--</code>).</p>
+
+	<p>Tatsächlich gibt es noch eine Form:</p>
+
+<pre>[[[syntax perl6]]]
+my $i = 3;
+++$i;		# das gleiche wie $i++;
+--$i;		# das gleiche wie $i--;
+[[[endsyntax]]]</pre>
+
+	<p>Allerdings sind die Formen <code>$i++</code> und <code>++$i</code>
+	nicht immer identisch:</p>
+
+<pre>[[[syntax perl6]]]
+my $i = 3;
+my $a = ++$i;
+# hier haben $i und $a beide den Wert 4.
+
+my $k = 3;
+my $b = $k++;
+# hier hat $k den Wert 4, aber $b den Wert 3
+[[[endsyntax]]]</pre>
+	<p>Also: Wenn <code>++$i</code> in einer Anweisung steht, wird erst
+	die Variable um eins erhöht, und dann der Wert der Variablen auf der
+	linken Seite (hier: <code>$a</code>) geschrieben.</p>
+
+	<p>In der Form <code>$i++</code> wird <em>erst</em> die Zuweisung
+	ausgeführt, <em>dann</em> <code>$i</code> um eins erhöht.</p>
+
+	<p>Am Anfang ist es empfehlenswert, diese Subtilität zu vermeiden, und
+	diese Operatoren nur zu verwenden, wenn es der einzige Befehl in
+	dieser Anweisung ist.</p>
+	
+	<h2>Alles hat einen Namen</h2>
+
+	<p>Für alles in einer Programmiersprache gibt es einen Namen, meistens
+	einen englischen.</p>
+
+	<p>Ohne den Fachjargon kommt man auf Dauer nicht aus. Für den Anfang
+	muss man ihn aber nicht aktiv beherrschen, es reicht die Begriffe zu
+	verstehen, wenn man sie liest.</p>
+
+	<h3>Ausdrücke</h3>
+
+	<p>Alles, was einen Wert zurückliefert, heißt
+	<strong>Ausdruck</strong>, auf Englisch
+	<strong>Expression</strong>.</p>
+	<p><code>1</code> ist ein Ausdruck (liefert den Wert 1 zurück), 
+	<code>3+4*$a</code> ist ein Ausdruck, und sogar</p>
+
+<pre>[[[syntax perl6]]]
+my $a = 5;
+[[[endsyntax]]]</pre>
+	<p>ist ein Ausdruck, der den Wert 5 liefert. Daher ist auch das hier
+	erlaubt:</p>
+<pre>[[[syntax perl6]]]
+my $b = my $a = 5;
+[[[endsyntax]]]</pre>
+
+	<h2>Operatoren</h2>
+
+	<p>Einige Operatoren haben Sie schon kennegernt: <code>+</code>,
+	<code>&lt;</code>, <code>eq</code> (String-Vergleich), ein paar wurden
+	schon benutzt, ohne explizit als Operator bezeichnet zu werden:
+	<code>=</code> für die Zuweisung (wie in <code>$a = 3</code>), und das
+	Komma <code>,</code> (wie in <code>say "Summe: ", $a + $b</code>; mehr
+	dazu, was das Komma macht, im nächsten Abschnitt).</p>
+
+	<p>Operatoren sind Bestandteile einer Sprache, meistens aus
+	Sonderzeichen bestehend, die mit Ausdrücken arbeiten. Diese Ausdrücke
+	nennt man <em>Operanden</em>.</p>
+
+	<p>Man klassifiziert Operatoren danach, wie viele Operanden sie
+	benötigen:</p>
+
+	<p><em>Unäre</em> Operatoren arbeiten nur mit einem Operand, z.B. das
+	Minus in <code>my $a = -1;</code>.</p>
+
+	<p>Die meisten Operatoren sind <em>binär</em>, d.h. sie arbeiten mit
+	zwei Operanden, wie z.B. <code>*</code> in <code>my $a = 2 *
+	3;</code>. Auch <code>+</code> und <code>-</code> sind binär, d.h. sie
+	haben sowohl eine binäre als auch eine unäre Form.</p>
+
+	<p>Es gibt auch ab und zu <em>ternäre</em> Operatoren, die drei
+	Argumente benötigen, die sind aber bisher noch nicht von Interess.</p>
+
+	<h3>Boolsche Ausdrücke</h3>
+
+	<p>Bedingungen wie <code>$a &lt; 5</code> sind sogenannte
+	Wahrheitswerte oder Booolsche Ausdrücke, auf Englisch "Boolean
+	Expression". Sie können nur die Werte <code>True</code> oder
+	<code>False</code> annehmen.</p>
+
+	<p>In Perl kann jeder Ausdruck als Boolscher Ausdruck verwendet
+	werden, wobei ein Ausdruck als <code>False</code> gilt, wenn er 0 oder
+	der leere String <code>""</code> ist, sonst <code>True</code>.</p>

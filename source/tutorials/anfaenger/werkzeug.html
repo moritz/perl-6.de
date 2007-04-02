@@ -1,40 +1,43 @@
 [[[menu main tut anfaenger]]]
-[[[setvar title Werkzeuge: Perl installieren]]]
+[[[setvar title Werkzeuge: Perl 6 installieren]]]
 <div id="content">
-	<h1>Werkzeuge: Perl installieren</h1>
+	<h1>Werkzeuge: Perl 6 installieren</h1>
 
-	<p>TODO: das meiste hiervon galt nur für p5, umschreiben!!!</p>
 	<p>Wenn man ein Programm schreiben will, muß der von Menschen lesbare
 	Text, aus dem das Programm besteht ("Quelltext" oder "Source Code")
 	irgend wie in etwas übersetzt werden, was der Computer versteht.</p>
 
-	<h2>perl</h2>
+	<p>Das macht ein sogenannter Compiler oder Interpreter.</p>
 
-	<p>Im Falle von Perl ist ein sogenannter "Interpreter" dafür
-	zuständig, und den muß man sich installieren, um in Perl programmieren
-	zu können.</p>
+	<p>Und da fangen die Probleme schon an: Es gibt noch keinen fertigen
+	Compiler oder Interpreter für Perl 6.</p>
 
-	<p>Der Interpreter für Perl heißt "perl" (man beachte das kleine p am
-	Anfang), und man findet ihn auf <a
-	href="http://www.perl.org/get.html">perl.org</a>.</p>
+	<p>Das ist noch kein Grund zur Verzweiflung: mit <a
+	href="/pugs">Pugs</a> steht ein recht weit entwickelter Interpreter
+	zur Verfügung, der alle hier aufgeführten Beispiele korrekt
+	ausführt.</p>
 
-	<h3>Windows</h3>
+	<h3>Pugs für Windows</h3>
 
-	<p>Windowsuser können sich von der Firma <a
-	href="http://www.activestate.com/store/productdetail.aspx?prdGuid=81fbce82-6bd5-49bc-a915-08d58c2648ca">ActiveState</a>
-	ein perl-Paket mit Windows-Installer kostenlos herunuterladen. Die
-	Installation sollte selbsterklärend sein.</p>
+	<p>Pugs für Windows gibt es <a
+	href="http://www.jnthn.net/perl6/">hier (Englisch)</a>.</p>
 
-	<h3>Linux und Mac OS X</h3>
+	<h3>Pugs für Linux</h3>
+	<ul>
+		<li>Für Gentoo-User: Pugs ist in portage, und kann wie jedes
+		andere Paket installiert werden.</li>
+		<li>Ubuntu- und Debian: Pugs-Builds sind in Debian Unstable,
+		Pakete für Debian Etch, die auch unter Ubuntu funktionieren,
+		gibt es <a
+		href="http://moritz.faui2k3.org/debian/pugs/">hier</a>.</li>
+		<li>Alle anderen müßen, falls es Pugs noch nicht für ihr
+		System gibt, Pugs selbst kompilieren und installieren. Dazu
+		muss man Subversion installiert haben, auf der Kommandozeile
+		<code>svn co http://svn.pugscode.org/pugs/</code> eingeben, in
+		das neu angelegte Verzeichnis gehen und dann den Anweisungen
+		in der Datei INSTALL folgen.</li>
+	</ul>
 
-	<p>Benutzer von Linux und Mac OS X haben es sogar noch einfacher: auf
-	ihren Systemen ist (fast immer) perl bereits installiert.</p>
-
-	<h3>Andere Systeme</h3>
-
-	<p>perl gibt es für fast jede Prozessorarchtiktur und jedes
-	Betriebssystem, genaueres findet man auf <a
-	href="http://www.cpan.org/ports/">Ports-Webseite von perl</a>.</p>
 
 	<h2>Texteditor</h2>
 	<p>Die Programme der meisten Programmiersprachen, inklusive Perl, sind
@@ -54,7 +57,10 @@
 	automatisch einrücken und bei Fehlern automatisch zu der
 	entsprechenden Zeile im Programm springen.</p>
 
-	<p>Auf der Internetseite perl-communitiy.de gibt es eine gute <a
-	href="http://links.perl-community.de/">Liste von geeigneten Editoren
-	und IDEs</a>, aus der man sich einen sympathischen aussuchen kann.</p>
+	<p>Leider gibt es für Perl 6  bisher noch kaum Werkzeuge, bisher nur
+	ein <a
+	href="http://svn.pugscode.org/pugs/util/perl6.vim">Syntax-Plugin</a>
+	für <a href="http://www.vim.org/">Vim</a>.</p>
 
+	<p>Wer sich nicht mit Vim anfreunden will oder kann, muss wohl oder
+	übel einen einfachen Texteditor nehmen.</p>

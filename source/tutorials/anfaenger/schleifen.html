@@ -125,3 +125,94 @@ while $zahl <= 100 {
 }
 say $zahl;
 [[[endsyntax]]] </pre>
+
+	<h2>Kleiner Exkurs: Schleifen vermeiden</h2>
+
+	<p>Erstaunlich häufig kann man Schleifen vermeiden, die etwas
+	berechnen, wenn man ein wenig Mathematik kann und in das Programm
+	hineinsteckt. Der Vorteil ist, dass die Programme dann schneller
+	laufen.</p>
+
+	<p>Für die mathematisch versierten Leser hier eine kurze Erklärung,
+	wie man in obigem Programm die Schleife, die <code>$zahl</code>
+	multipliziert, vermeiden kann. Wer es nicht versteht: macht nichts,
+	einfach <a href="#loop">weiter unten</a> wieder weiter lesen.</p>
+
+	<p>Die Idee ist folgende: man bildet den Quotienten aus
+	<code>100</code> und <code>$zahl</code>, nennen wir ihn
+	<code>$q</code>. Wenn man die nächst höhere Zweierpotenz kennt, kann
+	man <code>$zahl</code> damit multiplizieren, und hat damit das Problem
+	gelöst.</p>
+
+	<p>Wenn man z.B. 20 als Anfangszahl hat, ist der Quotient <code>$q =
+	5</code>. Die nächst höhere Zweierpotenz ist 8, also ist <code>20 * 8
+	== 160</code> unser Ergebnis.</p>
+
+	<p>Doch wie findet man die nächst höhere Zweierpotenz? Das geht, indem
+	man den Logarithmus zur Basis zwei bildet, aufrunded und Zwei damit
+	potenziert:</p>
+
+<pre>[[[syntax perl6]]]
+my $zahl = 12;
+my $limit = 100;
+my $q = $limit / $zahl;
+
+# Den Zweierlogarithmus von $x kann man als log($x)/log(2) berechnen:
+my $potenz =  log($q) / log(2);
+
+#aufrunden:
+$potenz = ceil $potenz;
+my $ergebnis = $zahl * 2**$potenz;
+[[[endsyntax]]]</pre>
+
+	<p>Wenn man das ganze etwas kompakter schreiben will, geht das so:</p>
+<pre>[[[syntax perl6]]]
+my $zahl = 12;
+my $limit = 100;
+my $result = $zahl * 2**(ceil(log($limit/$zahl)/log(2));
+[[[endsyntax]]]</pre>
+
+	<p>Dadurch wird der Quellcode aber auch wesentlich schwerer lesbar.
+	Wenn man so eine Zeile in seinen Programmen verwendet, sollte man
+	ausfürlich kommentieren, was der Code macht.</p>
+
+	<h2 id="loop">Andere Schleifen</h2>
+
+	<p>Mit der vorgestellten <code>while</code>-Schleife kann man zwar
+	schon alles machen, was man will, aber es gibt in Perl 6 noch weitere
+	Schleifen, die einem das Leben erleichtern können:</p>
+
+<pre>[[[syntax perl6]]]
+loop (my $i = 1; $i <= 10; $i++){
+	say "Das Quadrat von ", $i, " ist ", $i * $i;
+}
+[[[endsyntax]]]</pre>
+	<p><code>loop</code> enthält drei Anweisungen, mit Strichpunkten von
+	einander getrennt. Das erste ist eine Anweisung, die nur vor dem
+	ersten Durchlauf der Schleife durchgeführt wird. Das zweite ist eine
+	Bedingung, wie bei der <code>while</code>-Schleife, die die Schleife
+	abbricht, sobald die Bedingung nicht mehr wahr ist. Das dritte ist
+	eine Anweisung, die nach jedem Durchlauf der Schleife ausgeführt
+	wird.</p>
+
+	<p><code>$i++</code> erhöht den Wert der Variable <code>$i</code> bei
+	jeder Ausführung um eins, es ist also das gleich wie <code>$i = $i +
+	1</code>.</p>
+
+	<p>Allgemein kann man eine <code>loop</code>-Schleife also wie folgt
+	in eine <code>while</code>-Schleife zerlegen:</p>
+
+<pre>[[[syntax perl6]]]
+loop (s1; s2; s3){
+	block;
+}
+
+# entspricht
+
+s1;
+while s2 {
+	block;
+	s3;
+}
+[[[endsyntax]]]</pre>
+

@@ -19,12 +19,15 @@ text-decoration:none;
 	text-decoration: underline;
 }
 
-pre {
+pre, code {
 	font-size: 110%;
 	background-color: #e5e5fe;
 	border-color: gray;
 	border-style: dotted;
 	border-width: 1px;
+}
+pre {
+	padding: 1.2ex;
 }
 
 a:hover {
