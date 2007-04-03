@@ -103,13 +103,13 @@ text-transform:uppercase;
 }
 
 #mainmenu a:hover {
-background:#f0f0f0 url(img/menuhover.jpg) top left repeat-x;
+background:#f0f0f0 url(/img/menuhover.jpg) top left repeat-x;
 color:#505050;
 text-decoration:none;
 }
 
 #mainmenu a.current {
-background:#f0f0f0 url(img/menuhover.jpg) top left repeat-x;
+background:#f0f0f0 url(/img/menuhover.jpg) top left repeat-x;
 color:#505050;
 text-decoration:none;
 }

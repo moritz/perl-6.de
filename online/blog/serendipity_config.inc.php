@@ -2,7 +2,6 @@
 # Copyright (c) 2003-2005, Jannis Hermanns (on behalf the Serendipity Developer Team)
 # All rights reserved.  See LICENSE file for licensing details
 
-$serendipity['smarty']->security = false;
 if (defined('S9Y_FRAMEWORK')) {
     return;
 }
@@ -81,7 +80,7 @@ if (!isset($serendipity['mediaProperties'])) {
 }
 
 if (!isset($serendipity['use_PEAR'])) {
-    $serendipity['use_PEAR'] = true;
+    $serendipity['use_PEAR'] = false;
 }
 
 if (!isset($serendipity['useHTTP-Auth'])) {
