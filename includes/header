@@ -8,6 +8,7 @@
 		http://moritz.faui2k3.org/en/mowyw" />
 	<title>[[[readvar title]]]</title>
 	<link rel="stylesheet" href="/andreas09.css" type="text/css" media="screen" />
+	<link rel="icon" href="/favicon.ico" type="favicon.ico" />
 </head>
 <body>
 	<div id="container">
