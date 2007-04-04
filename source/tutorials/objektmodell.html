@@ -1,0 +1,113 @@
+[[[menu main tut objekt]]]
+[[[setvar title Perl 6 Objekte und Klassen]]]
+
+<div id="content">
+	<h1>Das Objektmodell von Perl 6</h1>
+
+	<p>Um von dieser Seite profitieren zu können sollten Sie  mit dem
+	Grundlagen von Perl 6 vertraut sein, und auch ein wenig von
+	Objektorientierung verstehen - Wenn Sie wissen, was eine Klasse, ein
+	Objekt und Vererbung ist, reicht das vermutlich schon.</p>
+
+	<p>Das Objektmodell von Perl 6 hat nur noch wenige Ähnlichkeiten mit
+	dem von Perl 5, und muß jetzt den vergleich mit "klassischen"
+	Objektorientierten Programmiersprachen nicht mehr scheuen.</p>
+
+	<h2>Klassen definieren</h2>
+
+	<p>Klassen werden mit dem <code>class</code>-Schlüsselwort defniert,
+	das man auf zwei verschiedene Arten verwenden kann. Entweder als erste
+	Anweisung in einer Datei in der Form <code>class Foo;</code>, dann
+	ist der Rest der Datei die Defintion der Klasse. Die zweite
+	Möglichkeit sieht so aus:</p>
+<pre>[[[syntax perl6]]]
+class Foo {
+	# hier kommt die Definition der Klasse
+}
+# hier ist die Definition der Klasse zu Ende
+[[[endsyntax]]]</pre>
+
+	<p>Objektvariablen werden mit <code>has</code> anstatt <code>my</code>
+	deklariert, Funktionen mit <code>method</code> anstatt
+	<code>sub</code>:</p>
+
+<pre>[[[syntax perl6]]]
+class Rechteck {
+	has $breite;
+	has $hoehe;
+
+	method flaeche {
+		return $breite * $hoehe;
+	}
+}[[[endsyntax]]]</pre>
+
+	<p>Wenn Objektvariablen von außen lesbar sein sollen, kann man sie mit
+	der Schreibweise <code>has $.foo</code> lesbar machen, wenn man sie
+	von außen auch setzen können soll hilft ein <code>is rw</code>:</pre>
+
+<pre>[[[syntax perl6]]]
+class Rechteck {
+	has $.breite is rw;
+	has $.hoehe is rw;
+
+	method flaeche {
+		return $.breite * $.hoehe;
+	}
+}
+my Rechteck $r = Rechteck.new();
+$r.breite = 2;
+$r.hoehe = 5;
+say $r.flaeche();
+[[[endsyntax]]]</pre>
+	<p>Das ist natürlich noch nicht besonders schön. Angenommen, man
+	möchte <code>$.breite</code> und <code>$.hoehe</code> beim erstellen
+	eines Objekts initialisieren, und danach nicht mehr ändern können.
+	Dann verwendet man den Konstruktur <code>BUILD</code>:</p>
+
+<pre>[[[syntax perl6]]]
+class Rechteck {
+	has $.breite;
+	has $.hoehe;
+
+	submethod BUILD ($.breite, $.hoehe) {}
+
+	method flaeche {
+		return $.breite * $.hoehe;
+	}
+}
+my Rechteck $r = Rechteck.new(breite => 2, hoehe => 5);
+say $r.flaeche();
+[[[endsyntax]]]</pre>
+
+	<p><code>BUILD</code> bringt einen automatischen Konstruktor mit, der
+	die beiden Variablen <code>$.breite</code> und <code>$.hoehe</code> im
+	erstellen Objekt initialisiert. Die Verwendung von
+	<code>submethod</code> anstelle von <code>method</code> verhindert,
+	dass der Konstruktor automatisch vererbt wird.</p>
+
+	<p>Man kann Variablen auch als explizit privat deklarieren indem man
+	ihenen ein Ausrufezeichen als Twigl mitgibt, also <code>has
+	$!foo;</code>. Methoden kann man privat machen, indem man sie als
+	<code>my method private_methode { ... }</code> deklariert.</p>
+
+
+	<h2>Vererbung</h2>
+
+	<p>Vererbung wird durch das <code>is</code>-Schlüsselwort
+	deklariert:</p>
+
+<pre>[[[syntax perl6]]]
+class Form {
+	...
+}
+
+class Rechteck is Form {
+	...
+}
+[[[endsyntax]]]</pre>
+
+	<p>Auch Mehrfachvererbung ist möglich:</p>
+
+<pre>[[[syntax perl6]]]
+# TODO: gutes Beispiel
+[[[endsyntax]]]</pre>
