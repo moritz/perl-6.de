@@ -149,6 +149,108 @@ loop (my $i = 0; $i < 10; $i++){
 	runden Klammern mehr um die Bedingung braucht), <code>eval { ...
 		}</code> ist jetzt <code>try { ... }</code>.</p>
 
+	<h2>Funktionen</h2>
+
+	<p>Funktionen werden immer noch mit <code>sub</code>-Keyword
+	deklariert, und können jetzt Parameterdeklarationen enthalten wie in
+	den meisten anderen Programmiersprachen.</p>
+
+<pre>[[[syntax perl6]]]
+sub fakultaet(Int $n){
+	return  reduce {$^a * $^b}, 1 .. $n;
+	# reduce reduziert listen mit der angegbenen Funktion
+}
+
+# immer noch möglich:
+sub fakultaet2 {
+	return  reduce {$^a * $^b}, 1 .. $_[0];
+}
+
+# Argumente können jetzt schreibbar gemacht werden:
+
+sub swap($a is rw, $b is rw){
+	$a, $b = $b, $a;
+}
+[[[endsyntax]]]</pre>
+
+	<h2>Typen und <code>ref</code></h2>
+
+	<p>Perl 6 erlaubt es, Typen für Variablen zu deklarieren, es ist aber
+	weiterhin optional. Das funktioniert auch mit selbstdeklarierten
+	Typen, also <a href="/tutorials/objektmodell">Klassen</a>.</p>
+
+<pre>[[[syntax perl6]]]
+my Int $ganzzahl;
+my Num $zahl;
+my Complex $complexe_zahl;
+my Str $string;
+my Array of Str @a;
+
+class Foo {
+	# defintionen hier
+}
+
+my Foo $foo;
+[[[endsyntax]]]</pre>
+
+	<p>Die Funktion <code>ref</code> gibt es nicht mehr, dafür gibt es als
+	Ersatz zwei Möglichkeiten:</p>
+<pre>[[[syntax perl6]]]
+my $str = "foo";
+say $str.WHAT;		# Ausgabe "Str"
+
+# Überprüfung, ob etwas einen bestimmten Typ hat:
+say "Das ist ein String" if $str ~~ Str
+[[[endsyntax]]]</pre>
+
+	<p>Die zweite Version verwendet den sogenannten <em>Smart Match
+	Operator</em> <code>~~</code>, das auf für Regular Expressions
+	verwendet wird. Diese Form sollte man verwenden, wenn man überprüft,
+	ob etwas einen bestimmten Typ hat, da das auch Vererbung
+	berücksichtigt, d.h. sowohl <code>4 ~~ Int</code> als auch <code>4 ~~
+	Num</a> liefern True zurück.</p>
+
+	<h2>Regexes</h2>
+
+	<p>Perl 5 Regexes können in Perl 6 immer noch verwendet werden, aber
+	es gibt auch viele Erweiterungen in den neuen <em>Rules</em>. Darüber
+	gibt es eine eigene Seite: <a href="regex">Regexes und Rules</a>.</p>
+
+	<h2>Strings</h2>
+
+	<p>Strings in Perl 6 sind Unicode-Strings, die auf verschiedenen
+	Ebenen gleichzeitig existieren können (bytes, code points,
+	graphemes und charlingua).</p>
+
+	<p>Deswegen gibt es kein <code>length</code> mehr, weil nicht 
+	defniert ist, was damit gemeint ist. Stattdessen kann mit
+	<code>bytes</code> die Anzahl der Bytes abfragen, mit
+	<code>chars</code> die Anzal der Zeichen , mit
+	<code>codes</code> die Anzahl der Codepoints, mit
+	<code>glyphs</code> die Anzahl der Glyphen
+	und mit
+	<code>graphs</code> die Anzahl der Grapheme.</p>
+
+	<p>So haben z.B. die deutschen Umlaute in UTF-8 zwei Bytes, aber je
+	nur ein char, glyph, code und graph.</p>
+
+	<p>Dagegen können z.B. Ligaturen, also aus zwei Buchstaben zusammen
+	gesetzte Zeichen, nur ein Glyph aber mehrere Zeichen haben.</p>
+
+	<p><code>split</code> akzeptiert nur noch Strings an denen gespaltet
+	wird, keine Regexes mehr. Dafür gibt es <code>comb</code>, das alle
+	Teile eines Strings zurückliefern, die auf eine regex passen - quasi
+	ein invertiertes <code>split</code>.</p>
+
+	<p>Mit <code>index</code> und <code>rindex</code> kann man das erste
+	und letzte Vorkommen eines substrings finden:</p>
+
+<pre>[[[syntax perl6]]]
+"foo".index("o");	# ist 1
+"foo".rindex("o");	# ist 2
+[[[endsyntax]]]</pre>
+
+
 	<h2>I/O</h2>
 
 	<p>Aus der <code>&lt;$fh&gt;</code>-Notation zum Lesen aus Filehandles
@@ -191,40 +293,6 @@ $file.close;
 	<p>Man beachte, dass aus <code>print $fh $text</code> jetzt
 	<code>print $fh: $text</code> (mit einem zusätlichen Doppelpunkt)
 	geworden ist.</p>
-
-	<h2>Strings</h2>
-
-	<p>Strings in Perl 6 sind Unicode-Strings, die auf verschiedenen
-	Ebenen gleichzeitig existieren können (bytes, code points,
-	graphemes und charlingua).</p>
-
-	<p>Deswegen gibt es kein <code>length</code> mehr, weil nicht 
-	defniert ist, was damit gemeint ist. Stattdessen kann mit
-	<code>bytes</code> die Anzahl der Bytes abfragen, mit
-	<code>chars</code> die Anzal der Zeichen , mit
-	<code>codes</code> die Anzahl der Codepoints, mit
-	<code>glyphs</code> die Anzahl der Glyphen
-	und mit
-	<code>graphs</code> die Anzahl der Grapheme.</p>
-
-	<p>So haben z.B. die deutschen Umlaute in UTF-8 zwei Bytes, aber je
-	nur ein char, glyph, code und graph.</p>
-
-	<p>Dagegen können z.B. Ligaturen, also aus zwei Buchstaben zusammen
-	gesetzte Zeichen, nur ein Glyph aber mehrere Zeichen haben.</p>
-
-	<p><code>split</code> akzeptiert nur noch Strings an denen gespaltet
-	wird, keine Regexes mehr. Dafür gibt es <code>comb</code>, das alle
-	Teile eines Strings zurückliefern, die auf eine regex passen - quasi
-	ein invertiertes <code>split</code>.</p>
-
-	<p>Mit <code>index</code> und <code>rindex</code> kann man das erste
-	und letzte Vorkommen eines substrings finden:</p>
-
-<pre>[[[syntax perl6]]]
-"foo".index("o");	# ist 1
-"foo".rindex("o");	# ist 2
-[[[endsyntax]]]</pre>
 
 	<h2>system und exec</h2>
 
