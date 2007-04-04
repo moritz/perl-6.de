@@ -1,5 +1,5 @@
 [[[menu main tut p5 index]]]
-[[[setvar title Perl 6-Tutorial für Perl 5-Programmierer]]]
+[[[setvar title Tutorial für Perl 5-Programmierer]]]
 <div id="content">
 	<h1>Perl 6 für Perl 5-Programmierer</h1>
 
@@ -149,3 +149,102 @@ loop (my $i = 0; $i < 10; $i++){
 	runden Klammern mehr um die Bedingung braucht), <code>eval { ...
 		}</code> ist jetzt <code>try { ... }</code>.</p>
 
+	<h2>I/O</h2>
+
+	<p>Aus der <code>&lt;$fh&gt;</code>-Notation zum Lesen aus Filehandles
+	ist <code>=&lt;$fh&gt;</code> geworden, und das Zeilenende wird jetzt
+	per default automatisch entfernt ("autochomp").</p>
+
+<pre>[[[syntax perl6]]]
+my $fn = "foo.txt";
+my $file = $fn.open err die "Can't read '$fn': $!";
+
+for =<$file> -> my $line {
+	# hier die Zeile verarbeiten
+}
+$file.close;
+[[[endsyntax]]]</pre>
+
+	<p>Die empfohlene Art, eine Datei zeileweise zu lesen ist jetzt eine
+	<code>for</code>-Schleife. Und das bedeutet nicht wie in Perl 5, dass
+	erst die gesamte Datei gelesen wird und dann darüber iteriert wird,
+	sondern die Werte werden dann aus der Datei gelesen, wenn sie
+	gebraucht werden.</p>
+
+	<p>Das ist möglich, weil in Perl 6 Listen per default <em>lazy</em>
+	sind, was es auch möglich macht, unendliche Listen zu verwenden:
+	<code>(1 .. *)[1]</code>.</p>
+
+	<p>Und so geht das Schreiben in Dateien:</p>
+
+<pre>[[[syntax perl6]]]
+my $fn = "foo.txt";
+my $file = open($fn, :w) err die "Can't open '$fn' for writing: $!";
+
+$file.say: "Erste Zeile der Datei";
+# oder:
+say $file: "Zweite Zeile";
+print $file: 'Diese Zeile hat kein \n am Ende';
+$file.close;
+[[[endsyntax]]]</pre>
+
+	<p>Man beachte, dass aus <code>print $fh $text</code> jetzt
+	<code>print $fh: $text</code> (mit einem zusätlichen Doppelpunkt)
+	geworden ist.</p>
+
+	<h2>Strings</h2>
+
+	<p>Strings in Perl 6 sind Unicode-Strings, die auf verschiedenen
+	Ebenen gleichzeitig existieren können (bytes, code points,
+	graphemes und charlingua).</p>
+
+	<p>Deswegen gibt es kein <code>length</code> mehr, weil nicht 
+	defniert ist, was damit gemeint ist. Stattdessen kann mit
+	<code>bytes</code> die Anzahl der Bytes abfragen, mit
+	<code>chars</code> die Anzal der Zeichen , mit
+	<code>codes</code> die Anzahl der Codepoints, mit
+	<code>glyphs</code> die Anzahl der Glyphen
+	und mit
+	<code>graphs</code> die Anzahl der Grapheme.</p>
+
+	<p>So haben z.B. die deutschen Umlaute in UTF-8 zwei Bytes, aber je
+	nur ein char, glyph, code und graph.</p>
+
+	<p>Dagegen können z.B. Ligaturen, also aus zwei Buchstaben zusammen
+	gesetzte Zeichen, nur ein Glyph aber mehrere Zeichen haben.</p>
+
+	<p><code>split</code> akzeptiert nur noch Strings an denen gespaltet
+	wird, keine Regexes mehr. Dafür gibt es <code>comb</code>, das alle
+	Teile eines Strings zurückliefern, die auf eine regex passen - quasi
+	ein invertiertes <code>split</code>.</p>
+
+	<p>Mit <code>index</code> und <code>rindex</code> kann man das erste
+	und letzte Vorkommen eines substrings finden:</p>
+
+<pre>[[[syntax perl6]]]
+"foo".index("o");	# ist 1
+"foo".rindex("o");	# ist 2
+[[[endsyntax]]]</pre>
+
+	<h2>system und exec</h2>
+
+	<p><code>system</code>, also das Ausführen von anderen Programmen,
+	heißt jetzt <code>run</code>:</p>
+<pre>[[[syntax perl6]]]
+my $status = run("mutt -f /path/to/mbox");
+# oder
+$status = run("mutt", "-f", "/path/to/mbox");
+if $status {
+	say "Mutt lief erfolgreich";
+} else {
+	say "Fehler beim ausführen von mutt, Rückgabewert: $status";
+}
+[[[endsyntax]]]</pre>
+
+	<p>Der Rückgabewert, hier <code>$status</code>, ist im Boolean
+	context <code>True</code>, wenn das Programm <code>0</code>
+	zurückgeliefert hat, und nicht <code>False</code> wie normale 
+	Integer.</a>
+
+
+	<p><code>exec</code> heißt jetzt <code>runinstead</code>.</p>
