@@ -294,6 +294,26 @@ $file.close;
 	<code>print $fh: $text</code> (mit einem zusätlichen Doppelpunkt)
 	geworden ist.</p>
 
+	<h2>File Tests</h2>
+
+	<p>File test, wie z.B. <code>-e $filename</code> werden jetzt mit dem
+	Smart Match-Operator durchgeführt, und können sowohl auf Strings (als
+	Dateinamen) als auch auf Filehandles angewandt werden:</p>
+
+<pre>[[[syntax perl6]]]
+my $fn = "/etc/passwd";
+
+if $fn ~~ :e {
+	say "$fn existiert";
+} else {
+	say "Wohl kein Unix...";
+}
+[[[endsyntax]]]</pre>
+	<p>Der <code>:s</code>-Filetest liefert True zurück, wenn die Datei
+	nicht leer ist, und im numerischen Kontext gibt er die Länge der Datei
+	in Byte zurück.</p>
+
+
 	<h2>system und exec</h2>
 
 	<p><code>system</code>, also das Ausführen von anderen Programmen,

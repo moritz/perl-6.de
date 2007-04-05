@@ -109,5 +109,17 @@ class Rechteck is Form {
 	<p>Auch Mehrfachvererbung ist möglich:</p>
 
 <pre>[[[syntax perl6]]]
-# TODO: gutes Beispiel
+class Kraftfahrzeug {
+	...
+}
+
+class Wasserfahrzeug {
+	...
+}
+
+class Amphibienfahrzeug is Kraftfahrzeug is Wasserfahrzeug {
+	...
+}
 [[[endsyntax]]]</pre>
+	<p>(Beispiel aus der <a
+			href="http://de.wikipedia.org/wiki/Vererbung_(Programmierung)#Beispiel">Wikipedia</a>)</p>
