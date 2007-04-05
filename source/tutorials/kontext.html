@@ -21,7 +21,7 @@ my @list = =<$file>;	# liest den Rest der Datei
 
 	<p>Das bedeutet, dass sich viele Objekte "magisch" verhalten.</p>
 
-	<h2>Verschiedene Kontexte</h2>
+	<h2 id="kontexte">Verschiedene Kontexte</h2>
 
 	<p>Der Listenkontext erwartet mehrere Elemente, der Skalarkontext
 	genau eines.</p>
@@ -49,7 +49,7 @@ say ~@a; 				# Ausgabe: Hallo Welt!
 	darum kümmern den richtigen Kontext zu wählen, Perl macht das
 	automatisch.</p>
 
-	<h2>Kontexte erzwingen</h2>
+	<h2 id="kontexte_erzwingen">Kontexte erzwingen</h2>
 
 	<p>Das Beispiel oben hat schon gezeigt, dass man sich z.B. durch eine
 	Addition <code>0 + @a</code> einen numerischen Kontext erzwingen kann.
@@ -75,7 +75,7 @@ my @a = "Hallo", "Welt!";
 	auf, und <code>~</code> verknüpft zwei Strings - hier einen leeren
 	String mit Ergebnis der Stringifizierung.</p>
 
-	<h2>Noch ein Beispiel</h2>
+	<h2 id="beispiel">Noch ein Beispiel</h2>
 
 	<p>Ein sehr vielseitiges Objekt ist das Match-Objekt, das herauskommt,
 	wenn man eine regex auf einen String loslässt:</p>
@@ -99,5 +99,37 @@ say $match[0];		# "Perl"
 # d.h. benannte sub-regexes in spitzen klammern:
 say $match<digit>;	# 6
 [[[endsyntax]]]</pre>
+	<h2 id="selbst">Selbst kontextsensitiv werden</h2>
 
-<!-- TODO: wants -->
+	<p>Perl bietet einem auch die Möglichkeit, selbst Funktionen zu
+	schreiben, die Kontextsensitiv sind. Dazu gibt es die Funktion
+	<code>want</code>:</p>
+
+<pre>[[[syntax perl6]]]
+sub my_magic {
+	if want.list {
+		# Alternative Abfrage wäre 'want ~~ List'
+		return 1, 2, 3;
+	} else {
+		return 42;
+	}
+}
+
+sub fibonacci {
+	# liefere so viele Fibonacci-Zahlen, wie der Aufrufer erwartet
+	# Das ist allerdings eine Endlosschleife, wenn die Funktion im
+	# Listen-Kontex aufgerufen wird
+
+	my $anzahl = want.count;
+	my @fib = 1, 1;
+	if $anzahl <= 2 {
+		return @fib[0 .. $anzahl - 1];
+	} 
+	while @fib.elems < $anzahl {
+		push @fib, @fib[-1] + @fib[-2];
+	}
+	return @fib;
+}
+
+my $erster, $zweiter, $dritter = fibonacci();
+[[[endsyntax]]]</pre>

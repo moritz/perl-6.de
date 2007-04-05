@@ -250,6 +250,21 @@ say "Das ist ein String" if $str ~~ Str
 "foo".rindex("o");	# ist 2
 [[[endsyntax]]]</pre>
 
+	<p>Strings werden jetzt mit <code>~</code> zusammengefügt (früher:
+	<code>.</code>), die Tilde soll zwei Arme symbolisieren, die nach den
+	beiden Enden der Strings greifen sollen:</p>
+
+<pre>[[[syntax perl6]]]
+my $name = "Perl";
+my $version = 6;
+my $lang = $name ~ " " ~ $version;
+[[[endsyntax]]]</pre>
+	<p>Gleichzeitig erzwingt die Tilde Stringkontext:</p>
+
+<pre>[[[syntax perl6]]]
+my @a = "foo", "bar;
+my $str = ~@a;		# "foo bar"
+[[[endsyntax]]]</pre>
 
 	<h2>I/O</h2>
 
@@ -264,6 +279,10 @@ my $file = $fn.open err die "Can't read '$fn': $!";
 for =<$file> -> my $line {
 	# hier die Zeile verarbeiten
 }
+
+# oder:
+my $ganze_datei = $file.slurp;
+
 $file.close;
 [[[endsyntax]]]</pre>
 
@@ -336,3 +355,16 @@ if $status {
 
 
 	<p><code>exec</code> heißt jetzt <code>runinstead</code>.</p>
+
+	<h2><code>wantarray</code> wird <code>want</code></h2>
+
+	<p>Die Funktion <code>wantarray</code> ist dem allgemeineren
+	<code>want</code>-Builtin gewichen.</p>
+
+	<p>Die alte Funktionalität bekommt man mit <code>want.list</code> oder
+	alternativ <code>want ~~ List</code>.</p>
+
+	<p>Allgemein kann man mit <code>want ~~ $typ</code> abfragen, ob der
+	Aufrufer den Typ <code>$typ</code> erwartet, und mit
+	<code>want.count</code>. Mehr dazu im Abschnitt <a
+	href="/tutorials/kontext">Kontexte</a>.</p>
