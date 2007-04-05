@@ -5,3 +5,4 @@ AddType application/x-httpd-php .php
 
 DirectoryIndex index
 AddOutputFilter INCLUDES .html
+

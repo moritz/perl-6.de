@@ -1,3 +1,6 @@
+Misc:
+	404 Error page
+	Andere error pages
 Projekte:
 	onion
 	pugs+parrot: smoke testing
@@ -5,7 +8,7 @@ Tutorials:
 	Anfänger:
 		ganz viel
 	Umsteiger:
-		???
+		$_-Variable
 	allgemein:
 		objektmodell:
 			Konstruktoren
