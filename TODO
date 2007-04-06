@@ -7,8 +7,6 @@ Projekte:
 Tutorials:
 	Anfänger:
 		ganz viel
-	Umsteiger:
-		$_-Variable
 	allgemein:
 		objektmodell:
 			Konstruktoren
@@ -22,4 +20,5 @@ Tutorials:
 tutorials:
 	kontext
 	p5
+	Umsteiger:
 		

@@ -110,7 +110,7 @@ $?LINE			# früher __LINE__
 $?FILE			# früher __FILE__
 $?PACKAGE		# früher __PACKAGE__
 
-# Formale Parameter haben ein ^ als twigl:
+# Implizite Variablen haben ein ^ als twigl:
 # in absteigender Reihenfolge sortieren:
 sort {$^b <=> $^a}, @list # bisher sort {$b <=> $a} @list
 [[[endsyntax]]]</pre>
@@ -148,6 +148,42 @@ loop (my $i = 0; $i < 10; $i++){
 	<p><code>while</code> bleibt unverändert (außer dass es auch keine
 	runden Klammern mehr um die Bedingung braucht), <code>eval { ...
 		}</code> ist jetzt <code>try { ... }</code>.</p>
+
+	<h2>Die Standardvarible <code>$_</code></h2>
+
+	<p><code>for</code>-Schleifen ohne eine explizite Variable benutzen
+	auch weiterhin <code>$_</code> als Standard, allerdings kann man sie
+	nicht mehr mit <code>print;</code> ausgeben, sondern man braucht ein
+	<code>.print</code>. Das gleiche gilt für Funktionen wie
+	<code>uc</code> und <code>lc</code>:</p>
+<pre>[[[syntax perl6]]]
+for =<> {
+	.uc.say;
+}
+# früher:
+# while (<STDIN>){
+#	print uc;
+#}
+[[[endsyntax]]]</pre>
+	<p>Allerdings gibt es auch noch eine andere Möglichkeit: mit dem
+	Twigil <code>^</code> kann man Variablen mit beliebigen Namen
+	verwenden, und man kann sogar mehrere davon in einem einer Schleife
+	verwenden und damit mehrere Variablen auslesen:</p>
+
+<pre>[[[syntax perl6]]]
+for 1 .. 4 {
+	say $^bla, ": ", $^blubb;
+# Ausgabe: 
+# 1: 2
+# 3: 4
+[[[endsyntax]]]</pre>
+	<p>Dabei wird den Variablen, die mit <code>$^</code> anfangen, in
+	alphabetischer Reihenfolge die Werte zugewiesen:</p>
+<pre>[[[syntax perl6]]]
+for 1 .. 4 {
+	say $^foo, ": ", $^bar;
+[[[endsyntax]]]</pre>
+
 
 	<h2>Funktionen</h2>
 
@@ -199,7 +235,7 @@ my Foo $foo;
 my $str = "foo";
 say $str.WHAT;		# Ausgabe "Str"
 
-# Überprüfung, ob etwas einen bestimmten Typ hat:
+# Ueberprüfung, ob etwas einen bestimmten Typ hat:
 say "Das ist ein String" if $str ~~ Str
 [[[endsyntax]]]</pre>
 

@@ -20,6 +20,7 @@ text-decoration:none;
 }
 
 pre, code {
+	font-family: monospace;
 	font-size: 110%;
 	background-color: #e5e5fe;
 	border-color: gray;
