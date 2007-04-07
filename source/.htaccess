@@ -1,5 +1,5 @@
 Options +ExecCGI +Includes +MultiViews
-AddType 'text/html; charset=UTF-8' html
+AddType 'text/html; charset=UTF-8' application/xhtml+xml
 AddType 'text/javascript; charset=UTF-8' js
 AddType application/x-httpd-php .php
 
