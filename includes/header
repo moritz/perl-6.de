@@ -2,7 +2,8 @@
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<!--	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+-->
 	<meta name="author" content="Moritz Lenz" />
 	<meta name="creator" content="vim+mowyw,
 		http://moritz.faui2k3.org/en/mowyw" />
