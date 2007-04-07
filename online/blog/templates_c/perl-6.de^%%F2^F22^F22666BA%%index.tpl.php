@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.14, created on 2007-03-30 19:27:22
+<?php /* Smarty version 2.6.14, created on 2007-04-07 19:26:14
          compiled from /var/www//blog/templates/perl-6.de/index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', '/var/www//blog/templates/perl-6.de/index.tpl', 12, false),array('function', 'serendipity_hookPlugin', '/var/www//blog/templates/perl-6.de/index.tpl', 22, false),array('function', 'my_inc_header', '/var/www//blog/templates/perl-6.de/index.tpl', 37, false),array('function', 'serendipity_printSidebar', '/var/www//blog/templates/perl-6.de/index.tpl', 38, false),)), $this); ?>
@@ -68,7 +68,8 @@ comment.php?type=pingback&amp;entry_id=<?php echo $this->_tpl_vars['entry_id']; 
 </div> <!--container-->
 
 <div id="footer">&copy; 2007 <a href="http://moritz.faui2k3.org/de/">Moritz
-Lenz</a> | <a href="/impressum">Impressum</a> | Design by <a href="http://andreasviklund.com">Andreas Viklund</a></div
+Lenz</a> | <a href="/impressum">Impressum</a> | Design by <a
+href="http://andreasviklund.com">Andreas Viklund</a></div>
 
 <?php if ($this->_tpl_vars['is_embedded'] != true): ?>
 </body>
