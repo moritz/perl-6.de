@@ -48,7 +48,8 @@
 </div> <!--container-->
 
 <div id="footer">&copy; 2007 <a href="http://moritz.faui2k3.org/de/">Moritz
-Lenz</a> | <a href="/impressum">Impressum</a> | Design by <a href="http://andreasviklund.com">Andreas Viklund</a></div
+Lenz</a> | <a href="/impressum">Impressum</a> | Design by <a
+href="http://andreasviklund.com">Andreas Viklund</a></div>
 
 {if $is_embedded != true}
 </body>
