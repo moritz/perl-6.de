@@ -1,16 +1,51 @@
 [[[setvar title kp6 - Perl 6-Compiler in Perl 6]]]
 [[[menu main home kp6]]]
 <div id="content">
-<h1>kp6 - Perl 6-Compiler in Perl 6</h1>
+	<h1>kp6 - Perl 6-Compiler in Perl 6</h1>
 
-<p>kp6 ist ein Zusammenstellung von vier verschiedenen, unterschiedlich weit
-entwickelten und aufeinander aufbauenden Perl 6-Compilern, einer in Perl 5 und
-der Rest in Perl 6 geschrieben.</p>
+	<p>kp6 und mp6 sind zwei zusammenarbeitende Compiler, die Teile von
+	Perl 6 in Perl 6 selbst implementieren.</p>
 
-<p>Diese Compiler können bisher als Ausgabe Perl 5 produzieren, eine
-Untermenge von Perl 6 oder auch Parrot-Code, allerdings funktionieren noch
-nicht alle Plattformen vollständig, insbesondere das Parrot-Backend benötigt
-noch viel Arbeit.</p>
+	<h2>mp6</h2>
 
-<p>kp6 stammt größtenteils von Flavio Glock und lebt im <a
-href="http://svn.pugscode.org/pugs/v6/v6-KindaPerl6/">Pugs-Repository</a>.</p>
+	<p>mp6 ist ein Compiler, der in miniperl6 geschrieben ist, miniperl6
+	als Eingabe versteht und als Ausgabe perl5-Code liefert.</p>
+
+	<p>miniperl6 ist eine Untermenge von Perl 6.</p>
+
+	<p>Außerdem gibt es noch eine Übersetzung des mp6-Source Codes in Perl
+	5, d.h. man kann mit mp6 miniperl6-Code ausführen, wenn man Perl 5 zur
+	Verfügung hat.</p>
+
+	<p>mp6 unterstützt experimentell auch andere "Emitter", d.h. es kann
+	auch parrot-Code oder Perl 6-Code ausgeben, wobei diese Emitter noch
+	experimentell sind.</p>
+
+	<h2>kp6</h2>
+
+	<p>kp6 oder "Kinda-Perl 6" (auf deutsch: "sowas wie Perl 6") ist in
+	miniperl6 geschrieben, kann also von mp6 übersetzt werden.</p>
+
+	<p>kp6 versteht ebenfalls eine Untermenge von Perl 6, die allerdings
+	größer ist als miniperl6 (und eine Übermenge von miniperl6 ist).</p>
+
+	<p>kp6 ist eine Art "Compiler-Framework", das aus Perl 6-Sourcecode
+	einen <a
+	href="http://de.wikipedia.org/wiki/Abstract_Syntax_Tree">Abstract
+	Syntax Tree</a> baut, und verschiedene Transformatoren und Emitter
+	unterstützt, die größtenteils noch in Arbeit sind.</p>
+
+	<p>kp6 unterstützt außerdem sogenannte "Domain Specific Languages",
+	kurz DSL. Das sind Elemente von Perl 6, die ihre eigene Syntax haben,
+	wie z.B. Regexes und String-Interpolation.</p>
+
+	<a href="/img/kp6.jpg"><img src="/img/tn-kp6.jpg" width="400" height="238" alt="Aufbau von
+	kp6" title="Struktur von kp6. Klicken Sie auf das Bild für Details.
+	Mit freundlicher Genehmigung von Flavious Glock"
+	style="float:none"/></a>
+
+
+	<p>kp6 und mp6 stammen größtenteils von Flavio Glock und lebt im <a
+	href="http://svn.pugscode.org/pugs/v6/">Pugs-Repository</a>.</p>
+
+
