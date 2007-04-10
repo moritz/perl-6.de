@@ -1,0 +1,22 @@
+	<ul>
+		[[[item einfuehrung <li><a href="einfuehrung" class="nav
+		sub{{ active}}">Einführung</a></li> ]]]
+		[[[item werkzeug <li><a href="werkzeug" class="nav
+		sub{{ active}}">Werkzeuge</a></li>]]]
+		[[[item programm <li><a href="erstes-programm" class="nav
+		sub{{ active}}">Erstes Programm</a></li>]]]
+		[[[item ausdruecke <li><a href="einfache-ausdruecke"
+		class="nav sub{{ active}}">Einfache Ausdrücke</a></li>]]]
+		[[[item variablen <li><a href="variablen" class="nav sub{{
+		active}}">Variablen</a></li>]]]
+		[[[item branch <li><a href="if-anweisung" class="nav
+		sub{{ active}}">If-Anweisung</a></li>]]]
+		[[[item schleifen <li><a href="schleifen" class="nav
+		sub{{ active}}">Schleifen</a></li>]]]
+		[[[item misc <li><a href="verschiedenes" class="nav
+		sub{{ active}}">Verschiedenes</a></li>]]]
+		[[[item listen <li><a href="listen" class="nav
+		sub{{ active}}">Listen</a></li>]]]
+		[[[item funktionen <li><a href="eigene-funktionen" class="nav
+		sub{{ active}}">Eigene Funktionen</a></li>]]]
+	</ul>
