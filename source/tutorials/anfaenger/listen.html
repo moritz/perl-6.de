@@ -143,3 +143,114 @@ say @namen[$auswahl - 1];
 	<code>@namen[$auswahl - 1]</code> ausgegeben. Wenn
 	<code>$auswahl</code> z.B. 2 ist, wird <code>@namen[1]</code>
 	ausgegeben, also das zweite Element - "Horst".</p>
+
+	<h2>Mehr zu Listen</h2>
+
+	<p>Listen können für sehr viele Aufgaben extrem praktisch sein.
+	Deswegen gibt es viele Möglichketen, Listen zu initialiseren,
+	auszulesen und sie zu bearbeiten.</p>
+
+<pre>[[[syntax perl6]]]
+my @a = 1 .. 10;
+# jetzt hat @a die Form 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+my @b = 0 xx 5;
+# @b enthält jetzt fünf mal das Element 0
+
+@b.push(1, 2);
+# dieser Befehlt hat die Elemente 1 und 2 an @b angehängt,
+# d.h. @b ist jetzt 0, 0, 0, 0, 0, 1, 2
+
+@a[2];		# ist 3
+@a[2, 3, 5];	# ergibt die Liste 3, 4, 6
+
+@a.elems;	# Anzahl der Elemete in @a, also 10
+@a.end;		# Index des letzten Elements von @a, also 9
+
+# Ein negativer Index wird von hinten gezählt:
+@a[-1]		# letztes Element
+[[[endsyntax]]]</pre>
+	<p>Listen können beliebige Elemente enthalten, das heißt man z.B.
+	Strings und Zahlen gemischt in Listen packen:</p>
+
+<pre>[[[syntax perl6]]]
+my @a = "hallo", 1, 2, "Welt";
+[[[endsyntax]]]</pre>
+
+	<p>Tatsächlich kann man sogar Listen als Elemente von Listen nehmen,
+	dann muss man die Liste allerdings in eckige Klammern schreiben:</p>
+
+<pre>[[[syntax perl6]]]
+my @a = 1, 2, [3, 4, 5], 6;
+@a.elems;	# 4 Elemente: 1, 2, eine Liste, und 6
+[[[endsyntax]]]</pre>
+
+	<p>Da man relativ häufig Arrays initialisieren muss, die aus einzelnen
+	Worten bestehen, gibt es dafür eine eigene Schreibweise:</p>
+<pre>[[[syntax perl6]]]
+my @werktage = <Montag Dienstag Mittwoch Donnerstag Freitag>;
+# das Gleiche wie @werktage = "Montag", "Dienstag", ...
+[[[endsyntax]]]</pre>
+
+	<h3>Listen ausgeben</h3>
+
+	<p>Wenn man eine Liste ohne irgend welche Trennzeichen ausgeben will,
+	kann man sie einfach an <code>say</code> übergeben. Wenn man die
+	Elemente trennen möchte, z.B. durch Kommata oder Leerzeichen, kann man
+	diese Trennzeichen mit <code>join</code> übergeben:</p>
+
+<pre>[[[syntax perl6]]]
+my @werktage = <Montag Dienstag Mittwoch Donnerstag Freitag>;
+
+say @werktage;
+# Ausgabe: MontagDienstagMittwochDonnerstagFreitag
+
+say @werktage.join(", ");
+# Ausgabe: Montag, Dienstag, Mittwoch, Donnerstag, Freitag
+[[[endsyntax]]]</pre>
+
+	<p>Für verschachtelte Listen ist Ergebnis nicht immer unbedingt das,
+	was man erwartet. Um die Struktur von beliebig verschachtelten Listen
+	auszugeben, kann man sich mit der Funktion <code>perl</code> eine
+	String-Repräsentation ausgeben lassen:</p>
+
+<pre>[[[syntax perl6]]]
+my @a = 1, 2, 3, [4, 5, 6], 7;
+say @a.perl;
+# Ausgabe: [1, 2, 3, [4, 5, 6], 7]
+[[[endsyntax]]]</pre>
+
+	<p>Das eignet sich zwar nicht für schön formatierte Ausgaben, aber um
+	zu wissen, wie eine Liste (oder etwas beliebiges anderes) aussieht,
+	reicht es.</p>
+
+	<h3>Listen durchlaufen</h3>
+
+	<p>Eine Möglichkeit, alle Elemente einer Liste auszugeben, haben Sie
+	oben (in ein wenig anderer Form) schon gesehen:</p>
+
+<pre>[[[syntax perl6]]]
+my @wochentag = <Montag Dienstag Mittwoch Donnerstag Freitag>;
+loop(my $i = 0; $i < @wochentag.end; $i++){
+	say @wochentag[$i];
+}
+[[[endsyntax]]]</pre>
+
+	<p>Weil das so häufig gebraucht wird, gibt es eine eigene, kompaktere
+	Schreibweise dafür:</p>
+
+<pre>[[[syntax perl6]]]
+my @wochentag = <Montag Dienstag Mittwoch Donnerstag Freitag>;
+my @wochentag -> my $tag {
+	say $tag;
+}
+[[[endsyntax]]]</pre>
+
+	<p>Die <code>for</code>-Schleife nimmt eine Liste, hier
+	<code>@wochentag</code>, und dahinter ist mit einem Pfeil, der aus
+	Minus-Zeichen und Größer-Zeichen besteht, eine Variable angegeben.
+	(<code>$tag</code>).</p>
+
+	<p>Bei jedem Durchlauf der Schleife der wird die Variable
+	<code>$tag</code> auf ein anderes Element der Liste gesetzt, in der
+	Reihenfolge, wie sie in der Liste auftauchen.</p>

@@ -1,0 +1,20 @@
+Dies ist das Source-Verzeichnis http://perl-6.de/.
+
+Header, Footer und Menüs liegen in 'includes/', die eigentlichen Seiten in
+'source/'.
+
+Aus den Dateien in 'source/' und 'includes/' werden mit mowyw [1] die Dateien
+unter 'online/' erzeugt. Einzige Ausnahme ist das Unterverzeichnis
+'online/blog/', das so wie es ist im SVN liegt.
+
+DocumentRoot von http://perl-6.de/ ist online/, oder besser gesagt, von allen
+Dateien unter online/ werden symbolische Links in den DocumentRoot gelegt.
+
+Dateien sollte nicht unter online/ direkt abgelegt werden, außer es gibt einen
+_sehr_ guten Grund dafür.
+
+
+
+[1] siehe <http://moritz.faui2k3.org/en/mowyw> oder
+	<http://moritz.faui2k3.org/de/mowyw>, SVN repository: 
+	https://faui2k3.org/svn/moritz/mowyw/

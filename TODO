@@ -21,4 +21,14 @@ tutorials:
 	kontext
 	p5
 	Umsteiger:
+projekte:
+15:39 < fglock> moritz: re p6 compilers - there is also perl6-in-perl5, 
+                http://search.cpan.org/dist/v6-alpha/
+15:39 < lambdabot> Title: Fl&#225;vio Soibelmann Glock / v6-alpha - 
+                   search.cpan.org
+15:39 < fglock> which is a different line of thought
+15:47 < moritz> fglock: is that still maintained/developed?
+15:50 < fglock> moritz: yes - the directories in pugs are 
+                perl5/Pugs-Compiler-Perl6/ and perl5/Pugs-Compiler-Rule/
+
 		

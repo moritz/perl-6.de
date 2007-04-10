@@ -1,0 +1,88 @@
+[[[menu main tut anfaenger funktionen]]]
+[[[setvar title Eigene Funktionen]]]
+<div id="content">
+	<h1>Eigene Funktionen schreiben</h1>
+
+	<p>Wenn Sie diesem Tutorial bis hierhin gefolgt sind, sind Ihnen immer 
+	wieder "Dinge" begegnet, die als "Funktionen" bezeichnet wurden, zum
+	Beispiel <code>say</code>, <code>push</code> und andere.</p>
+
+	<p>Funktionen sind immer dann gut, wenn man ein Stück Quellcode an
+	verschiedenen Stellen im Programm braucht.</p>
+
+	<p>Anstatt dieses Stück Quellcode überall dorthin zu kopieren, wo man
+	es braucht, schreibt man es an einer Stelle in eine sogenannte
+	Funktion, und ruft diese Funktion dann auf, wenn man den Code
+	braucht.</p>
+
+	<p>Hier zum Beispiel soll an mehreren Stellen im Programm eine
+	positive Zahl von der Tastatur gelesen werden, und das so lange
+	versucht werden, bis der Benutzer endlich nachgegeben hat:</p>
+
+<pre>[[[syntax perl6]]]
+my $a;
+my $b;
+
+$a = =<>;
+while $a <= 0 {
+	$a = =<>;
+}
+
+$b = =<>;
+while $b <= 0 {
+	$b = =<>;
+}
+
+say "Zwei positive Zahlen: $a und $b";
+[[[endsyntax]]]</pre>
+
+	<p>Hier sind vier Zeilen in dem Programm, die sich wiederholen, und
+	nur durch den Namen einer Variable unterscheiden.</p>
+
+	<p>Und so sieht es aus, wenn man das ganze in eine Funktion packt:</p>
+
+<pre>[[[syntax perl6]]]
+sub positive_zahl {
+	my $zahl = =<>;
+
+	while $zahl <= 0 {
+		$zahl = =<>;
+	}
+	return $zahl;
+}
+
+
+my $a = positive_zahl;
+my $b = positive_zahl;
+
+say "Zwei positive Zahlen: $a und $b";
+[[[endsyntax]]]</pre>
+
+	<p>Dieses Beispiel macht genau das gleiche wie das vorherige, nur dass
+	es intern anders aufgebaut ist.</p>
+
+	<p>Am Anfang wird in der Zeile</p>
+<pre>[[[syntax perl6]]]
+sub positive_zahl {
+[[[endsyntax]]]</pre>
+	<p>eine Funktion oder <em>Subroutine</em>, auf Englisch kurz
+	<em>sub</em> definiert, mit dem Namen <code>positive_zahl</code>.</p>
+
+	<p>Für Funktionsnamen gelten die gleichen Regeln wie für
+	Variablennamen, nur dass sie offensichtlich nicht mit einem
+	Sonderzeichen anfangen: Sie müssen mit einem Buchstaben oder
+	Unterstrich anfangen, und können aus Buchstaben, Unterstrichen und
+	Ziffern bestehen.</p>
+
+	<p>Nach dem Funktionsnamen kommt einen öffnende geschweifte Klammer
+	<code>{</code>, und danach kommt der eigentliche Inhalt der Funktion,
+	der so lange geht, bis die geschweifte Klammer von <code>}</code> 
+	geschlossen wird.</p>
+
+	<p>In der Funktion taucht die Anweisung <code>return</code> auf,
+	hinter der ein Ausdruck steht - hier die Variable
+	<code>$zahl</code>.</p>
+
+	<p>Das sorgt dafür, dass die Funktion beendet wird, sobald die Stelle
+	erreicht wird, an der <code>return</code> steht, und der Ausdruck
+	dahinter wird an den Aufrufer zurückgegeben.</p>

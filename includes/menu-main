@@ -12,6 +12,7 @@
 	<div id="leftside">
 	<ul>
 	[[[item home <li><a href="/" class="nav{{ active}}">Home</a></li>]]]
+	[[[item prinzipien <li><a href="/prinzipien" class="nav{{ active}}">Prinzipien</a></li>]]]
 	</ul>
 	<h1 style="margin-top:2ex">Perl 6 Projekte</h1>
 	<ul>
