@@ -19,4 +19,6 @@
 		sub{{ active}}">Listen</a></li>]]]
 		[[[item funktionen <li><a href="eigene-funktionen" class="nav
 		sub{{ active}}">Eigene Funktionen</a></li>]]]
+		[[[item funktionen <li><a href="hashes" class="nav
+		sub{{ active}}">Hashes</a></li>]]]
 	</ul>
