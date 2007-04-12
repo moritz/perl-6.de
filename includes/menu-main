@@ -33,9 +33,15 @@
 			{{[[[menu anfaenger]]]}}
 			</li>
 			]]]
-			[[[item umsteiger <li><a href="/tutorials/umsteiger/" class="nav{{ active}}">Für Umsteiger</a></li>]]]
+			[[[item umsteiger <li><a href="/tutorials/umsteiger/"
+			class="nav{{ active}}">Für Umsteiger</a></li>]]]
 			[[[item p5 <li><a href="/tutorials/p5/" class="nav{{ active}}">Für Perl 5-
-			Programmierer</a></li>]]]
+			Programmierer</a></li>
+			{{<ul>
+				 [[[item regex <li><a class="nav sub{{ active}}"
+					 href="/tutorials/p5/regex">Regexes</a>
+					 </li>]]]
+			 </ul>}}]]]
 		</ul>
 	</div>
 }}]]]

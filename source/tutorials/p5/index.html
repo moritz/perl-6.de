@@ -309,14 +309,14 @@ my $str = ~@a;		# "foo bar"
 	<h2>I/O</h2>
 
 	<p>Aus der <code>&lt;$fh&gt;</code>-Notation zum Lesen aus Filehandles
-	ist <code>=&lt;$fh&gt;</code> geworden, und das Zeilenende wird jetzt
+	ist <code>=$fh</code> geworden, und das Zeilenende wird jetzt
 	per default automatisch entfernt ("autochomp").</p>
 
 <pre>[[[syntax perl6]]]
 my $fn = "foo.txt";
 my $file = $fn.open err die "Can't read '$fn': $!";
 
-for =<$file> -> my $line {
+for =$file -> my $line {
 	# hier die Zeile verarbeiten
 }
 
@@ -324,6 +324,18 @@ for =<$file> -> my $line {
 my $ganze_datei = $file.slurp;
 
 $file.close;
+[[[endsyntax]]]</pre>
+
+	<p>Man kann nicht nur aus Filehandles lesen, sondern auch aus
+	Dateinamen, die automatisch geöffnet werden:</p>
+
+<pre>[[[syntax perl6]]]
+for =</etc/passwd> {
+	# '.split' splittet die Standardvariable
+	my @entries = .split(":");
+	say "Login: ", @entries[0];
+}
+# oder: my $file = "/etc/passwd"; for =$file { ... }
 [[[endsyntax]]]</pre>
 
 	<p>Die empfohlene Art, eine Datei zeileweise zu lesen ist jetzt eine

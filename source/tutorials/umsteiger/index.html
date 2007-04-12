@@ -1,4 +1,4 @@
-[[[setvar title Perl 6-Tutorial f&uuml;r Programmier anderer Programmiersprachen]]]
+[[[setvar title Perl 6-Tutorial für Programmier anderer Programmiersprachen]]]
 [[[menu main tut umsteiger]]]
 <div id="content">
 
@@ -10,12 +10,12 @@
       <h2>Zielgruppe</h2>
 
       <p>Dieses Tutorial richtet sich an Interessierte, die schon in einer
-      anderen Programmiersprache etwas programmieren k&ouml;nnen, aber bisher
-      kein Perl k&ouml;nnen.</p>
+      anderen Programmiersprache etwas programmieren können, aber bisher
+      kein Perl können.</p>
 
 
-      <p>Dieses Tutorial ist recht kompakt gehalten. F&uuml;r eine
-      ausf&uuml;hrlichere Einf&uuml;hrung gibt es ein Tutorial auf <a
+      <p>Dieses Tutorial ist recht kompakt gehalten. Für eine
+      ausführlichere Einführung gibt es ein Tutorial auf <a
       href="http://wiki.perl-community.de/bin/view/Wissensbasis/Perl 6Tutorial">der
       perl-community</a>.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
@@ -23,10 +23,10 @@
       <h2>Compiler, Interpreter und VM</h2>
 
       <p>perl6 ist vom Design her ein Compiler, der Perl 6-Quellcode in
-      Bytecode f&uuml;r die <a href="http://www.parrotcode.org/">Parrot
-      Virtual Maschine</a> erzeugt. Das geschieht aber Transparent f&uuml;r
+      Bytecode für die <a href="http://www.parrotcode.org/">Parrot
+      Virtual Maschine</a> erzeugt. Das geschieht aber Transparent für
       den Benutzer, d.h. er ruft einfach <code>perl6
-      <em>scriptname</em></code> auf, und dann f&uuml;hrt perl6 das Skript
+      <em>scriptname</em></code> auf, und dann führt perl6 das Skript
       aus.</p>
 
       <p>Die Implementierung von perl6 ist aber noch nicht sehr weit
@@ -35,11 +35,11 @@
       System", ein in Haskell geschriebener Perl 6-Interpreter.</p>
 
       <p>Zusammen mit Pugs werden umfangreiche Testcases entwickelt, die
-      sicherstellen, dass Pugs und die entg&uuml;ltige Version von perl6
+      sicherstellen, dass Pugs und die entgültige Version von perl6
       kompatibel bleiben.</p>
 
       <p>Im Moment ist es sicher am einfachsten, sich pugs herunterzuladen und
-      damit die Perl 6-Programme auszuf&uuml;hren.</p>
+      damit die Perl 6-Programme auszuführen.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
       <h2>Einfache Programme</h2>
@@ -55,19 +55,19 @@ say "Die Zahl ist ", $number;
 [[[endsyntax]]]
 </pre>
 	<p>Die Zeile <code>use v6;</code> sagt dem Interpreter, dass es sich um
-	Perl-Code f&uuml;r Version 6 handelt. Wenn man probiert, den Code auf
-	einem &auml;lteren Perl-Interpreter auszuf&uuml;hren, wird er
+	Perl-Code für Version 6 handelt. Wenn man probiert, den Code auf
+	einem älteren Perl-Interpreter auszuführen, wird er
 	vergeblich nach dem Modul <code>v6</code> suchen und eine
 	Fehlermeldung ausgeben.</p>
 
 	<p>Die Zeile 
 	<code>my $number = 2 * 3 + 5;</code> deklariert mit dem
-	Schl&uuml;sselwort <code>my</code> eine Variable namens
+	Schlüsselwort <code>my</code> eine Variable namens
 	<code>$number</code>, und weist ihr den Wert 11 zu.</p>
 
 	<p>Alle Perl-Veriablen beginnen mit einem Sonderzeichen, dem
 	sogenannten <em>sigil</em>. Ein Doller <code>$</code> steht dabei
-	f&uuml;r einen sogeannten Skalar, also ein einzelner Wert.</p>
+	für einen sogeannten Skalar, also ein einzelner Wert.</p>
 
 	<p>So ein Wert kann eine Zahl sein, ein String, eine Referenz oder ein
 	Objekt.</p>
@@ -82,10 +82,10 @@ say "Die Zahl ist ", $number;
 	<code>$number</code> aus.</p>
 
 	<p>Man beachte, dass alle Zeilen mit einem Strichpunkt
-	<code>;</code> aufh&ouml;ren.</p>
+	<code>;</code> aufhören.</p>
 
 	<p>Man kann beliebig viele Leerzeichen in Perl-Programme
-	ausf&uuml;hren, und auch die Befehle &uuml;ber mehrere Zeilen
+	ausführen, und auch die Befehle über mehrere Zeilen
 	verteilen - nicht das Zeilenende, sondern der Strichpunkt definiert
 	das Ende eines Befehls.</p>
 
@@ -94,11 +94,11 @@ say "Die Zahl ist ", $number;
 
 	<h2>Variablen</h2>
 
-	<p>Wie schon gesagt f&auml;ngt jede Variable mit einem <em>sigil</em>,
+	<p>Wie schon gesagt fängt jede Variable mit einem <em>sigil</em>,
 	einem Sonderzeichen an. Dieses Sonderzeichen bestimmt den Typ der
 	Variable.</p>
 
-	<p>Verf&uuml;gbare Typen sind <strong>Skalare</strong>,
+	<p>Verfügbare Typen sind <strong>Skalare</strong>,
 	<strong>Listen</strong> und <strong>Hashes</strong>.</p>
 
 	<p>Dabei darf es durchaus zwei Variablen mit gleichem Namen aber aber
@@ -110,7 +110,7 @@ say "Die Zahl ist ", $number;
 	<p>Skalare beginnen mit einem Dollar-Zeichen <code>$</code>, und
 	enthalten immer genau einen Wert.</p>
 
-	<p>Viele verschiedene Arten von Werten k&ouml;nnen in einem Skalar
+	<p>Viele verschiedene Arten von Werten können in einem Skalar
 	gespeichert werden: <code>undef</code>, Zahlen, Strings, und
 	Referenzen auf Listen, Hashes und andere Objekete.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
@@ -129,10 +129,10 @@ my $complex = 3 + 4i;
 	<code>+</code>
 	(Addition), <code>-</code> (Substraktion), <code>*</code> 
 	(Multiplikation), <code>/</code> (Divison) und <code>**</code>
-	(Potenzierung) zur Verf&uuml;gung.</p>
+	(Potenzierung) zur Verfügung.</p>
 
 	<p>Wie gewohnt gilt Punkt- vor Strichrechnung, und Potenzierung hat
-	noch h&ouml;here Priorit&auml;t.</p>
+	noch höhere Priorität.</p>
 
 	<p><code>2 + 3 * 2**10</code> ist damit gleichwertig wie <code>2 + (3
 	* (2**10))</code>.</p>
@@ -152,28 +152,28 @@ say exp(-1i * pi) + 1;
 
 	<h4>Strings</h4>
 
-	<p>Strings oder Zeichenketten waren von jeher die St&auml;rke von
-	Perl, das hat sich auch in Perl 6 nicht ge&auml;ndert.</p>
+	<p>Strings oder Zeichenketten waren von jeher die Stärke von
+	Perl, das hat sich auch in Perl 6 nicht geändert.</p>
 
 	<p>Strings kann man im Quelltext entweder in einfachen
-	Anf&uuml;hrungszeichen <code>'bla'</code> oder in doppelten
+	Anführungszeichen <code>'bla'</code> oder in doppelten
 	<code>"bla"</code> angeben.</p>
 
 	<p>Der Unterschied ist, dass Strings in doppelten
-	Anf&uuml;hrungszeichen "interpoliert" werden, d.h. andere Variablen
+	Anführungszeichen "interpoliert" werden, d.h. andere Variablen
 	werden durch ihren Wert ersetzt:</p>
 
 <pre>[[[syntax perl6]]]
 my $age = 18;
-say "In Deutschland wird man mit $age vollj&auml;hrig.";
+say "In Deutschland wird man mit $age volljährig.";
 # gibt folgendes aus:
-# `In Deutschland wird man mit 18 vollj&auml;hrig.' (ohne die
-# Anf&uuml;hrungszeichen)
-say 'In Deutschland wird man mit $age vollj&auml;hrig.';
+# `In Deutschland wird man mit 18 volljährig.' (ohne die
+# Anführungszeichen)
+say 'In Deutschland wird man mit $age volljährig.';
 # gibt folgendes aus:
-# `In Deutschland wird man mit $age vollj&auml;hrig.'
+# `In Deutschland wird man mit $age volljährig.'
 [[[endsyntax]]]</pre>
-	<p>Zwei Strings k&ouml;nnen mit einer Tilde <code>~</code> miteinander
+	<p>Zwei Strings können mit einer Tilde <code>~</code> miteinander
 	verbunden werden (concatenation):</p>
 <pre>[[[syntax perl6]]]
 say "Hallo" ~ " " ~ "Welt";
@@ -187,7 +187,7 @@ say $alphabet; # `abcdefghijklmnopqrstuvwxyz'
 say $alphabet.substr(2); # alles ab dem 3. Zeichen, also
 #`cdefghijklmnopqrstuvwxyz' 
 say $alphabet.substr(2, 5); # Fünf Zeichen ab dem 3. Zeichen, also `cdefg'
-# negative Indizes werden von hinten gez&auml;hlt, mit dem letzen Element als
+# negative Indizes werden von hinten gezählt, mit dem letzen Element als
 # -1:
 say $alphabet.substr(2, -2);  # Alles ausser den ersten beiden und den letzten
 # beiden Zeichen, also `cdefghijklmnopqrstuvwx'
@@ -213,12 +213,12 @@ $s.split("e"); # mit Argument wird nach dem Argument gespalten:
 # ("D", "r w", "it", " W", "g")
 [[[endsyntax]]]</pre>
 
-	<p><code>split</code> liefert eine Liste zur&uuml;ck, dazu sp&auml;ter
+	<p><code>split</code> liefert eine Liste zurück, dazu später
 	mehr.</p>
 
-	<p>Mit einer &auml;hnlichen Funktion namens <code>comb</code> kann man
+	<p>Mit einer ähnlichen Funktion namens <code>comb</code> kann man
 	Strings mittels <a href="#rules">rules/regexes</a> zerlegen, was sehr
-	viele M&ouml;glichkeiten er&ouml;ffnet.</p>
+	viele Möglichkeiten eröffnet.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 
@@ -248,7 +248,7 @@ say @weekdays.elems
 my @weekdays = <Montag Dienstag Mittwoch Donnerstag Freitag> 
 # trennt am Leerzeichen
 
-my @digits = 0 .. 9  # selbsterkl&auml;rend
+my @digits = 0 .. 9  # selbsterklärend
 my @letters = "a" .. "z", "A" .. "Z"  # ebenso ;-) 
 [[[endsyntax]]]</pre>
 
@@ -267,11 +267,11 @@ say @a;
 # `A bis Z'
 [[[endsyntax]]]</pre>
 	<p>Die Elemente, die durch das Schreiben in eine Array Slice
-	gel&ouml;scht werden, verschwinden nicht, sondern werden durch
+	gelöscht werden, verschwinden nicht, sondern werden durch
 	<code>undef</code>, also einen leeren Wert, ersetzt.</p>
 
-<p>F&uuml;r den Zugriff auf das erste und letzte Element gibt es eigene
-Funktionen, weil es so h&auml;ufig gebraucht wird:</p>
+<p>Für den Zugriff auf das erste und letzte Element gibt es eigene
+Funktionen, weil es so häufig gebraucht wird:</p>
 <pre>[[[syntax perl6]]]
 my @a = 1, 2;
 @a.push(3);
@@ -284,7 +284,7 @@ say @a.pop;
 say @a.shift;
 # gibt `0' aus, @a ist danach (1, 2, 3)
 [[[endsyntax]]]</pre>
-	<p>Listen sind interpolierend, d.h. das einf&uuml;gen von Listen in
+	<p>Listen sind interpolierend, d.h. das einfügen von Listen in
 	andere Listen erzeugt keine verschachtelten Listen:</p>
 <pre>[[[syntax perl6]]]
 my @a = 1, 2;
@@ -293,9 +293,9 @@ say @b.elems;
 # `4'
 [[[endsyntax]]]</pre>
 	<p>Um verschachtelte Listen zu bekommen, darf man keine Arrays
-	einf&uuml;gen, sondern <strong>Referenzen</strong> zu Arrays.</p>
+	einfügen, sondern <strong>Referenzen</strong> zu Arrays.</p>
 
-	<p>Das erreicht man in Perl durch einen R&uuml;ckstrich
+	<p>Das erreicht man in Perl durch einen Rückstrich
 	<code>\</code>.</p>
 <pre>[[[syntax perl6]]]
 my @a = 1, 2;
@@ -306,7 +306,7 @@ say @b.elems;
 # oder kürzer:
 @b = 0, [1, 2], 3;
 [[[endsyntax]]]</pre>
-	<p>Die Kurzschreibweise f&uuml;r Arrayreferenzen sind eckige
+	<p>Die Kurzschreibweise für Arrayreferenzen sind eckige
 	Klammern: <code>[1 .. 4]</code>.</p>
 
 	<p>Auf verschachtelte Arrays kann man mit mehrfachen eckigen Klammern
@@ -320,7 +320,7 @@ say @a[0][2];
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h3>Hashes</h3>
-	<p>Hashes oder "Assoziative Listen" funktionieren &auml;hnlich wie
+	<p>Hashes oder "Assoziative Listen" funktionieren ähnlich wie
 	Arrays, aber man greift mit Strings anstatt mit ganzen Zahlen auf die
 	ELemente zu. Ihr Sigil ist ein Prozent-Zeichen <code>%</code>.</p>
 
@@ -336,13 +336,13 @@ say $country , " wird zur Zeit von ",  %leader{$country}, "regiert";
 %leader{'Transsylvanien'} = 'Dracula';
 [[[endsyntax]]]</pre>
 
-	<p>Die Reihenfolge, in der die Elemente eingef&uuml;gt werden, geht
+	<p>Die Reihenfolge, in der die Elemente eingefügt werden, geht
 	dabei verloren.</p>
 
-	<p>Pro Schl&uuml;ssel gibt es genau einen Wert. Wenn man dem
-	Schl&uuml;ssel einen neuen Wert zuweist, geht der alte verloren.</p>
+	<p>Pro Schlüssel gibt es genau einen Wert. Wenn man dem
+	Schlüssel einen neuen Wert zuweist, geht der alte verloren.</p>
 
-	<p>Will man mehrere Werte pro Schl&uuml;ssel speichern, so muss man in
+	<p>Will man mehrere Werte pro Schlüssel speichern, so muss man in
 	den Hash eine Liste schreiben:</p>
 
 <pre>[[[syntax perl6]]]
@@ -354,10 +354,10 @@ my $regisseur = "Alfred Hitchcok";
 say $regisseur, " hat folgende Filme gedreht: ", %regie{$regisseur}.join(", ");
 [[[endsyntax]]]</pre>
 
-	<p>Auf alle Schl&uuml;ssel eines Hashs <code>%h</code> kann man mit
+	<p>Auf alle Schlüssel eines Hashs <code>%h</code> kann man mit
 	<code>%h.keys</code> zugreifen, <code>%h.values</code> gibt alle Werte
-	zur&uuml;ck. Wie man elegant alle Elemente eines Hashes durchlaufen
-	kann, steht im Abschnitt <a href="#for">&uuml;ber for-Schleifen</a>.</p>
+	zurück. Wie man elegant alle Elemente eines Hashes durchlaufen
+	kann, steht im Abschnitt <a href="#for">über for-Schleifen</a>.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h2>Kontrollstrukturen</h2>
@@ -375,14 +375,14 @@ if $age < 6 {
 } else {
 	say "Irgendwer..."
 }[[[endsyntax]]]</pre>
-	<p>Der <code>elsif</code> und <code>else</code>-Block k&ouml;nnen
-	weggelassen werden, und es k&ouml;nnen beliebig viele
-	<code>elsif</code>-Bl&ouml;cke vorkommen.</p>
+	<p>Der <code>elsif</code> und <code>else</code>-Block können
+	weggelassen werden, und es können beliebig viele
+	<code>elsif</code>-Blöcke vorkommen.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h3 id="for">for: &Uuml;ber Listen iterieren</h3>
 
-	<p>H&auml;ufig muss man alle Elemente einer Liste durchlaufen. Das
+	<p>Häufig muss man alle Elemente einer Liste durchlaufen. Das
 	geht mit der <code>for</code>-"Schleife":</p>
 
 <pre>[[[syntax perl6]]]
@@ -407,7 +407,7 @@ Immer das gleiche!
 	Wert des Arrays gesetzt.</p>
 
 	<p>Wenn man die Angabe der Variable, in der der Wert gespeichert
-	werden soll, wegl&auml;sst, so wird der Wert in der speziellen
+	werden soll, weglässt, so wird der Wert in der speziellen
 	Variable <code>$_</code> gespeichert:</p>
 
 <pre>[[[syntax perl6]]]
@@ -428,8 +428,8 @@ my %essen = (
 for %essen.kv -> $leute, $gericht {
 	say "Die $leute essen gerne $gericht";
 }[[[endsyntax]]]</pre>
-	<p>Man beachte, dass die Elemente aus einem Hash in zuf&auml;lliger
-	Reihenfolge herauskommen. Wenn man das nicht m&ouml;chte, kann man
+	<p>Man beachte, dass die Elemente aus einem Hash in zufälliger
+	Reihenfolge herauskommen. Wenn man das nicht möchte, kann man
 	die keys vorher sortieren:</p>
 <pre>[[[syntax perl6]]]
 my %essen = (
@@ -458,15 +458,15 @@ loop (my $i = 2; $i < 300; $i **= 2){
 # 16
 # 256
 [[[endsyntax]]]</pre>
-	<p>(<code>$i **= 2</code> ist kurz f&uuml;r <code>$i = $i**2</code>,
-	d.h. bei jedem Ausf&uuml;hren wird $i quadriert.)</p>
+	<p>(<code>$i **= 2</code> ist kurz für <code>$i = $i**2</code>,
+	d.h. bei jedem Ausführen wird $i quadriert.)</p>
 
 	<p><code>loop</code> ist wie folgt aufgebaut: <code>loop(init;
 	bedingung; increment){ code;}</code>. Ganz am Anfang wird einmal die
-	Anweisung in <code>init</code> ausgef&uuml;hrt. Dann wird die
-	<code>bedingung</code> gepr&uuml;ft. Wenn sie wahr ist, wird
-	<code>code</code> ausgef&uuml;hrt, und dann <code>increment</code>.
-	Dann wird wieder die Bedingung gepr&uuml;ft, und so weiter.</p>
+	Anweisung in <code>init</code> ausgeführt. Dann wird die
+	<code>bedingung</code> geprüft. Wenn sie wahr ist, wird
+	<code>code</code> ausgeführt, und dann <code>increment</code>.
+	Dann wird wieder die Bedingung geprüft, und so weiter.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h3>While-Schleife</h3>
@@ -486,20 +486,20 @@ while abs($w*$w-$val) &gt; $eps {
 say $w;
 #Ausgabe: 10.00000000013989
 [[[endsyntax]]]</pre>
-	<p>Die <code>while</code>-Schleife wird augef&uuml;hrt, solange die
+	<p>Die <code>while</code>-Schleife wird augeführt, solange die
 	Bedingung direkt hinter dem <code>while</code> wahr ist.</p>
 
-	<p>Wenn die Bedingung von Anfang an nicht erf&uuml;llt ist, wir die
-	Schleife kein einziges mal ausgef&uuml;hrt.</p>
+	<p>Wenn die Bedingung von Anfang an nicht erfüllt ist, wir die
+	Schleife kein einziges mal ausgeführt.</p>
 
-	<p>Diese Schleife rechnet N&auml;hrungsweise die Wurzel von
-	<code>$val</code> aus (es gibt nat&uuml;rlich auch eine eingebaute
+	<p>Diese Schleife rechnet Nährungsweise die Wurzel von
+	<code>$val</code> aus (es gibt natürlich auch eine eingebaute
 		Funtkion die das macht, <code>sqrt()</code>.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h3>Eigene Funktionen</h3>
 
-	<p>Eigene Funktionen kann man mit <code>sub</code>-Schl&uuml;sselwort
+	<p>Eigene Funktionen kann man mit <code>sub</code>-Schlüsselwort
 	schreiben:</p>
 <pre>[[[syntax perl6]]]
 sub factorial($x){
@@ -518,21 +518,21 @@ sub factorial(int $x){
 }
 [[[endsyntax]]]</pre>
 
-	<p>Und man kann auch den R&uuml;ckgabetyp festlegen:</p>
+	<p>Und man kann auch den Rückgabetyp festlegen:</p>
 <pre>[[[syntax perl6]]]
 sub factorial(int $x) is int {
     return [*] (1 .. $x);
 }
 [[[endsyntax]]]</pre>
 	<p>Wie in Perl 5 kann man die Argumenteliste bei der Definition der
-	Funktion auch weglassen, &uuml;bergebene Argumente landen in der
+	Funktion auch weglassen, übergebene Argumente landen in der
 	speziellen Variable <code>@_</code>:</p>
 <pre>[[[syntax perl6]]]
 sub factorial {
 	return [*] (1 .. @_[0]);
 }
 [[[endsyntax]]]</pre>
-	<p>Eine Funktion kann auch Listen zur&uuml;ckgeben. Innerhalb einer
+	<p>Eine Funktion kann auch Listen zurückgeben. Innerhalb einer
 	Funktion kann man mit dem Objekt <code>want</code> abfragen, ob der
 	Aufrufer eine Liste, einen Hash oder ein einzelnes Element
 	erwartet.</p>
@@ -549,9 +549,9 @@ sub wisdom {
 [[[endsyntax]]]</pre>
 
 	<p>Parameter werden per Default als read-only Referenzen
-	&uuml;bergeben, d.h. die Funktion kann die Parameter nicht
-	ver&auml;ndern. Das kann man mit dem Trait <code>is rw</code>
-	&auml;ndern:</p>
+	übergeben, d.h. die Funktion kann die Parameter nicht
+	verändern. Das kann man mit dem Trait <code>is rw</code>
+	ändern:</p>
 <pre>[[[syntax perl6]]]
 sub swap($x is rw, $y is rw){
 	($x, $y) = ($y, $x);
@@ -562,7 +562,7 @@ sub swap($x is rw, $y is rw){
 
 	<h4>Multi subs</h4>
 
-	<p>Multi Subs sind &auml;hnlich wie &uuml;berladene Funktionen in
+	<p>Multi Subs sind ähnlich wie überladene Funktionen in
 	anderen Programmiersprachen. Mehrere Multi Subs haben den gleichen
 	Namen, aber unterschiedliche Signaturen:</p>
 
@@ -580,9 +580,9 @@ multi foo(Int $x){
 
 	<p>Mit Traits, zu Deutsch "Eigenschaften" oder "Merkmale", 
 	kann man das Verhalten von
-	Funktionen modifzieren. Ein Beispiel sind Vorbedingungen f&uuml;r die
-	Ausf&uuml;hrung einer Funktion, und Zusicherungen, die nach dem
-	Ausf&uuml;hren einer Funktion gelten sollen:</p>
+	Funktionen modifzieren. Ein Beispiel sind Vorbedingungen für die
+	Ausführung einer Funktion, und Zusicherungen, die nach dem
+	Ausführen einer Funktion gelten sollen:</p>
 
 <pre>[[[syntax perl6]]]
 sub wurzel(Num $x){
@@ -614,16 +614,16 @@ sub wurzel(Num $x){
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 
-	<h2 id="rules">Regul&auml;re Ausdr&uuml;cke / rules</h2>
+	<h2 id="rules">Reguläre Ausdrücke / rules</h2>
 
-	<p>Ein Wort zu den Namen: Regul&auml;re Ausdr&uuml;cke, auf Englisch
+	<p>Ein Wort zu den Namen: Reguläre Ausdrücke, auf Englisch
 	"Regular Expressions", sind ein bekanntes Konzept in der Informatik.
-	Schon in Perl5 konnten die Regul&auml;ren Ausdr&uuml;cke mehr, als die
+	Schon in Perl5 konnten die Regulären Ausdrücke mehr, als die
 	Definition der Informatiker erlaubt, deswegen spricht man bei Perl von
 	regexes, Singular regex.</p>
 
-	<p>Regul&auml;re Ausdr&uuml;cke definieren Muster. Man kann den
-	Interpreter anweisen, zu &uuml;bepr&uuml;fen, ob ein Muster zu einer
+	<p>Reguläre Ausdrücke definieren Muster. Man kann den
+	Interpreter anweisen, zu übeprüfen, ob ein Muster zu einer
 	Zeichenkette passt.</p>
 
 	<p>Ein paar Beispiele erleutern das:</p>
@@ -641,7 +641,7 @@ if $test_string ~~ m/ar+y/ {
 
 	<p>Einzelne Buchstaben, Ziffern, Minus <code>-</code> und Unterstrich
 	<code>_</code> haben keine besondere Bedeutung, sondern stehen
-	f&uuml;r das jeweilige Zeichen.</p>
+	für das jeweilige Zeichen.</p>
 
 	<p>Sonderzeichen wie ()[]{}+*? beraubt man ihrere besondern Bedeutung,
 	indem man ihnen eine Backslash <code>\</code> voranstellt.</p>
@@ -651,7 +651,7 @@ if $test_string ~~ m/ar+y/ {
 
 	<h3>Alternativen</h3>
 
-	<p>Ein senkrechter Strich <code>|</code> steht f&uuml;r ein logisches
+	<p>Ein senkrechter Strich <code>|</code> steht für ein logisches
 	Oder. <code>m/Ein(horn|stein)/</code> passt also auf Einhorn und
 	Einstein.</p>
 
@@ -667,9 +667,9 @@ if $test_string ~~ m/ar+y/ {
 m/^Genau diese Zeile$/
 [[[endsyntax]]]</pre>
 
-	<p>Wenn ein String mehrere logische Zeilen enth&auml;lt, kann man auf
+	<p>Wenn ein String mehrere logische Zeilen enthält, kann man auf
 	Anfang und Ende einer Zeile mit <code>^^</code> und <code>$$</code>
-	&uuml;berpr&uuml;fen.</p>
+	überprüfen.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h3>Quantifier</h3>
@@ -679,15 +679,15 @@ m/^Genau diese Zeile$/
 
 	<p><code>m/mi?au/</code> passt also auf miau oder auf mau.</p>
 
-	<p>Das Plus <code>+</code> steht f&uuml;r eine oder beliebig viele
+	<p>Das Plus <code>+</code> steht für eine oder beliebig viele
 	Wiederholungen. <code>m/mi+au/</code> matched also miau, miiau, miiiau
 	usw, aber nicht mau.</p>
 
-	<p>Der Stern <code>*</code> steht f&uuml;r keine oder beliebig viele
+	<p>Der Stern <code>*</code> steht für keine oder beliebig viele
 	Wiederholungen. <code>m/mi*au/</code> matched also mau, miau, miiau,
 	miiiau etc.</p>
 
-	<p>Man kann auch explizit eine gew&uuml;nschte Anzahl von
+	<p>Man kann auch explizit eine gewünschte Anzahl von
 	Wiederholungen angeben: <code>m/ab**{3}c/</code> matched abbbc,
 	<code>m/ab**{3, 8}c/</code> matched ein a, gefolgt von 3 bis 8 b's und
 	einem c.</p>
@@ -696,7 +696,7 @@ m/^Genau diese Zeile$/
 	<h3>Charakterklassen</h3>
 
 	<p>Bisher waren die regexes relativ langweilig. Durch Charakterklassen
-	werden sie sehr viel m&auml;chtiger. Eine Charakterklasse ist quasi
+	werden sie sehr viel mächtiger. Eine Charakterklasse ist quasi
 	eine (meistens recht lange) Auflistung von durch <code>|</code>
 	getrennten Zeichen, und matched immer genau ein Zeichen</p>
 
@@ -731,7 +731,7 @@ if $text ~~ m/\d+\s+\w+/ {
 
 	<p>In diesem Beispiel wird die spezielle Variable <code>$/</code>
 	verwendet, die, wenn sie als String verwendet wird, den gematched Text
-	zur&uuml;ckliefert.</p>
+	zurückliefert.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
 	<h3>Capturing Groups</h3>
@@ -740,7 +740,7 @@ if $text ~~ m/\d+\s+\w+/ {
 	einschliesst, merkt sich der Interpreter den String, der auf die
 	Teilregex innerhalb der Klammern gepasst hat.</p>
 
-	<p>Sp&auml;ter innerhalb der regex kann man dann mit der Variable
+	<p>Später innerhalb der regex kann man dann mit der Variable
 	<code>$0</code> auf den Inhalt der ersten Klammer zugreifen, mit
 	<code>$1</code> auf den Inhalt der zweiten usw. Au&szlig;erdem kann
 	man <code>$/</code> als Array verwenden, und auf das
@@ -749,14 +749,14 @@ if $text ~~ m/\d+\s+\w+/ {
 
 	<p>Damit kann man z.B. nach wiederkehrenden Mustern suchen.
 	Angenommen, man will ganz einfaches HTML darauf untersuchen, ob die
-	Tags richtig verschachtelt sind. Richtig w&auml;re z.B:</p>
+	Tags richtig verschachtelt sind. Richtig wäre z.B:</p>
 <pre>[[[syntax html]]]
 Bla bla bla <strong>fetter Text</strong> bla
 bla
 [[[endsyntax]]]
 </pre>
 
-	<p>Und falsches HTML w&auml;re</p>
+	<p>Und falsches HTML wäre</p>
 
 	<pre>Bla bla bla &lt;strong&gt;fetter Text&lt;/em&gt; bla
 	bla</pre>
@@ -778,13 +778,13 @@ if $text ~~ m/ \<(\w+)\> (.*) \<\/$0> / {
 	Klammer nur braucht, um zu gruppieren, kann man eckige Klammern
 	<code>[...]</code> anstatt runder Klammern verwenden.</p>
 
-	<p>&Uuml;ber Regexes kann man ganze B&uuml;cher schreiben, und in der
+	<p>&Uuml;ber Regexes kann man ganze Bücher schreiben, und in der
 	Tat <a
 	href="http://www.amazon.de/gp/product/0596528124?ie=UTF8&tag=moritzlenz-21&linkCode=as2&camp=1638&creative=6742&creativeASIN=0596528124">gibt
-	es auch gute B&uuml;cher dar&uuml;ber</a>.</p>
+	es auch gute Bücher darüber</a>.</p>
 
 	<p>Gerade mit den Regexes von Perl 6 hat man noch sehr, sehr viel mehr
-	M&ouml;glichkeiten, als bisher beschrieben.</p>
+	Möglichkeiten, als bisher beschrieben.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
       <h3>Benannte Rules</h3>
@@ -799,11 +799,11 @@ token identifier { <[a-zA-Z_0-9]> };
 regex perl6_variable { <sigil> <twigil>? <identifier> };
 [[[endsyntax]]]</pre>
 	<p>Das ist ein krudes Modell, um Perl 6-Variablen aufzufinden, die aus
-	einem Sigil (<code>$</code> f&uuml;r Skalare, <code>@</code> f&uuml;r
+	einem Sigil (<code>$</code> für Skalare, <code>@</code> für
 	Arrays...), einem optionalen Twigil und dem eigentlichen Namen der
 	Variablen.</p>
 
-	<p>Es demonstriert, wie man Rules mit dem Schl&uuml;sselw&ouml;rtern
+	<p>Es demonstriert, wie man Rules mit dem Schlüsselwörtern
 	<code>token</code> und <code>regex</code> Namen geben kann, und dann mit
 	<code>&lt;name_der_rule&gt;</code> angesprochen werden kann.</p>
 
@@ -812,11 +812,11 @@ regex perl6_variable { <sigil> <twigil>? <identifier> };
 	was die mögliche Komplexität einschränkt.</p>
 
 	<p>Damit kann man ganze Grammatiken aufbauen und mit rules
-	&uuml;berpr&uuml;fen.</p>
+	überprüfen.</p>
 
       <h3>Rules anwenden</h3>
 
-      <p>Die einfachste M&ouml;glichkeit, eine regexp/rule anzuwenden, ist der
+      <p>Die einfachste Möglichkeit, eine regexp/rule anzuwenden, ist der
       "Smart Match Operator" <code>~~</code>.</p>
 
 <pre>[[[syntax perl6]]]
@@ -824,7 +824,7 @@ my $match = "abcd" ~~ m/b(c)/
 [[[endsyntax]]]</pre>
 
 	<p>in <code>$match</code> wird ein <code>Match</code>-Objekt
-	gespeichert. Diese Objekt verh&auml;lt sich, je nach Kontext,
+	gespeichert. Diese Objekt verhält sich, je nach Kontext,
 	unterschiedlich:</p>
 
 <pre> [[[syntax perl6]]]
@@ -865,7 +865,7 @@ say $text;
 	<p>Die Ausgabe auf den Bildschirm, d.h. auf die Standardausgabe des
 	Programms, erfolt mit <code>say</code> oder <code>print</code>. Der
 	Unterschied besteht darin, dass <code>say</code> am Ende einen
-	zus&auml;tzlichen Zeilenumbruch ausgibt, <code>print</code> nicht.</p>
+	zusätzlichen Zeilenumbruch ausgibt, <code>print</code> nicht.</p>
 
 <pre>[[[syntax perl6]]]
 print "Text";
@@ -885,18 +885,19 @@ say $f: "Dieser Text landet in der Datei $filename";
 $f.say: "Dieser Text auch";
 $f.close();
 [[[endsyntax]]]</pre>
-	<p>Mit <code>open</code> wird eine Datei ge&ouml;ffnet, das zweite
-	Argument <code>:w</code> gibt an, dass die Datei zum schreiben
-	ge&ouml;ffent wird. Dabei wird sie, falls sie existiert,
-	&uuml;berschrieben. Wenn man das nicht will, kann man sie mit
-	<code>:a</code> &ouml;ffnen, dann wird alles, was hineingeschrieben
-	wird, ans Ende angeh&auml;ngt.</p>
 
-	<p><code>open()</code> liefert ein filehandle zur&uuml;ck, dass man in
+	<p>Mit <code>open</code> wird eine Datei geöffnet, das zweite
+	Argument <code>:w</code> gibt an, dass die Datei zum schreiben
+	geöffent wird. Dabei wird sie, falls sie existiert,
+	überschrieben. Wenn man das nicht will, kann man sie mit
+	<code>:a</code> öffnen, dann wird alles, was hineingeschrieben
+	wird, ans Ende angehängt.</p>
+
+	<p><code>open()</code> liefert ein filehandle zurück, dass man in
 	einem Skalar speichern kann, hier <code>$f</code>.</p>
 
 	<p>Mit der Konstruktion <code>open(..) err die "..."</code> wird im
-	Fehlerfall die Funktion <code>die</code> ausgef&uuml;hrt, die das
+	Fehlerfall die Funktion <code>die</code> ausgeführt, die das
 	Programm mit einer Fehlermeldung beendet.</p>
 
 	<p>Man kann, wie oben im Beispiel, <code>say</code> und
@@ -922,15 +923,15 @@ $f.close();
 # lese durch beliebige Zeichen getrennte ganze Zahlen von der 
 # Standardeingabe ein  und gebe die Summe aus:
 for =<> -> my $line {
-	# comb liefert alle Matches der Regular Expression zur&uuml;ck:
+	# comb liefert alle Matches der Regular Expression zurück:
 	my @numbers = $line.comb(/\d+/);
 	# [+] (liste) gibt die Summe aller Elemente der Liste
 	say [+] @numbers;
 }
 [[[endsyntax]]]</pre>
 
-	<p>Um aus einer Datei zu lesen, &ouml;ffnet man sie vorher mit
-	<code>open</code>:</p>
+	<p>Um aus einer Datei zu lesen, öffnet man sie vorher mit
+	<code>open</code>, und list mit der Konstruktion <code>=$fh</code>:</p>
 <pre>[[[syntax perl6]]]
 my $f = open("summe.dat") err die "Kann summe.dat nicht lesen: $!";
 for =$f -> my $line {
@@ -943,7 +944,7 @@ for =$f -> my $line {
 
       <h2>Objektorientierung: Klassen, Rollen und Objekte</h2>
 
-      <p>Perl 6 bietet die M&ouml;glichkeit, objektorientiert zu programmieren.
+      <p>Perl 6 bietet die Möglichkeit, objektorientiert zu programmieren.
       Allerdings ist das vollkommen optional, wenn man nicht will, muss man
       auch nicht.</p>
 
@@ -953,17 +954,17 @@ for =$f -> my $line {
 
 	<h2>Funktionen</h2>
 
-	<p>Perl 6 bring von sich aus viele n&uuml;tzliche Funktionen mit. Hier
-	seien nur ein paar wichtige erw&auml;hnt, die komplette Liste
-	inklusive Erkl&auml;rungen gibt es in der offiziellen Dokumentation im
+	<p>Perl 6 bring von sich aus viele nützliche Funktionen mit. Hier
+	seien nur ein paar wichtige erwähnt, die komplette Liste
+	inklusive Erklärungen gibt es in der offiziellen Dokumentation im
 	Abschnitt <a href="http://perlcabal.org/syn/S29.html">builtin
 	functions</a>.</p>
 
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 	<h3>Mathematische Funktionen</h3>
 
-	<p>Die "&uuml;blichen" mathematischen Funktionen sind in Perl 6
-	verf&uuml;gbar:</p>
+	<p>Die "üblichen" mathematischen Funktionen sind in Perl 6
+	verfügbar:</p>
 
 	<p><code>abs</code> (Betrag), <code>floor, ceiling, round</code>
 	(Runden), <code>sin, cos, tan, asin, acos, atan, sec, cosec, cotan,
@@ -1068,13 +1069,13 @@ my @l = grep { $^a % 3 == 0}, 1 .. 10;
 	<h2>Timtowtdi: "There is more than one way to do it"</h2>
 
 	<p>Eine von Perls Philosophien war schon immer, dem Programmierer
-	m&ouml;glichst  viele Freiheiten zu lassen, und ihn damit so
-	programmieren lassen, wie ihm oder ihr das am besten gef&auml;llt.</p>
+	möglichst  viele Freiheiten zu lassen, und ihn damit so
+	programmieren lassen, wie ihm oder ihr das am besten gefällt.</p>
 
-	<p>Hier seien ein paar Beispiele aufgef&uuml;rht, wie man ein paar
-	einfache Aufgaben auf verschiedene Arten l&ouml;sen kann.</p>
+	<p>Hier seien ein paar Beispiele aufgefürht, wie man ein paar
+	einfache Aufgaben auf verschiedene Arten lösen kann.</p>
 
-	<h3>Alle Werte einer Liste um <code>$n</code> erh&ouml;hen</h3>
+	<h3>Alle Werte einer Liste um <code>$n</code> erhöhen</h3>
 
 <pre>[[[syntax perl6]]]
 my $n = 3;
