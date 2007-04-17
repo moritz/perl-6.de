@@ -156,7 +156,9 @@ margin:0 0 12px;
 
 #leftside h2,#rightside h2 {
 font-size:1.1em;
-margin:0 0 20px;
+padding: 1.1ex;
+margin-left: 20px;
+/*margin:10px 10px 20px; */
 }
 
 #leftside p,#rightside p {

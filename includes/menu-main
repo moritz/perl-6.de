@@ -43,20 +43,12 @@
 					 </li>]]]
 			 </ul>}}]]]
 		</ul>
+		<h2>Spezielle Themen</h2>
+		<ul>
+			[[[item objekt	 <li><a class="nav{{ active}}"
+			 href="/tutorials/objektmodell">Objektmodell</a></li>]]]
+			[[[item regex <li><a class="nav{{ active}}"
+			href="/tutorials/regex">Regex</a></li>]]]
+		</ul>
 	</div>
 }}]]]
-
-<!--
-<div id="leftside">
-<h1>Included layouts</h1>
-<p>
-<a class="nav active" href="index.html">3 columns</a><span class="hide"> | </span>
-<a class="nav" href="2col.html">2 columns</a><span class="hide"> | </span>
-<a class="nav" href="no-img.html">No images</a><span class="hide"> | </span>
-<a class="nav" href="#">Example menu</a><span class="hide"> | </span>
-<a class="nav sub" href="#">Sub-page 1</a><span class="hide"> | </span>
-<a class="nav sub" href="#">Active sub-page</a><span class="hide"> | </span>
-<a class="nav sub" href="#">Sub-page 2</a>
-</p>
--->
-

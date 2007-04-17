@@ -43,7 +43,7 @@ class Rechteck {
 
 	<p>Wenn Objektvariablen von außen lesbar sein sollen, kann man sie mit
 	der Schreibweise <code>has $.foo</code> lesbar machen, wenn man sie
-	von außen auch setzen können soll hilft ein <code>is rw</code>:</pre>
+	von außen auch setzen können soll hilft ein <code>is rw</code>:</p>
 
 <pre>[[[syntax perl6]]]
 class Rechteck {
@@ -123,3 +123,31 @@ class Amphibienfahrzeug is Kraftfahrzeug is Wasserfahrzeug {
 [[[endsyntax]]]</pre>
 	<p>(Beispiel aus der <a
 			href="http://de.wikipedia.org/wiki/Vererbung_(Programmierung)#Beispiel">Wikipedia</a>)</p>
+
+	<h2>Roles</h2>
+
+	<p>In Perl 6 sind Klassen vor allem dazu da, um "ist-ein"-Beziehungen
+	für Typen zu deklarieren. Für die Wiederverwendbarkeit von Code sind
+	<em>Roles</em>, auf Deutsch <em>Rolle</em> zuständig. Roles sind so 
+	etwas wie Interfaces in Java,
+	die Implementierung der Methoden beinhalten.</p>
+
+	<p>Genauer gesagt kann eine Role alles enthalten, was eine Klasse auch
+	enthalten kann, nur kann man keine Objekte einer Role erstellen.</p>
+<pre>[[[syntax perl6]]]
+role Haustier {
+	has $.halsband;
+	method halsband_loesen {
+		undefine $.halsband;
+	}
+	...
+}
+
+class Hund is Saeugetier does Haustier {
+	...
+}
+[[[endsyntax]]]</pre>
+	<p>Wie das Beispiel zeigt, inkorporiert eine Klasse eine Rolle mit dem
+	Schlüsselwort <code>does</code>.</p>
+
+	
