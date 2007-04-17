@@ -28,6 +28,7 @@ my @list;
 
 	<p>Die <code>print</code>-Funktion hat eine eine Schwester, die ein
 	Newline am Ende anhängt:<code>say</code></p>
+
 <pre>[[[syntax perl6]]]
 my $answer  = 7 * 6;
 # alle folgenden Varianten sind äquivalent:
@@ -420,3 +421,67 @@ if $status {
 	Aufrufer den Typ <code>$typ</code> erwartet, und mit
 	<code>want.count</code>. Mehr dazu im Abschnitt <a
 	href="/tutorials/kontext">Kontexte</a>.</p>
+
+	<h2>Verschiedenes (2)</h2>
+
+	<h3>Data::Dumper</h3>
+	<p><code>Data::Dumper</code> ist jetzt überflüssig, dafür gibt es die
+	eingebaute Methode <code>perl</code>:</p>
+
+<pre>[[[syntax perl6]]]
+my %foo = "a" => "b", "c" => <d e f>;
+say %foo.perl;
+#Ausgabe: {("a" => "b"), ("c" => ("d", "e", "f"))}
+[[[endsyntax]]]</pre>
+
+	<p><code>perl</code> gibt Perl-Code aus, der das entsprechende
+	Konstrukt erzeugt.</p>
+
+	<h3>Ausführen anderer Programmiersprachen</h3>
+
+	<p>Mit <code>eval</code> können jetzt auch andere Programmiersprachen
+	ausgeführt werden, insbesondere Perl 5, aber auch <a
+	href="http://www.yaml.org/">Yaml</a> (liefert dann Datenstrukturen
+	zurück), und je nach Compiler/Interpreter eventuell Java, Haskell,
+	Ruby und andere:</p>
+
+<pre>[[[syntax perl6]]]
+eval("/* Java-Code hier, der einen Wert liefert */", :lang(Java));
+[[[endsyntax]]]</pre>
+
+	<p>Die Flexibilität der Datenstrukturen, die von der "Fremdsprache"
+	zurückgegeben werden können, hängt sicher von der entsprechenden
+	Sprache und dem Interface ab, aber zumindest Perl 5 sollte beliebig
+	komplexe Datenstrukturen (inklusive Objekte) zurückliefern können.</p>
+
+	<h3>Pointy Subs</h3>
+
+	<p><em>Pointy Subs</em> sind eine neue Möglichkeit, anonyme
+	Subroutinen zu schreiben:</p>
+
+<pre>[[[syntax perl6]]]
+my $square = -> $a { $a * $a };
+say $square(4);	
+# Ausgabe: 16
+
+say $square.WHAT
+# Ausgabe: Block
+[[[endsyntax]]]</pre>
+
+	<p>Man beachte, dass die <code>for</code>-Schleife, wie sie vorher
+	vorgestellt wurde, ein <em>pointy sub</em> erwartet:</p>
+
+<pre>[[[syntax perl6]]]
+for 1 .. 5 -> my $a {
+	say $a;
+}
+[[[endsyntax]]]</pre>
+
+	<p>Alternativ können auch <em>self declaring formal parameters</em>
+	verwendet werden, also Variablen mit dem <code>$^</code>-Sigil:</p>
+
+<pre>[[[syntax perl6]]]
+for 1 .. 5  {
+	say $^number;
+}
+[[[endsyntax]]]</pre>
