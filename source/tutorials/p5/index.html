@@ -409,7 +409,47 @@ if $status {
 
 	<p><code>exec</code> heißt jetzt <code>runinstead</code>.</p>
 
-	<h2><code>wantarray</code> wird <code>want</code></h2>
+
+	<h2>Neue Features</h2>
+
+	<p>Eine ganze Reihe neuer Features gibt es in Perl 6, die es in Perl 5
+	in dieser Form noch gar nicht gab.</p>
+
+	<h3>Metaoperatoren</h3>
+
+	<p>Metaoperatoren verwenden andere Operatoren, um sie z.B. auf Listen
+	anzuwenden:</p>
+
+<pre>[[[syntax perl6]]]
+my @a = 1 .. 4;
+my $sum = [+] @a;	# $sum = 10
+# Aequivalent:
+$sum = reduce &infix:<+>, @a;
+$sum = reduce {$^a + $^b}, @a;
+
+# Hyperoperatoren:
+my @b = <4 3 2 1>
+my @sum = @a »+« @b;	# @sum = 5, 5, 5, 5
+# kann man auch als >>+<< schreiben
+
+my @b_plus_one = @b »+ 1;
+[[[endsyntax]]]</pre>
+
+	<p>Der Hyperoperator <code>»...«</code> wendet den Operator in der
+	Mitte paarweise auf die Elemente zweier Listen an. Wenn man auf einer
+	Seite keine Liste sondern einen Skalar angibt, muss man die
+	entsprechende Hälfte des Hyperoperators weglassen.</p>
+
+	<p>Anstatt der Unicode-Zeichen <code>»</code> und <code>«</code> kann
+	man auch doppelte Kleiner- und Größerzeichen
+	<code>&gt;&gt;...&lt;&lt;</code> benutzen.</p>
+
+	<p>Hyper- und Reduktionsoperator führen ihre Operationen auf
+	Multi-Prozessor-Systemen parallelisiert aus, wenn der Interpreter bzw.
+	Compiler entsprechend konfiguriert wird.</p>
+
+	<h2>Verschiedenes (2)</h2>
+	<h3><code>wantarray</code> wird <code>want</code></h3>
 
 	<p>Die Funktion <code>wantarray</code> ist dem allgemeineren
 	<code>want</code>-Builtin gewichen.</p>
@@ -421,8 +461,6 @@ if $status {
 	Aufrufer den Typ <code>$typ</code> erwartet, und mit
 	<code>want.count</code>. Mehr dazu im Abschnitt <a
 	href="/tutorials/kontext">Kontexte</a>.</p>
-
-	<h2>Verschiedenes (2)</h2>
 
 	<h3>Data::Dumper</h3>
 	<p><code>Data::Dumper</code> ist jetzt überflüssig, dafür gibt es die

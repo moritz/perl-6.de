@@ -480,7 +480,7 @@ my $val = 100;
 my $w = 1;
 my $eps = 1e-7;
 
-while abs($w*$w-$val) &gt; $eps {
+while abs($w*$w-$val) > $eps {
 	$w = 0.5 * ($w + $val / $w );
 }
 say $w;
