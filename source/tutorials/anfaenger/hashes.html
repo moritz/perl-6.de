@@ -89,9 +89,9 @@ for %autoren.keys.sort -> my $projekt {
 
 <pre>[[[syntax perl6]]]
 my %autoren  = (
-	"Linux"	=> ("Linus Torvalds", "Andrew Morton", "Chris Wright"),
-	"Pugs"	=> ("Audrey Tang", "Damian Conway"),
-	"Perl"	=> ("Larry Wall", "Randal Schwartz") 
+	"Linux"	=> ["Linus Torvalds", "Andrew Morton", "Chris Wright"],
+	"Pugs"	=> ["Audrey Tang", "Damian Conway"],
+	"Perl"	=> ["Larry Wall", "Randal Schwartz"], 
 	);
 # Die Listen sind alles andere als vollständig
 
@@ -105,4 +105,28 @@ for %autoren.kv -> my $projekt, @autoren {
 # (push fügt einem Array ein Element hinzu)
 [[[endsyntax]]]</pre>
 	
+	<p>Die Verschachtelungen können beliebig sein, also z.B. Hashes in
+	Hashes in Listen, oder wie auch immer man es braucht:</p>
 
+<pre>[[[syntax perl6]]]
+my %autoren  = (
+	"Linux"	=> [
+		{
+			'Person'	=> 'Linus Torvalds',
+			'Position'	=> 'Gründer',
+			'Arbeitgeber'	=> 'Linux Foundation',
+		},
+		{
+			'Person'	=> 'Andrew Morton',
+			'Position'	=> 'Maintainer des 2.6er Kernels',
+			'Arbeitgeber'	=> 'Google',
+		}
+	],
+	"Perl"	=> [
+			{
+			'Person'	=> "Larry Wall", 
+			'Position'	=> 'Wohlmeinender Diktator',
+			},
+	],
+	);
+[[[endsyntax]]]</pre>
