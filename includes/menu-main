@@ -47,6 +47,8 @@
 		<ul>
 			[[[item objekt	 <li><a class="nav{{ active}}"
 			 href="/tutorials/objektmodell">Objektmodell</a></li>]]]
+			[[[item kontext <li><a class="nav{{ active}}"
+			href="/tutorials/kontext">Kontext</a></li>]]]
 			[[[item regex <li><a class="nav{{ active}}"
 			href="/tutorials/regex">Regex</a></li>]]]
 		</ul>

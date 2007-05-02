@@ -234,6 +234,17 @@ my @worte = $text.split(m/\s+/);
 # Ergebnis: @worte = "20", "mal", "2", "ist", "40";
 [[[endsyntax]]]</pre>
 
+	<p>Wenn man in einer Regex häufig einen Schrägstrich <code>/<code>
+	benutzt, muss man ihn mit einem Rückstrich escapen: <code>\/</code>.
+	Eine andere Möglichkeit ist, ein anderes Zeichen als Begrenzung der
+	Regex zu verwenden:</p>
+<pre>[[[syntax perl6]]]
+my $cmd = "/usr/bin/perl -w";
+if $cmd ~~ m#^(/.*/)perl# {
+	say "Perl liegt im Verzeichnis $/[0]";
+}
+[[[endsyntax]]]</pre>
+
 	<h2>Gierige und bescheidene Quantifier</h2>
 
 	<p>Angenommen, man lässt die Regex <code>m/a.*b/</code> auf den String
