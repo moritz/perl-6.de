@@ -628,3 +628,26 @@ m/ \d+ <!after <sp> Euro>/
 # passt auf "3 Dollar", aber nicht auf "3 Euro"
 [[[endsyntax]]]</pre>
 
+	<h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
+
+<pre>[[[syntax perl6]]]
+my $str = "12+3";
+token op { \+ };
+$str ~~ m:rw/(\d+) <op> (\+d)/;
+$<op> = '(irgendwas)';	# $str ist jetzt "12(irgendwas)3"
+[[[endsyntax]]]</pre>
+	
+	<p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
+	beschreibbar machen, wie oben demonstriert.</p>
+
+	<p>Dabei ändern sich automatisch auch die anderen Captures,
+	insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
+
+<pre>[[[syntax perl6]]]
+my $str = "ab";
+$str ~~ m:rw/(a)(b)/;
+say $/[1].from;		# 1
+$/[0] = 'aa';	
+say $/[1].from;		# 2
+say ~$/;		# aab
+[[[endsyntax]]]</pre>
