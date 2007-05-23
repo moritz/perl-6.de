@@ -585,6 +585,17 @@ div.serendipitySideBarItem {
     background-color: #EEEEFF;
 }
 
+pre, code {
+	font-family: monospace;
+	font-size: 110%;
+	background-color: #e5e5fe;
+	border-color: gray;
+	border-style: dotted;
+	border-width: 1px;
+}
+pre {
+	padding: 1.2ex;
+}
 /* Syntax Hilighting stuff from Text::VimColor */
 
 .synComment    { color: #0000FF }
