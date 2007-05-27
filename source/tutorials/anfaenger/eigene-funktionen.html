@@ -90,3 +90,136 @@ sub positive_zahl {
 	<p>Wenn z.B. ein <code>return 4;</code> in der Funktion steht, und die
 	Funktion mit <code>$a = positive_zahl;</code> aufgerufen wird, hat
 	danach die Variable <code>$a</code> den Wert 4.</p>
+
+	<h2>Gültigkeitsbereiche für Variablen</h2>
+
+	<p>Versuchen Sie, folgendes Programm auszuführen:</p>
+
+<pre>[[[syntax perl6]]]
+sub meine_berechnung ($x){
+	my $y = 2 * $x;
+	return $y * $y;
+}
+
+say $y;	    # FEHLER!
+[[[endsyntax]]]</pre>
+
+	<p>Die letzte Zeile wird einen Fehler ausgeben, der sagt, dass die
+	Variable <code>$y</code> nicht deklariert sei.</p>
+
+	<p>Tatsächlich wurde sie zwar definiert, aber innerhalb einer
+	Funktion, und in diesem Beispiel wird versucht, auf sie außerhalb der
+	Funktion zuzugreifen. Dort ist sie aber nicht bekannt.</p>
+
+	<p>Man sagt, dass die Funktion einen eigenen Gültigkeitsbereich für
+	Variablen erzeugt, auf Englisch "Scope" genannt.</p>
+
+	<p>In der Funktion kann man auf Variablen im äußeren Scope zugreifen,
+	wenn sie vorher deklariert wurden:</p>
+
+<pre>[[[syntax perl6]]]
+my $x;
+
+sub say_x {
+	say $x;
+}
+
+sub change_x {
+	$x = 0;
+}
+
+$x = 3;
+say_x;		# Ausgabe: 3
+change_x;	# $x wird jetzt auf 0 gesetzt
+say_x;		# Ausgabe: 0
+[[[endsyntax]]]</pre>
+
+	<p>Wenn man innerhalb einer Funktion eine Variable mit <code>my</code>
+	deklariert, die außerhalb dieser Funktion schon vorhanden ist, gilt
+	innerhalb dieser Funktion nur die neu deklarierte "lexikalische"
+	Variable, außerhalb der Funktion aber wieder die alte:</p>
+
+<pre>[[[syntax perl6]]]
+my $x = 3;
+
+say $x;		# Ausgabe: 3
+
+sub irgendeine_funktion {
+	my $x;
+	$x = 4;
+	say $x;	# Ausgabe: 4
+}
+
+irgendeine_funktion();
+
+say $x;		# Ausgabe: 3
+[[[endsyntax]]]</pre>
+
+	<p>Diese Regeln gelten nicht nur für Funktionen, sondern für alle
+	Blöcke, d.h. für (fast) alles, was in geschweiften Klammern steht.</p>
+
+	<p>In den meisten Programmiersprachen gelten übrigens andere Regeln
+	für den Gültigkeitsbereich von Variablen.</p>
+
+	<h3>Motivation</h3>
+
+	<p>Am Anfang sehen diese Regeln kompliziert und vielleicht auch
+	willkürlich aus, aber es gibt sehr gute Gründe dafür.</p>
+
+	<p>Der wichtigste ist, dass es sonst sehr schnell zu unangenehmen
+	Namenskollisionen kommen kann:</p>
+
+<pre>[[[syntax perl6]]]
+sub fakultaet($x){
+	my $produkt = 1;
+	for 1 .. $i -> $i {
+		$produkt = $produkt * $x;
+	}
+	return $produkt;
+}
+
+# irgendwo ganz anders im Code:
+# Berechne die 10. Zeile des Pascalschen Dreiecks:
+# http://de.wikipedia.org/wiki/Pascalsches_Dreieck
+
+loop(my $i = 0; $i < 10; $i++){
+	say fakultaet(10) / (fakultaet($i) * fakultaet(10 - $i));
+}
+[[[endsyntax]]]</pre>
+
+	<p>Wenn es kein Scoping, also keine verschiedenen Gültigkeitsbereiche
+	für Variablen gäbe, würde folgendes passieren:</p>
+
+	<ol>
+		<li>In der Schleife wird <code>$i</code> auf 0 gesetzt.</li>
+		<li><code>fakultaet(10)</code> wird aufgerufen, darin wird am
+		Ende der <code>for</code>-Schleife <code>$i</code> auf 10
+		gesetzt.</li>
+		<li>Ab jetzt enthält <code>$i</code> den Wert 10, d.h. der
+		Aufruf <code>fakultaet($i)</code> wird nach
+		<code>fakultaet(10)</code> überesetzt. Nach diesem Aufruf
+		steht <code>$i</code> immer noch auf 10.</li>
+		<li>Der dritte Aufruf <code>fakultaet(10-$i)</code> wird zu
+		<code>fakultät(10-10)</code>, also <code>fakultaet(0)</code>.
+		In deren Berechnung wird die Liste <code>1..0</code>
+		durchlaufen, diese Liste ist aber leer, d.h. die Variable 
+		<code>$i</code> ändert ihren Wert nicht.</li>
+		<li>Nach dieser Zeile hat <code>$i</code> den Wert 10, die
+		Bedingung <code>$i &lt; 10</code> ist also nicht mehr erfüllt,
+		die Schleife bricht ab.</li>
+	</ol>
+
+	<p>Ohne Scoping würde die Schleife also nicht wie erwartet die 10
+	Werte (1, 10, 45, 120, 210, 252, 210, 120, 45, 10,) ausgeben, sondern
+	nur einen einzigen Wert, 1.</p>
+
+	<p>Das Problem war, dass in zwei verschiedenen Bereichen des Codes
+	Variablen mit gleichen Namen verwendet wurden.</p>
+
+	<p>Programme können leicht mehrere Zehntausend Zeilen lang werden -
+	der <a href="http://www.kernel.org/">Linux Kernel</a> hat sogar 6
+	Millionen Zeilen Programmcode.</p>
+
+	<p>In derartig großen Projekten ist es de facto unmöglich,
+	Namenskollision zu vermeiden, wenn die Programmiersprache keine
+	effektive Möglichkeit gibt, damit umzugehen.</p>

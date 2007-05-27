@@ -1,0 +1,26 @@
+[[[setvar title 404 - Seite nicht gefunden]]]
+[[[menu main home home]]]
+
+<div id="content">
+<h1>404 - Seite nicht gefunden</h1>
+
+	<p>Das Leben ist tragisch.</p>
+
+	<p>Wir haben Kamele und Elche losgeschickt, um diese Seite zu finden -
+	erfolglos.</p>
+
+	<p>Nicht einmal der Smartmatch-Operator hat geholfen.</p>
+
+	<p>In unserer Verzweiflung haben wir es sogar mit SQL versucht:</p>
+<pre>[[[syntax perl6]]]
+use v6;
+use perl5:DBI;
+# ...
+my $q = $dbh.prepare("SELECT content_type, canonical_url, content 
+		FROM pages WHERE url = ?");
+$q.execute $url;
+
+# wenn es geklappt hätte, würden Sie das hier nicht lesen
+[[[endsyntax]]]</pre>
+
+	<p>Die Seite konnte nicht gefunden werden. Mist.</p>

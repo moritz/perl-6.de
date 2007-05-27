@@ -85,6 +85,9 @@ say $r.flaeche();
 	<code>submethod</code> anstelle von <code>method</code> verhindert,
 	dass der Konstruktor automatisch vererbt wird.</p>
 
+	<p>Wenn <code>BUILD</code> nichts außer der impliziten Zuweisung von
+	Objektvariablen macht, kann man die Methode auch weglassen.</p>
+
 	<p>Man kann Variablen auch als explizit privat deklarieren indem man
 	ihenen ein Ausrufezeichen als Twigl mitgibt, also <code>has
 	$!foo;</code>. Methoden kann man privat machen, indem man sie als
@@ -123,6 +126,39 @@ class Amphibienfahrzeug is Kraftfahrzeug is Wasserfahrzeug {
 [[[endsyntax]]]</pre>
 	<p>(Beispiel aus der <a
 			href="http://de.wikipedia.org/wiki/Vererbung_(Programmierung)#Beispiel">Wikipedia</a>)</p>
+
+	<p>Vererbung und andere <code>is ...</code>-Traits kann man auch
+	innerhalb der Klasse schreiben:</p>
+<pre>[[[syntax perl6]]]
+
+class Amphibienfahrzeug {
+	is Kraftfahrzeug;
+	is Wasserfahrzeug;
+	...
+}
+[[[endsyntax]]]</pre>
+
+	<h2>Klassen erweitern</h2>
+
+	<p>Wenn man eine Klasse erweitern will, ihr zum Beispiel eine Methode
+	hinzufügen will, kann man das auch ohne Vererbung erreichen:</p>
+
+<pre>[[[syntax perl6]]]
+class String is also {
+	method as_ebcdic {
+		...
+	}
+}
+[[[endsyntax]]]</pre>
+
+	<p>Das hat den Vorteil, dass man auch fest eingebaute Datentypen wie
+	String oder Int erweitern kann, und fremder Code, den man einbindet,
+	verwendet automatisch die erweiterte Version.</p>
+	
+	<p>Wenn man versucht, eine Klasse zu erweitern, ohne ein <code>is
+	also</code> in die Deklaration zu schreiben, bekommt man eine
+	Fehlermeldung, dass man eine Klasse redeklariert.</p>
+
 
 	<h2>Roles</h2>
 
