@@ -522,7 +522,7 @@ sub factorial(int $x){
 
 	<p>Und man kann auch den Rückgabetyp festlegen:</p>
 <pre>[[[syntax perl6]]]
-sub factorial(int $x) is int {
+Int sub factorial(Int $x) returns Int {
     return [*] (1 .. $x);
 }
 [[[endsyntax]]]</pre>
