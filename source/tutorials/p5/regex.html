@@ -1,134 +1,142 @@
 [[[menu main tut p5 regex]]]
 [[[setvar title Perl 6 für p5-Programmierer: Regexes und Rules]]]
 <div id="content">
-	<h1>Regexes und Rules</h1>
+    <h1>Regexes und Rules</h1>
 
-	<h2>Perl 5-Regex</h2>
+    <h2>Perl 5-Regex</h2>
 
-	<p>Aus Gründen der Rückwärtskompatibilität sind Perl 5-"Regular
-	Expressions", kurz regexes, immer noch vorhanden, allerdings hat sich
-	die Schreibweise für die Modifier ein wenig verändert:</p>
+    <p>Aus Gründen der Rückwärtskompatibilität sind Perl 5-"Regular
+    Expressions", kurz regexes, immer noch vorhanden, allerdings hat sich
+    die Schreibweise für die Modifier ein wenig verändert:</p>
 
 <pre>[[[syntax perl6]]]
 # bisher: $str =~ m/^foo\d{3}$/i;
 # jetzt:
 $str ~~ m:P5:i/^foo\d{3}$/;
 [[[endsyntax]]]</pre>
-	<p>Modifier werden also am Anfang geschrieben, aus <code>=~</code>
-	wird der <em>Smart Match Operator</em> <code>~~</code>. Die
-	"Innereien" der regex bleiben größtenteils unverändert, nur dass aus
-	<code>$0</code> jetzt <code>$1</code> geworden ist (usw), da der
-	Programmname in <code>$*PROGRAM_NAME</code> verfübar ist und nicht
-	mehr in <code>$0</code>.</p>
 
-	<h2>Rules</h2>
+    <p>Modifier werden also am Anfang geschrieben, aus <code>=~</code>
+    wird der <em>Smart Match Operator</em> <code>~~</code>. Die
+    "Innereien" der regex bleiben größtenteils unverändert, nur dass aus
+    <code>$0</code> jetzt <code>$1</code> geworden ist (usw), da der
+    Programmname in <code>$*PROGRAM_NAME</code> verfübar ist und nicht
+    mehr in <code>$0</code>.</p>
 
-	<p><em>Rules</em> sind der mächtigere und durchdachtere Nachfolger von
-	regexes. Vieles hat sich geändert, aber einiges ist auch gleich
-	geblieben:</p>
-	<ul>
-		<li>Jedes mit einem Backslash <code>\</code> escapete
-		Sonderzeichen steht genau für das das escapte Zeichen.</li>
-		<li>Capturing Groups stehen immer noch in runden Klammern
-		<code>( ... )</code>.</li>
-		<li>Alternativen werden immer noch durch <code>|</code>
-		getrennt.</li>
-		<li>Die Quantifier <code>+</code>, <code>*</code> und
-		<code>?</code> behalten ihre Bedeutung bei, auch die
-		"non-greedy"-Varianten mit nachgestelltem Fragezeichen (wie
-		<code>+?</code>).</li>
-	</ul>
+    <h2>Rules</h2>
 
-	<p>Die Änderungen überwiegen bei weitem. Das hier ist nur eine kleine
-	Zusammenstellung der Änderungen, die sicher nicht Vollständig ist.</p>
+    <p><em>Rules</em> sind der mächtigere und durchdachtere Nachfolger von
+    regexes. Vieles hat sich geändert, aber einiges ist auch gleich
+    geblieben:</p>
+    <ul>
+        <li>Jedes mit einem Backslash <code>\</code> escapete
+        Sonderzeichen steht genau für das das escapte Zeichen.</li>
+        <li>Capturing Groups stehen immer noch in runden Klammern
+        <code>( ... )</code>.</li>
+        <li>Alternativen werden immer noch durch <code>|</code>
+        getrennt.</li>
+        <li>Die Quantifier <code>+</code>, <code>*</code> und
+        <code>?</code> behalten ihre Bedeutung bei, auch die
+        "non-greedy"-Varianten mit nachgestelltem Fragezeichen (wie
+        <code>+?</code>).</li>
+    </ul>
 
-	<ul>
-		<li>Alle Zahlen und Buchstaben bekommen durch ein
-		vorgestellten Backslash eine Sonderbedeutung, alles andere
-		verliert durch einen Backslash seine Sonderbedeutung.</li>
+    <p>Die Änderungen überwiegen bei weitem. Das hier ist nur eine kleine
+    Zusammenstellung der Änderungen, die sicher nicht Vollständig ist.</p>
 
-		<li>Leerzeichen, Tabs und New Lines werden per Default
-		ignoriert (so wie unter p5 mit /x).</li>
+    <ul>
+        <li>Alle Zahlen und Buchstaben bekommen durch ein
+        vorgestellten Backslash eine Sonderbedeutung, alles andere
+        verliert durch einen Backslash seine Sonderbedeutung.</li>
 
-		<li>Den /s-Switch (single line) gibt es nicht mehr,
-		<code>^</code> und <code>$</code> passen
-		<strong>immer</strong> auf Anfang bzw. Ende des Strings,
-		<code>^^</code> und <code>$$</code> auf logische
-		Zeilenanfänge und -Enden (und auch Anfang/Ende des
-		Strings.</li>
+        <li>Leerzeichen, Tabs und New Lines werden per Default
+        ignoriert (so wie unter p5 mit /x).</li>
 
-		<li>Der Punkt <code>.</code> matched jetzt jedes
-		beliebige Zeichen, auch Zeilenende, <code>\N</code> matched
-		alles <em>außer</em> dem Zeilenende.</li>
+        <li>Den /s-Switch (single line) gibt es nicht mehr,
+        <code>^</code> und <code>$</code> passen
+        <strong>immer</strong> auf Anfang bzw. Ende des Strings,
+        <code>^^</code> und <code>$$</code> auf logische
+        Zeilenanfänge und -Enden (und auch Anfang/Ende des
+        Strings.</li>
 
-		<li>Gruppierungen können jetzt mit einzlenen Anführungszeichen
-		erfolgen, d.h. <code>m/foo*/</code> matched foooo, während
-		<code>m/'foo'*/</code> zu foofoofoo passt.</li>
+        <li>Der Punkt <code>.</code> matched jetzt jedes
+        beliebige Zeichen, auch Zeilenende, <code>\N</code> matched
+        alles <em>außer</em> dem Zeilenende.</li>
 
-		<li>Non-Capturing Groups, früher <code>(?: ... )</code> stehen
-		jetzt in eckigen Klammern <code>[ ... ]</code>.</li>
+        <li>Gruppierungen können jetzt mit einzlenen Anführungszeichen
+        erfolgen, d.h. <code>m/foo*/</code> matched foooo, während
+        <code>m/'foo'*/</code> zu foofoofoo passt.</li>
 
-		<li>Code in geschweiften Klammern wird als sog.
-		<em>Capture</em> ausgeführt: 
-		<code>[[[syntax perl6]]] m/(\S+) { say "Text gefunden"; push
-		@text_chunks, $0 }/[[[endsyntax]]]</code>. Nach einer Closure
-		werden <code>$0</code> etc. zurückgesetzt.</li>
+        <li>Analog zum "normalen" Perl 6 gibt es auch doppelte
+        Anführungszeichen, in denen auch interpoliert wird:
+        <code>"..."</code>.</li>
 
-		<li>Variablen in Regexes werden per Default nicht mehr
-		interpoliert, d.h. <code>my $f = "."; $text ~~ m/$f/</code>
-		passt nicht mehr auf beliebige Zeichen, sondern auf den
-		Punkt.</li>
+        <li>Non-Capturing Groups, früher <code>(?: ... )</code> stehen
+        jetzt in eckigen Klammern <code>[ ... ]</code>.</li>
 
-		<li>Wenn man ein Array in eine Regex einsetzt, werden die
-		Elemente als Alternativen angesehen, d.h. <code>m/@cmd/</code>
-		ist äquivalent zu <code>m/ [ @cmd[0] | @cmd[1] | ...  ]</code>.
-		</li>
-	</ul>
+        <li>Code in geschweiften Klammern wird als sog.
+        <em>Capture</em> ausgeführt: 
+        <code>[[[syntax perl6]]] m/(\S+) { say "Text gefunden"; push
+        @text_chunks, $0 }/[[[endsyntax]]]</code>. Nach einer Closure
+        werden <code>$0</code> etc. zurückgesetzt.</li>
 
-	<h2>&lt; ... &gt; ist magisch</h2>
-	
-	<p>Teile von Regexes, die in spitze Klammern <code>&lt; ...
-		&gt;</code> eingeschlossen sind, können sehr verschiedene
-	Dinge bedeuten, je nach dem, was das erste Zeichen ist - und der
-	Rest...</p>
+        <li>Variablen in Regexes werden per Default nicht mehr als Regex,
+        sonder also String interpoliert, d.h. 
+        <code>my $f = "."; $text ~~ m/$f/</code> passt nicht mehr auf beliebige 
+        Zeichen, sondern auf den Punkt. Interpolation geht noch mit
+        <code>&lt;$re&gt;</code>.</li>
 
-	<p>Wenn direkt innerhalb der spitzen Klammern eckige Klammern stehen,
-	steht das für eine Klasse von Zeiche, so wie früher
-	<code>[...]</code> (nur dass jetzt Leerzeichen ignoriert werden):</p>
+        <li>Wenn man ein Array in eine Regex einsetzt, werden die
+        Elemente als Alternativen angesehen, d.h. <code>m/@cmd/</code>
+        ist äquivalent zu <code>m/ [ @cmd[0] | @cmd[1] | ...  ]</code>.
+        </li>
+    </ul>
+
+    <h2>&lt; ... &gt; ist magisch</h2>
+
+    <p>Teile von Regexes, die in spitze Klammern <code>&lt; ...
+    &gt;</code> eingeschlossen sind, können sehr verschiedene
+    Dinge bedeuten, je nach dem, was das erste Zeichen ist - und der
+    Rest...</p>
+
+    <p>Wenn direkt innerhalb der spitzen Klammern eckige Klammern stehen,
+    steht das für eine Klasse von Zeiche, so wie früher
+    <code>[...]</code> (nur dass jetzt Leerzeichen ignoriert werden):</p>
+
 <pre>[[[syntax perl6]]]
 regex buchstabe { <[a..z A..Z]> };
 [[[endsyntax]]]</pre>
 
-	<p>Wenn einfach nur Buchstaben und Ziffern darin stehen, wird das
-	Konstrukt als unter-Regex interpretiert. Damit kann man regexes
-	verschachteln:</p>
+    <p>Wenn einfach nur Buchstaben und Ziffern darin stehen, wird das
+    Konstrukt als unter-Regex interpretiert. Damit kann man regexes
+    verschachteln:</p>
 
 <pre>[[[syntax perl6]]]
 regex buchstabe  { <[a-zA-Z]> };
-regex zahl	 { <[0-9]> };
+regex zahl       { <[0-9]> };
 regex identifier { <buchstabe> [ <buchstabe> | <zahl> ]* };
-regex sigil 	 { <[$@%]> };
-regex p5_var	 { <sigil> <identifier>};
+regex sigil      { <[$@%]> };
+regex p5_var     { <sigil> <identifier>};
 [[[endsyntax]]]</pre>
-	<p>Es gibt auch schon fertige Regexes, so steht
-	<code>&lt;alpha&gt;</code> für Buchstaben, <code>&lt;sp&gt;</code> für
-	das Leerzeichen und <code>&lt;ws&gt;</code> für ein "magisches"
-	Leerzeichen, d.h. für <code>\s+</code> zwischen alphanumerischen
-	Zeichen und für <code>\s*</code> sonst.</p>
 
-	<p>Auch den von uns gerade definierten identifier gibt es als
-	<code>&lt;ident&gt;</code> vorgefertigt.</p>
+    <p>Es gibt auch schon fertige Regexes, so steht
+    <code>&lt;alpha&gt;</code> für Buchstaben, <code>&lt;sp&gt;</code> für
+    das Leerzeichen und <code>&lt;ws&gt;</code> für ein "magisches"
+    Leerzeichen, d.h. für <code>\s+</code> zwischen alphanumerischen
+    Zeichen und für <code>\s*</code> sonst.</p>
 
-	<p>Fängt das Konstrukt mit <code>&lt;?{</code> an, so wird das als
-	Assertion, also Bedingung gewertet. Folgende Regex matched ein- bis
-	dreistellige Zahlen von 0 bis 255:</p>
+    <p>Auch den von uns gerade definierten identifier gibt es als
+    <code>&lt;ident&gt;</code> vorgefertigt.</p>
+
+    <p>Fängt das Konstrukt mit <code>&lt;?{</code> an, so wird das als
+    Assertion, also Bedingung gewertet. Folgende Regex matched ein- bis
+    dreistellige Zahlen von 0 bis 255:</p>
 <pre>[[[syntax perl6]]]
 regex byte { (\d**{1..3}) <?{ $0 < 256 }> };
 [[[endsyntax]]]</pre>
 
-	<h3>Das Match-Objekt</h3>
-	<p>Wenn man eine regex mit dem Smart Match Operator <code>~~</code>
-	auf einen String los lässt, ist das Ergebnis ein Match-Objekt:</p>
+    <h3>Das Match-Objekt</h3>
+    <p>Wenn man eine Regex mit dem Smart Match Operator <code>~~</code>
+    auf einen String los lässt, ist das Ergebnis ein Match-Objekt:</p>
 
 <pre>[[[syntax perl6]]]
 my $match = "foo123" ~~ m/ <ident> /;
@@ -160,7 +168,7 @@ Match.new(
 
 # im Boolean-Kontext:
 if $match {
-	say "Identifier found";
+    say "Identifier found";
 }
 
 # im String-Kontext liefert es den gematchen String:
@@ -171,32 +179,33 @@ print ~$match;
 $match.from .. $match.to;
 [[[endsyntax]]]</pre>
 
-	<p>Ist das magisch? Es kommt sogar noch besser: Wenn man Capturing
-	Groups <code>( ... )</code> in der regex hat, kann man das
-	Match-Objekt als Array verwenden, das die verschiedenen Captures als
-	Elemente enthält:</p>
+    <p>Ist das magisch? Es kommt sogar noch besser: Wenn man Capturing
+    Groups <code>( ... )</code> in der regex hat, kann man das
+    Match-Objekt als Array verwenden, das die verschiedenen Captures als
+    Elemente enthält:</p>
 
 <pre>[[[syntax perl6]]]
 my $m = "bar" ~~ m/(.) a (r)/;
-say $m[0];	# ist 'b'
-say $m[1];	# ist 'r'
+say $m[0];  # ist 'b'
+say $m[1];  # ist 'r'
 [[[endsyntax]]]</pre>
 
-	<p>Und wenn man ein capture in spitzen Klammern, z.B.
-	<code>&lt;ident&gt;</code> verwendet hat, kann man das Match-Objekt
-	als Hash benutzen, und auf die Captures mit ihrem Namen zugreifen:</p>
+    <p>Und wenn man ein capture in spitzen Klammern, z.B.
+    <code>&lt;ident&gt;</code> verwendet hat, kann man das Match-Objekt
+    als Hash benutzen, und auf die Captures mit ihrem Namen zugreifen:</p>
 
 <pre>[[[syntax perl6]]]
 regex sigil { '@' | '$' | '%' };
 my $m = ' $foo bar' ~~ m/ <sigil> <ident>/;
-say $m<sigil>;		# gibt $
-say $m<ident>;		# gibt foo
+say $m<sigil>;      # gibt $
+say $m<ident>;      # gibt foo
 [[[endsyntax]]]</pre>
 
-	<h2>Text ersetzen</h2>
+    <h2>Text ersetzen</h2>
 
-	<p>Die alte Form des Text-Ersetzens mit <code>s///</code> geht auch
-	unter Perl 6, neue Formen sind dazu gekommen:</p>
+    <p>Die alte Form des Text-Ersetzens mit <code>s///</code> geht auch
+    unter Perl 6, neue Formen sind dazu gekommen:</p>
+
 <pre>[[[syntax perl6]]]
 my $s1 = "klein";
 $s1 tr ~~ s/^kl/k/;
@@ -213,10 +222,10 @@ my $s3 = "35 beers, 7 drunken nights";
 $s3 ~~ s:g[(\d+)] = 2 * $0;
 [[[endsyntax]]]</pre>
 
-	<p>Man beachte im letzten Beispiel, dass das keine normale Zuweisung
-	ist, sondern dass die rechte Seite bei jedem Match neu ausgwertet
-	wird.</p>
+    <p>Man beachte im letzten Beispiel, dass das keine normale Zuweisung
+    ist, sondern dass die rechte Seite bei jedem Match neu ausgwertet
+    wird.</p>
 
-	<!-- TODO: Backslash-Reform, unterschied regex-rx etc., Zuweisungen a
-	la my $foo = regex / ... / -->
+    <!-- TODO: Unterschied regex-rx etc., Zuweisungen a
+    la my $foo = regex / ... / -->
 
