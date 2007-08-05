@@ -1,33 +1,40 @@
 [[[menu main tut p5 index]]]
 [[[setvar title Tutorial für Perl 5-Programmierer]]]
 <div id="content">
-	<h1>Perl 6 für Perl 5-Programmierer</h1>
+    <h1>Perl 6 für Perl 5-Programmierer</h1>
 
-	<p>Trotz vieler Änderungen von p5 zu p6 ist auch vieles gleich
-	geblieben, was es alt eingesessenen Perl 5-Programmieren sicher
-	leichter macht Perl 6 zu lernen als anderen.</p>
+    <p>Trotz vieler Änderungen von p5 zu p6 ist auch vieles gleich
+    geblieben, was es alt eingesessenen Perl 5-Programmieren sicher
+    leichter macht Perl 6 zu lernen als anderen.</p>
 
-	<p>Das hier ist ein Versuch, die wichtigsten Änderungen
-	zusammenzufassen, die häufigsten am Anfang, danach grob nach
-	Kategorien.</p>
+    <p>Das hier ist ein Versuch, die wichtigsten Änderungen
+    zusammenzufassen, die häufigsten am Anfang, danach grob nach
+    Kategorien.</p>
 
-	<h2>Verschiedenes</h2>
+    <h2>Verschiedenes</h2>
 
-	<p><code>use strict;</code> ist per default angeschaltet, Ausnahme
-	sind Einzeiler die mit <code>perl -e '$code'</code> ausgeführt
-	werden.</p>
+    <p><code>use strict;</code> ist per default angeschaltet, Ausnahme
+    sind Einzeiler die mit <code>perl -e '$code'</code> ausgeführt
+    werden.</p>
 
-	<p>Für viele Funktionen gibt es jetzt die <code>.</code>-Notation:</p>
+    <p>Für Objektmethoden gibt es jetzt die <code>.</code>-Notation (anstatt
+    von <code>-&gt;</code>), die meisten Builtins sind jetzt Methoden:</p>
 
 <pre>[[[syntax perl6]]]
 my @list;
-@list.push "foo"	# wie push @list, "foo"
-"foo".print		# wie print "foo";
+@list.push("foo")   # wie push @list, "foo"
+"foo".print         # wie print "foo";
 [[[endsyntax]]]</pre>
-	<p>Die alte Notation ist immer noch unterstützt.</p>
+    <p>Die alte Notation ist immer noch unterstützt.</p>
+    <p>Wenn man bei Methoden (also Funktionen, die zu einem Objekt gehören),
+    die Klammern weglassen will, braucht man einen Doppelpunkt:</p>
+ 
+<pre>[[[syntax perl6]]]
+@list.push: 'foo';
+[[[endsyntax]]]</pre>
 
-	<p>Die <code>print</code>-Funktion hat eine eine Schwester, die ein
-	Newline am Ende anhängt:<code>say</code></p>
+    <p>Die <code>print</code>-Funktion hat eine eine Schwester, die ein
+    Newline am Ende anhängt:<code>say</code></p>
 
 <pre>[[[syntax perl6]]]
 my $answer  = 7 * 6;
@@ -37,152 +44,160 @@ say $answer;
 $answer.say;
 [[[endsyntax]]]</pre>
 
-	<h2>Sigils, Arrays und Hashes</h2>
+    <h2>Sigils, Arrays und Hashes</h2>
 
-	<p>Wie bisher fangen Skalare mit <code>$</code>, Arrays mit
-	<code>@</code> und Hashes mit <code>%</code> an.</p>
-	
-	<p>Allerdings bleibt bei Arrays und Hashes der Sigil beim Zugriff auf
-	Elemente erhalten:</p>
-<pre> [[[syntax perl6]]]
+    <p>Wie bisher fangen Skalare mit <code>$</code>, Arrays mit
+    <code>@</code> und Hashes mit <code>%</code> an.</p>
+        
+    <p>Allerdings bleibt bei Arrays und Hashes der Sigil beim Zugriff auf
+    Elemente erhalten:</p>
+<pre>[[[syntax perl6]]]
 my @list = 1, 3, 5, 1, 2;
 my %hash = (
-	'foo' => 'bar',
-	'baz' => 'qox',
-	);
-@list[0]	#früher: $list[0]
-%hash{'foo'}	#früher $hash{foo}
+    'foo' => 'bar',
+    'baz' => 'qox',
+    );
+@list[0]        #früher: $list[0]
+%hash{'foo'}    #früher: $hash{'foo'}
+%hahs<foo>      #früher: $hash{foo}
 [[[endsyntax]]]</pre>
 
-	<p>Das Autoquoting beim Zugriff auf Hashes funktioniert in
-	geschweiften Klammern nicht mehr, statt dessen gibt es jetzt
-	<code>&lt;...&gt;</code>:</p>
+    <p>Das Autoquoting beim Zugriff auf Hashes funktioniert in
+    geschweiften Klammern nicht mehr, statt dessen gibt es jetzt
+    <code>&lt;...&gt;</code>:</p>
 
 <pre>[[[syntax perl6]]]
 my $str = "foo";
-%hash{$str} 	# wie bisher
-%hash<foo>	# anstatt %hash{foo}
-%hash{'foo'}	# wie bisher
+%hash{$str}     # wie bisher
+%hash<foo>      # anstatt %hash{foo}
+%hash{'foo'}    # wie bisher
 [[[endsyntax]]]</pre>
 
-	<p>Man kann jetzt auch auf Elemente von Array- und Hashreferenzen ohne
-	den Pfeil-Operator zugreifen:</p>
+    <p>Man kann jetzt auch auf Elemente von Array- und Hashreferenzen ohne
+    den Pfeil-Operator zugreifen:</p>
 <pre>[[[syntax perl6]]]
 my $a = [1, 2, [3, 4, 5], 6];
-$a[0]		# früher: $a->[0]
-$a[2][0]	# früher $a->[0]->[0] oder $a->[0][0]
+$a[0]       # früher: $a->[0]
+$a[2][0]    # früher $a->[0]->[0] oder $a->[0][0]
 my $b = { 'a' => 'b', 'c' => [1, 2, 3]};
-$b{'a'} 	# früher $b->{a}
-$b<a>		# das gleiche
-$b<c>[0]	# früher: $b->{c}[0] oder $b->{c}->[0]
+$b{'a'}     # früher $b->{a}
+$b<a>       # das gleiche
+$b<c>[0]    # früher: $b->{c}[0] oder $b->{c}->[0]
 [[[endsyntax]]]</pre>
-	<p>Auch beim Zugriff auf Objekte ist der Pfeil dem Punkt gewichen.</p>
+    <p>Auch beim Zugriff auf Objekte ist der Pfeil dem Punkt gewichen.</p>
 
-	<p>Die Anzahl der Elemente eines Arrays bekommt man nun nicht mehr
-	über <code>scalar @list</code>, sondern mit elems:</p>
+    <p>Die Anzahl der Elemente eines Arrays bekommt man nun nicht mehr
+    über <code>scalar @list</code>, sondern mit elems:</p>
 <pre>[[[syntax perl6]]]
 # man beachte, dass hier keine Klammern mehr nötig sind:
-my @list = 1, 2, 4, 5	
+my @list = 1, 2, 4, 5;
 
-my $num = @list.elems; 		# früher: scalar @list;
-$num = elems @list;		# das gleiche
-my $last_index = @list.end; 	# früher: $#list
+my $num = @list.elems;            # früher: scalar @list;
+$num = elems @list;               # das gleiche
+my $last_index = @list.end;       # früher: $#list
 my $last_elem = @list[@list.end]; # früher: $list[$#list]
-$last_eleme = @list[-1];	# das gleiche
-[[[endsyntax]]]</pre>
-	<p><code>qw()</code> wird durch <code>&lt;...&gt;</code> ersetzt und
-	hat auch eine interpolierende Form:</p>
-<pre>[[[syntax perl6]]]
-my @list = <bla blubb>		# früher: qw(bla blubb)
-my $str = "bla blubb"
-my @l2 = <<foo $str bar>>	# liefert ['foo', 'bla', 'blubb', 'bar']
+$last_eleme = @list[-1];          # das gleiche
 [[[endsyntax]]]</pre>
 
-	<h2>Twigils</h2>
-	<p>Globale Variablen (und ein paar andere) haben ein sekundäres Sigil,
-	Twigil genannt:</p>
+    <p><code>qw()</code> wird durch <code>&lt;...&gt;</code> ersetzt und
+    hat auch eine interpolierende Form:</p>
+
 <pre>[[[syntax perl6]]]
-%*ENV			# früher %ENV
-@*ARGS			# früher @ARGV
-$*IN, $*OUT, $ERR	# früher STDIN, STDOUT, STDERR
+my @list = <bla blubb>;     # früher: qw(bla blubb)
+my $str = "bla blubb";
+my @l2 = <<foo $str bar>>;  # liefert ['foo', 'bla', 'blubb', 'bar']
+[[[endsyntax]]]</pre>
+
+    <h2>Twigils</h2>
+    <p>Globale Variablen (und ein paar andere) haben ein sekundäres Sigil,
+    Twigil genannt:</p>
+<pre>[[[syntax perl6]]]
+%*ENV               # früher %ENV
+@*ARGS              # früher @ARGV
+$*IN, $*OUT, $ERR   # früher STDIN, STDOUT, STDERR
 
 # zur Kompilezeit bekannte Symbole:
-$?LINE			# früher __LINE__
-$?FILE			# früher __FILE__
-$?PACKAGE		# früher __PACKAGE__
+$?LINE          # früher __LINE__
+$?FILE          # früher __FILE__
+$?PACKAGE       # früher __PACKAGE__
 
 # Implizite Variablen haben ein ^ als twigl:
 # in absteigender Reihenfolge sortieren:
 sort {$^b <=> $^a}, @list # bisher sort {$b <=> $a} @list
 [[[endsyntax]]]</pre>
 
-	<h2>Kontrollstrukturen</h2>
+    <h2>Kontrollstrukturen</h2>
 
-	<p><code>if</code> und <code>unless</code> benötigen jetzt keine
-	Klammern mehr um die Bedingung:</p>
+    <p><code>if</code> und <code>unless</code> benötigen jetzt keine
+    Klammern mehr um die Bedingung:</p>
 
 <pre>[[[syntax perl6]]]
-if $a < 0 {		# if ($a < 0) {
-	say "Negativ";	#	print "Negativ\n";
-}			# }
+if $a < 0 {         # if ($a < 0) {
+    say "Negativ";  #   print "Negativ\n";
+}                   # }
 [[[endsyntax]]]</pre>
-	<p><code>foreach</code> wird zu <code>for</code>, <code>for</code> zu
-	<code>loop</code>:</p>
+    <p><code>foreach</code> wird zu <code>for</code>, <code>for</code> zu
+    <code>loop</code>:</p>
 
 <pre>[[[syntax perl6]]]
 my @nums = 1, 2, 3, 23, 42;
 
-for @nums -> my $i {
-	# tolle Berechnung mit $i hier
+for @nums -> $i {
+    # tolle Berechnung mit $i hier
 }
+
+# Iterationsvariablen sind per Default read only.
+# Ändern kann man das so:
+
+for @nums -> $i is rw {
+    # tolle Berechnung mit $i hier
+}
+# Alternativ gäbe es noch 'is copy'
 
 # über Hashes iteriern:
 for %hash.kv -> my $key, $val {
-	say "$key corresponds to $val";
+    say "$key corresponds to $val";
 }
 
 # C-Style for-Schleife:
 loop (my $i = 0; $i < 10; $i++){
-	# tolle Berechnung mit $i hier
+    # tolle Berechnung mit $i hier
 }
 [[[endsyntax]]]</pre>
-	<p><code>while</code> bleibt unverändert (außer dass es auch keine
-	runden Klammern mehr um die Bedingung braucht), <code>eval { ...
-		}</code> ist jetzt <code>try { ... }</code>.</p>
+    <p><code>while</code> bleibt unverändert (außer dass es auch keine
+    runden Klammern mehr um die Bedingung braucht), <code>eval { ...
+    }</code> ist jetzt <code>try { ... }</code>.</p>
 
-	<h2>Die Standardvarible <code>$_</code></h2>
+    <h2>Die Standardvarible <code>$_</code></h2>
 
-	<p><code>for</code>-Schleifen ohne eine explizite Variable benutzen
-	auch weiterhin <code>$_</code> als Standard, allerdings kann man sie
-	nicht mehr mit <code>print;</code> ausgeben, sondern man braucht ein
-	<code>.print</code>. Das gleiche gilt für Funktionen wie
-	<code>uc</code> und <code>lc</code>:</p>
+    <p><code>for</code>-Schleifen ohne eine explizite Variable benutzen
+    auch weiterhin <code>$_</code> als Standard, allerdings kann man sie
+    nicht mehr mit <code>print;</code> ausgeben, sondern man braucht ein
+    <code>.print</code>. Das gleiche gilt für Funktionen wie
+    <code>uc</code> und <code>lc</code>:</p>
 <pre>[[[syntax perl6]]]
-for =<> {
-	.uc.say;
-}
-# früher:
-# while (<STDIN>){
-#	print uc;
-#}
+                # früher:
+for =<> {       # while (<STDIN>){
+    .uc.say;    # print uc;
+}               # }
 [[[endsyntax]]]</pre>
-	<p>Allerdings gibt es auch noch eine andere Möglichkeit: mit dem
-	Twigil <code>^</code> kann man Variablen mit beliebigen Namen
-	verwenden, und man kann sogar mehrere davon in einem einer Schleife
-	verwenden und damit mehrere Variablen auslesen:</p>
+    <p>Allerdings gibt es auch noch eine andere Möglichkeit: mit dem
+    Twigil <code>^</code> kann man Variablen mit beliebigen Namen
+    verwenden, und man kann sogar mehrere davon in einem einer Schleife
+    verwenden und damit mehrere Variablen auslesen:</p>
 
 <pre>[[[syntax perl6]]]
 for 1 .. 4 {
-	say $^bla, ": ", $^blubb;
+    say $^bla, ": ", $^blubb;
 # Ausgabe: 
 # 1: 2
 # 3: 4
 [[[endsyntax]]]</pre>
-	<p>Dabei wird den Variablen, die mit <code>$^</code> anfangen, in
-	alphabetischer Reihenfolge die Werte zugewiesen:</p>
+    <p>Dabei wird den Variablen, die mit <code>$^</code> anfangen, in
+    alphabetischer Reihenfolge die Werte zugewiesen:</p>
 <pre>[[[syntax perl6]]]
 for 1 .. 4 {
-	say $^foo, ": ", $^bar;
+    say $^foo, ": ", $^bar;
 }
 # Ausgabe:
 # 2: 1
@@ -190,35 +205,35 @@ for 1 .. 4 {
 [[[endsyntax]]]</pre>
 
 
-	<h2>Funktionen</h2>
+    <h2>Funktionen</h2>
 
-	<p>Funktionen werden immer noch mit <code>sub</code>-Keyword
-	deklariert, und können jetzt Parameterdeklarationen enthalten wie in
-	den meisten anderen Programmiersprachen.</p>
+    <p>Funktionen werden immer noch mit <code>sub</code>-Keyword
+    deklariert, und können jetzt Parameterdeklarationen enthalten wie in
+    den meisten anderen Programmiersprachen.</p>
 
 <pre>[[[syntax perl6]]]
 sub fakultaet(Int $n){
-	return  reduce {$^a * $^b}, 1 .. $n;
-	# reduce reduziert listen mit der angegbenen Funktion
+    return  reduce {$^a * $^b}, 1 .. $n;
+    # reduce reduziert listen mit der angegbenen Funktion
 }
 
 # immer noch möglich:
 sub fakultaet2 {
-	return  reduce {$^a * $^b}, 1 .. $_[0];
+    return  reduce {$^a * $^b}, 1 .. @_[0];
 }
 
 # Argumente können jetzt schreibbar gemacht werden:
 
 sub swap($a is rw, $b is rw){
-	$a, $b = $b, $a;
+    $a, $b = $b, $a;
 }
 [[[endsyntax]]]</pre>
 
-	<h2>Typen und <code>ref</code></h2>
+    <h2>Typen und <code>ref</code></h2>
 
-	<p>Perl 6 erlaubt es, Typen für Variablen zu deklarieren, es ist aber
-	weiterhin optional. Das funktioniert auch mit selbstdeklarierten
-	Typen, also <a href="/tutorials/objektmodell">Klassen</a>.</p>
+    <p>Perl 6 erlaubt es, Typen für Variablen zu deklarieren, es ist aber
+    weiterhin optional. Das funktioniert auch mit selbstdeklarierten
+    Typen, also <a href="/tutorials/objektmodell">Klassen</a>.</p>
 
 <pre>[[[syntax perl6]]]
 my Int $ganzzahl;
@@ -229,14 +244,15 @@ my Str @a; 		# Array mit Strings
 my Array of Str @b 	# Array von Arrays mit Strings
 
 class Foo {
-	# Defintionen hier
+    # Defintionen hier
 }
 
 my Foo $foo;
 [[[endsyntax]]]</pre>
+    
+    <p>Die Funktion <code>ref</code> gibt es nicht mehr, dafür gibt es als
+    Ersatz zwei Möglichkeiten:</p>
 
-	<p>Die Funktion <code>ref</code> gibt es nicht mehr, dafür gibt es als
-	Ersatz zwei Möglichkeiten:</p>
 <pre>[[[syntax perl6]]]
 my $str = "foo";
 say $str.WHAT;		# Ausgabe "Str"
@@ -245,81 +261,87 @@ say $str.WHAT;		# Ausgabe "Str"
 say "Das ist ein String" if $str ~~ Str
 [[[endsyntax]]]</pre>
 
-	<p>Die zweite Version verwendet den sogenannten <em>Smart Match
-	Operator</em> <code>~~</code>, das auf für Regular Expressions
-	verwendet wird. Diese Form sollte man verwenden, wenn man überprüft,
-	ob etwas einen bestimmten Typ hat, da das auch Vererbung
-	berücksichtigt, d.h. sowohl <code>4 ~~ Int</code> als auch <code>4 ~~
-	Num</a> liefern True zurück.</p>
+    <p>Die zweite Version verwendet den sogenannten <em>Smart Match
+    Operator</em> <code>~~</code>, das auf für Regular Expressions
+    verwendet wird. Diese Form sollte man verwenden, wenn man überprüft,
+    ob etwas einen bestimmten Typ hat, da das auch Vererbung
+    berücksichtigt, d.h. sowohl <code>4 ~~ Int</code> als auch <code>4 ~~
+    Num</a> liefern True zurück.</p>
 
-	<h2>Regexes</h2>
+    <h2>Regexes</h2>
 
-	<p>Perl 5 Regexes können in Perl 6 immer noch verwendet werden, aber
-	es gibt auch viele Erweiterungen in den neuen <em>Rules</em>. Darüber
-	gibt es eine eigene Seite: <a href="regex">Regexes und Rules</a>.</p>
+    <p>Perl 5 Regexes können in Perl 6 immer noch verwendet werden, aber
+    es gibt auch viele Erweiterungen in den neuen <em>Rules</em>. Darüber
+    gibt es eine eigene Seite: <a href="regex">Regexes und Rules</a>.</p>
 
-	<h2>Strings</h2>
+    <h2>Strings</h2>
 
-	<p>Strings in Perl 6 sind Unicode-Strings, die auf verschiedenen
-	Ebenen gleichzeitig existieren können (bytes, code points,
-	graphemes und charlingua).</p>
+    <p>Strings in Perl 6 sind Unicode-Strings, die auf verschiedenen
+    Ebenen gleichzeitig existieren können (bytes, code points,
+    graphemes und charlingua).</p>
 
-	<p>Deswegen gibt es kein <code>length</code> mehr, weil nicht 
-	defniert ist, was damit gemeint ist. Stattdessen kann mit
-	<code>bytes</code> die Anzahl der Bytes abfragen, mit
-	<code>chars</code> die Anzal der Zeichen , mit
-	<code>codes</code> die Anzahl der Codepoints, mit
-	<code>glyphs</code> die Anzahl der Glyphen
-	und mit
-	<code>graphs</code> die Anzahl der Grapheme.</p>
+    <p>Deswegen gibt es kein <code>length</code> mehr, weil nicht 
+    defniert ist, was damit gemeint ist. Stattdessen kann mit
+    <code>bytes</code> die Anzahl der Bytes abfragen, mit
+    <code>chars</code> die Anzal der Zeichen , mit
+    <code>codes</code> die Anzahl der Codepoints, mit
+    <code>glyphs</code> die Anzahl der Glyphen
+    und mit
+    <code>graphs</code> die Anzahl der Grapheme.</p>
 
-	<p>So haben z.B. die deutschen Umlaute in UTF-8 zwei Bytes, aber je
-	nur ein char, glyph, code und graph.</p>
+    <p>So haben z.B. die deutschen Umlaute in UTF-8 zwei Bytes, aber je
+    nur ein char, glyph, code und graph.</p>
 
-	<p>Dagegen können z.B. Ligaturen, also aus zwei Buchstaben zusammen
-	gesetzte Zeichen, nur ein Glyph aber mehrere Zeichen haben.</p>
+    <p>Dagegen können z.B. Ligaturen, also aus zwei Buchstaben zusammen
+    gesetzte Zeichen, nur ein Glyph aber mehrere Zeichen haben.</p>
 
-	<p><code>split</code> akzeptiert nur noch Strings an denen gespaltet
-	wird, keine Regexes mehr. Dafür gibt es <code>comb</code>, das alle
-	Teile eines Strings zurückliefern, die auf eine regex passen - quasi
-	ein invertiertes <code>split</code>.</p>
+    <p>Wenn man mit <code>split</code> Strings aufspalten will, muss man die
+    Regex als <code>rx/.../</code> übergeben:</p>
+<pre>[% syntax perl6 %]
+"foo bar  baz".split: rx/\s+/;
+[% endsyntax %]</pre>
 
-	<p>Mit <code>index</code> und <code>rindex</code> kann man das erste
-	und letzte Vorkommen eines substrings finden:</p>
+    <p>Zusätzlich gibt es <code>comb</code> (von "to comb", durchkämmen), das alle
+    Teile eines Strings zurückliefern, die auf eine regex passen - quasi
+    ein invertiertes <code>split</code>.</p>
+
+    <p>Mit <code>index</code> und <code>rindex</code> kann man das erste
+    und letzte Vorkommen eines substrings finden:</p>
 
 <pre>[[[syntax perl6]]]
-"foo".index("o");	# ist 1
-"foo".rindex("o");	# ist 2
+"foo".index("o");   # ist 1
+"foo".rindex("o");  # ist 2
 [[[endsyntax]]]</pre>
 
-	<p>Strings werden jetzt mit <code>~</code> zusammengefügt (früher:
-	<code>.</code>), die Tilde soll zwei Arme symbolisieren, die nach den
-	beiden Enden der Strings greifen sollen:</p>
+    <p>Strings werden jetzt mit <code>~</code> zusammengefügt (früher:
+    <code>.</code>), die Tilde soll zwei Arme symbolisieren, die nach den
+    beiden Enden der Strings greifen sollen:</p>
 
 <pre>[[[syntax perl6]]]
 my $name = "Perl";
 my $version = 6;
 my $lang = $name ~ " " ~ $version;
 [[[endsyntax]]]</pre>
-	<p>Gleichzeitig erzwingt die Tilde Stringkontext:</p>
+
+    <p>Gleichzeitig erzwingt die Tilde Stringkontext:</p>
 
 <pre>[[[syntax perl6]]]
 my @a = "foo", "bar;
-my $str = ~@a;		# "foo bar"
+my $str = ~@a;      # "foo bar"
 [[[endsyntax]]]</pre>
 
-	<h2>I/O</h2>
+    <h2>I/O</h2>
 
-	<p>Aus der <code>&lt;$fh&gt;</code>-Notation zum Lesen aus Filehandles
-	ist <code>=$fh</code> geworden, und das Zeilenende wird jetzt
-	per default automatisch entfernt ("autochomp").</p>
+    <p>Aus der <code>&lt;$fh&gt;</code>-Notation zum Lesen aus Filehandles
+    ist <code>=$fh</code> geworden, und das Zeilenende wird jetzt
+    per default automatisch entfernt ("autochomp").</p>
 
 <pre>[[[syntax perl6]]]
 my $fn = "foo.txt";
 my $file = $fn.open err die "Can't read '$fn': $!";
 
-for =$file -> my $line {
-	# hier die Zeile verarbeiten
+for =$file -> $line {
+    # hier die Zeile verarbeiten
 }
 
 # oder:
@@ -328,29 +350,29 @@ my $ganze_datei = $file.slurp;
 $file.close;
 [[[endsyntax]]]</pre>
 
-	<p>Man kann nicht nur aus Filehandles lesen, sondern auch aus
-	Dateinamen, die automatisch geöffnet werden:</p>
+    <p>Man kann nicht nur aus Filehandles lesen, sondern auch aus
+    Dateinamen, die automatisch geöffnet werden:</p>
 
 <pre>[[[syntax perl6]]]
 for =</etc/passwd> {
-	# '.split' splittet die Standardvariable
-	my @entries = .split(":");
-	say "Login: ", @entries[0];
+    # '.split' splittet die Standardvariable
+    my @entries = .split(":");
+    say "Login: ", @entries[0];
 }
 # oder: my $file = "/etc/passwd"; for =$file { ... }
 [[[endsyntax]]]</pre>
 
-	<p>Die empfohlene Art, eine Datei zeileweise zu lesen ist jetzt eine
-	<code>for</code>-Schleife. Und das bedeutet nicht wie in Perl 5, dass
-	erst die gesamte Datei gelesen wird und dann darüber iteriert wird,
-	sondern die Werte werden dann aus der Datei gelesen, wenn sie
-	gebraucht werden.</p>
+    <p>Die empfohlene Art, eine Datei zeileweise zu lesen ist jetzt eine
+    <code>for</code>-Schleife. Und das bedeutet nicht wie in Perl 5, dass
+    erst die gesamte Datei gelesen wird und dann darüber iteriert wird,
+    sondern die Werte werden dann aus der Datei gelesen, wenn sie
+    gebraucht werden.</p>
 
-	<p>Das ist möglich, weil in Perl 6 Listen per default <em>lazy</em>
-	sind, was es auch möglich macht, unendliche Listen zu verwenden:
-	<code>(1 .. *)[1]</code>.</p>
+    <p>Das ist möglich, weil in Perl 6 Listen per default <em>lazy</em>
+    sind, was es auch möglich macht, unendliche Listen zu verwenden:
+    <code>(1 .. *)[1]</code>.</p>
 
-	<p>Und so geht das Schreiben in Dateien:</p>
+    <p>Und so geht das Schreiben in Dateien:</p>
 
 <pre>[[[syntax perl6]]]
 my $fn = "foo.txt";
@@ -363,109 +385,113 @@ print $file: 'Diese Zeile hat kein \n am Ende';
 $file.close;
 [[[endsyntax]]]</pre>
 
-	<p>Man beachte, dass aus <code>print $fh $text</code> jetzt
-	<code>print $fh: $text</code> (mit einem zusätlichen Doppelpunkt)
-	geworden ist.</p>
+    <p>Man beachte, dass aus <code>print $fh $text</code> jetzt
+    <code>print $fh: $text</code> (mit einem zusätlichen Doppelpunkt)
+    geworden ist, da <code>print</code> u.A.eine Methode der zuständigen
+    IO-Klasse ist.</p>
 
-	<h2>File Tests</h2>
+    <h2>File Tests</h2>
 
-	<p>File test, wie z.B. <code>-e $filename</code> werden jetzt mit dem
-	Smart Match-Operator durchgeführt, und können sowohl auf Strings (als
-	Dateinamen) als auch auf Filehandles angewandt werden:</p>
+    <p>File test, wie z.B. <code>-e $filename</code> werden jetzt mit dem
+    Smart Match-Operator durchgeführt, und können sowohl auf Strings (als
+    Dateinamen) als auch auf Filehandles angewandt werden:</p>
 
 <pre>[[[syntax perl6]]]
 my $fn = "/etc/passwd";
 
 if $fn ~~ :e {
-	say "$fn existiert";
+    say "$fn existiert";
 } else {
-	say "Wohl kein Unix...";
+    say "Wohl kein Unix...";
 }
 [[[endsyntax]]]</pre>
-	<p>Der <code>:s</code>-Filetest liefert True zurück, wenn die Datei
-	nicht leer ist, und im numerischen Kontext gibt er die Länge der Datei
-	in Byte zurück.</p>
+
+    <p>Der <code>:s</code>-Filetest liefert True zurück, wenn die Datei
+    nicht leer ist, und im numerischen Kontext gibt er die Länge der Datei
+    in Byte zurück.</p>
 
 
-	<h2>system und exec</h2>
+    <h2>system und exec</h2>
 
-	<p><code>system</code>, also das Ausführen von anderen Programmen,
-	heißt jetzt <code>run</code>:</p>
+    <p><code>system</code>, also das Ausführen von anderen Programmen,
+    heißt jetzt <code>run</code>:</p>
+
 <pre>[[[syntax perl6]]]
 my $status = run("mutt -f /path/to/mbox");
 # oder
 $status = run("mutt", "-f", "/path/to/mbox");
 if $status {
-	say "Mutt lief erfolgreich";
+    say "Mutt lief erfolgreich";
 } else {
-	say "Fehler beim ausführen von mutt, Rückgabewert: $status";
+    say "Fehler beim ausführen von mutt, Rückgabewert: $status";
 }
 [[[endsyntax]]]</pre>
 
-	<p>Der Rückgabewert, hier <code>$status</code>, ist im Boolean
-	context <code>True</code>, wenn das Programm <code>0</code>
-	zurückgeliefert hat, und nicht <code>False</code> wie normale 
-	Integer.</a>
+    <p>Der Rückgabewert, hier <code>$status</code>, ist im Boolean
+    context <code>True</code>, wenn das Programm <code>0</code>
+    zurückgeliefert hat, und nicht <code>False</code> wie normale 
+    Integer.</a>
 
 
-	<p><code>exec</code> heißt jetzt <code>runinstead</code>.</p>
+    <p><code>exec</code> heißt jetzt <code>runinstead</code>.</p>
 
 
-	<h2>Neue Features</h2>
+    <h2>Neue Features</h2>
 
-	<p>Eine ganze Reihe neuer Features gibt es in Perl 6, die es in Perl 5
-	in dieser Form noch gar nicht gab.</p>
+    <p>Eine ganze Reihe neuer Features gibt es in Perl 6, die es in Perl 5
+    in dieser Form noch gar nicht gab.</p>
 
-	<h3>Metaoperatoren</h3>
+    <h3>Metaoperatoren</h3>
 
-	<p>Metaoperatoren verwenden andere Operatoren, um sie z.B. auf Listen
-	anzuwenden:</p>
+    <p>Metaoperatoren verwenden andere Operatoren, um sie z.B. auf Listen
+    anzuwenden:</p>
 
 <pre>[[[syntax perl6]]]
 my @a = 1 .. 4;
-my $sum = [+] @a;	# $sum = 10
+my $sum = [+] @a;       # $sum = 10
 # Aequivalent:
 $sum = reduce &infix:<+>, @a;
 $sum = reduce {$^a + $^b}, @a;
+$sum = reduce -> $a, $b { $a + $b }, @a;
 
 # Hyperoperatoren:
 my @b = <4 3 2 1>
-my @sum = @a »+« @b;	# @sum = 5, 5, 5, 5
+my @sum = @a »+« @b      # @sum = 5, 5, 5, 5
 # kann man auch als >>+<< schreiben
 
 my @b_plus_one = @b »+ 1;
 [[[endsyntax]]]</pre>
 
-	<p>Der Hyperoperator <code>»...«</code> wendet den Operator in der
-	Mitte paarweise auf die Elemente zweier Listen an. Wenn man auf einer
-	Seite keine Liste sondern einen Skalar angibt, muss man die
-	entsprechende Hälfte des Hyperoperators weglassen.</p>
+    <p>Der Hyperoperator <code>»...«</code> wendet den Operator in der
+    Mitte paarweise auf die Elemente zweier Listen an. Wenn man auf einer
+    Seite keine Liste sondern einen Skalar angibt, muss man die
+    entsprechende Hälfte des Hyperoperators weglassen.</p>
 
-	<p>Anstatt der Unicode-Zeichen <code>»</code> und <code>«</code> kann
-	man auch doppelte Kleiner- und Größerzeichen
-	<code>&gt;&gt;...&lt;&lt;</code> benutzen.</p>
+    <p>Anstatt der Unicode-Zeichen <code>»</code> und <code>«</code> kann
+    man auch doppelte Kleiner- und Größerzeichen
+    <code>&gt;&gt;...&lt;&lt;</code> benutzen.</p>
 
-	<p>Hyper- und Reduktionsoperator führen ihre Operationen auf
-	Multi-Prozessor-Systemen parallelisiert aus, wenn der Interpreter bzw.
-	Compiler entsprechend konfiguriert wird.</p>
+    <p>Hyper- und Reduktionsoperator führen ihre Operationen auf
+    Multi-Prozessor-Systemen parallelisiert aus, wenn der Interpreter bzw.
+    Compiler entsprechend konfiguriert wird.</p>
 
-	<h2>Verschiedenes (2)</h2>
-	<h3><code>wantarray</code> wird <code>want</code></h3>
+    <h2>Verschiedenes (2)</h2>
+    <h3><code>wantarray</code> wird <code>want</code></h3>
 
-	<p>Die Funktion <code>wantarray</code> ist dem allgemeineren
-	<code>want</code>-Builtin gewichen.</p>
+    <p>Die Funktion <code>wantarray</code> ist dem allgemeineren
+    <code>want</code>-Builtin gewichen.</p>
 
-	<p>Die alte Funktionalität bekommt man mit <code>want.list</code> oder
-	alternativ <code>want ~~ List</code>.</p>
+    <p>Die alte Funktionalität bekommt man mit <code>want.list</code> oder
+    alternativ <code>want ~~ List</code>.</p>
 
-	<p>Allgemein kann man mit <code>want ~~ $typ</code> abfragen, ob der
-	Aufrufer den Typ <code>$typ</code> erwartet, und mit
-	<code>want.count</code>. Mehr dazu im Abschnitt <a
-	href="/tutorials/kontext">Kontexte</a>.</p>
+    <p>Allgemein kann man mit <code>want ~~ $typ</code> abfragen, ob der
+    Aufrufer den Typ <code>$typ</code> erwartet, und mit
+    <code>want.count</code>. Mehr dazu im Abschnitt <a
+    href="/tutorials/kontext">Kontexte</a>.</p>
 
-	<h3>Data::Dumper</h3>
-	<p><code>Data::Dumper</code> ist jetzt überflüssig, dafür gibt es die
-	eingebaute Methode <code>perl</code>:</p>
+    <h3>Data::Dumper</h3>
+    <p><code>Data::Dumper</code> ist jetzt überflüssig, dafür gibt es die
+    eingebaute Methode <code>perl</code>:</p>
 
 <pre>[[[syntax perl6]]]
 my %foo = "a" => "b", "c" => <d e f>;
@@ -473,54 +499,54 @@ say %foo.perl;
 #Ausgabe: {("a" => "b"), ("c" => ("d", "e", "f"))}
 [[[endsyntax]]]</pre>
 
-	<p><code>perl</code> gibt Perl-Code aus, der das entsprechende
-	Konstrukt erzeugt.</p>
+    <p><code>perl</code> gibt Perl-Code aus, der das entsprechende
+    Konstrukt erzeugt.</p>
 
-	<h3>Ausführen anderer Programmiersprachen</h3>
+    <h3>Ausführen anderer Programmiersprachen</h3>
 
-	<p>Mit <code>eval</code> können jetzt auch andere Programmiersprachen
-	ausgeführt werden, insbesondere Perl 5, aber auch <a
-	href="http://www.yaml.org/">Yaml</a> (liefert dann Datenstrukturen
-	zurück), und je nach Compiler/Interpreter eventuell Java, Haskell,
-	Ruby und andere:</p>
+    <p>Mit <code>eval</code> können jetzt auch andere Programmiersprachen
+    ausgeführt werden, insbesondere Perl 5, aber auch <a
+    href="http://www.yaml.org/">Yaml</a> (liefert dann Datenstrukturen
+    zurück), und je nach Compiler/Interpreter eventuell Java, Haskell,
+    Ruby und andere:</p>
 
 <pre>[[[syntax perl6]]]
 eval("/* Java-Code hier, der einen Wert liefert */", :lang(Java));
 [[[endsyntax]]]</pre>
 
-	<p>Die Flexibilität der Datenstrukturen, die von der "Fremdsprache"
-	zurückgegeben werden können, hängt sicher von der entsprechenden
-	Sprache und dem Interface ab, aber zumindest Perl 5 sollte beliebig
-	komplexe Datenstrukturen (inklusive Objekte) zurückliefern können.</p>
+    <p>Die Flexibilität der Datenstrukturen, die von der "Fremdsprache"
+    zurückgegeben werden können, hängt sicher von der entsprechenden
+    Sprache und dem Interface ab, aber zumindest Perl 5 sollte beliebig
+    komplexe Datenstrukturen (inklusive Objekte) zurückliefern können.</p>
+        
+    <h3>Pointy Subs</h3>
 
-	<h3>Pointy Subs</h3>
-
-	<p><em>Pointy Subs</em> sind eine neue Möglichkeit, anonyme
-	Subroutinen zu schreiben:</p>
+    <p><em>Pointy Subs</em> sind eine neue Möglichkeit, anonyme
+    Subroutinen zu schreiben:</p>
 
 <pre>[[[syntax perl6]]]
 my $square = -> $a { $a * $a };
-say $square(4);	
+say $square(4);
 # Ausgabe: 16
 
 say $square.WHAT
 # Ausgabe: Block
 [[[endsyntax]]]</pre>
 
-	<p>Man beachte, dass die <code>for</code>-Schleife, wie sie vorher
-	vorgestellt wurde, ein <em>pointy sub</em> erwartet:</p>
+    <p>Man beachte, dass die <code>for</code>-Schleife, wie sie vorher
+    vorgestellt wurde, ein <em>pointy sub</em> erwartet:</p>
 
 <pre>[[[syntax perl6]]]
-for 1 .. 5 -> my $a {
-	say $a;
+for 1 .. 5 -> $a {
+    say $a;
 }
 [[[endsyntax]]]</pre>
 
-	<p>Alternativ können auch <em>self declaring formal parameters</em>
-	verwendet werden, also Variablen mit dem <code>$^</code>-Sigil:</p>
+    <p>Alternativ können auch <em>self declaring formal parameters</em>
+    verwendet werden, also Variablen mit dem <code>$^</code>-Sigil:</p>
 
 <pre>[[[syntax perl6]]]
 for 1 .. 5  {
-	say $^number;
+    say $^number;
 }
 [[[endsyntax]]]</pre>
