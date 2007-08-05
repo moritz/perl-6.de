@@ -387,7 +387,7 @@ if $age < 6 {
 
 <pre>[[[syntax perl6]]]
 my @a = <Montag Dienstag Mittwoch Donnerstag Freitag>;
-for @a->my $day {
+for @a -> $day {
 	say $d, "s frueh aufstehen..."
 }
 say "Immer das gleiche!";
@@ -421,24 +421,26 @@ say "Immer das gleiche!";
 
 <pre>[[[syntax perl6]]]
 my %essen = (
-		'Schwaben' 	=> 'Maultaschen',
-		'Bayern' => 'Weisswuerste',
-		'Briten' => 'Fish &amp; Chips',
+		'Schwaben'  => 'Maultaschen',
+		'Bayern'    => 'Weisswuerste',
+		'Briten'    => 'Fish & Chips',
 		);
 for %essen.kv -> $leute, $gericht {
 	say "Die $leute essen gerne $gericht";
 }[[[endsyntax]]]</pre>
-	<p>Man beachte, dass die Elemente aus einem Hash in zufälliger
-	Reihenfolge herauskommen. Wenn man das nicht möchte, kann man
-	die keys vorher sortieren:</p>
+
+    <p>Man beachte, dass die Elemente aus einem Hash in zufälliger
+    Reihenfolge herauskommen. Wenn man das nicht möchte, kann man
+    die keys vorher sortieren:</p>
+
 <pre>[[[syntax perl6]]]
 my %essen = (
-		'Schwaben'	=&gt; 'Maultaschen',
-		'Bayern'	=&gt; 'Weisswuerste',
-		'Briten'	=&gt; 'Fish &amp; Chips',
-		);
+        'Schwaben'  => 'Maultaschen',
+        'Bayern'    => 'Weisswuerste',
+        'Briten'    => 'Fish & Chips',
+        );
 for %essen.keys.sort -> $leute {
-	say "Die $leute essen gerne" ~ %essen{$leute};
+    say "Die $leute essen gerne" ~ %essen{$leute};
 }[[[endsyntax]]]</pre>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 

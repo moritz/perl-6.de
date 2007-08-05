@@ -651,3 +651,65 @@ $/[0] = 'aa';
 say $/[1].from;		# 2
 say ~$/;		# aab
 [[[endsyntax]]]</pre>
+
+	<h2>Mit Rules parsen</h2>
+
+	<p>Mit Rules kann man sehr leicht Parser schreiben, also Programme,
+	die einen Text in eine interne Struktur verarbeiten.</p>
+
+	<p>Als Beispiel sollen einfache Konfigurationsdateien gelesen
+	werden:</p>
+
+<pre>[% syntax sh %]
+# Das ist ein Kommentar
+
+# Strings werden mit doppelten Anführungszeichen
+ip = "127.0.0.1";	
+
+timeout = 120; # Zahlen können einfach so darstehen
+
+# Variablen können ohne Anführungszeichen zugewiesen werden:
+other_timeout = timeout; 
+[% endsyntax %]</pre>
+
+	<p>Das ist zwar noch leicht ohne Rules zu parsen, aber des
+	pädagogischen Wertes wegen soll es mit Rules geparsed werden.</p>
+
+	<p>Ein erster naiver, aber gar nicht so schlechter Ansatz sieht so
+	aus:</p>
+
+<pre>[% syntax perl6 %]
+grammar config_file {
+	rule config 	   { <config_line>* };
+	# Kommentare müssen nicht gespeichert werden:
+	rule confg_line    { <?comment> | <assignment> };
+	token comment      { '#' \N* \n };
+	rule assigment     { <ident> '=' <expression> ';' };
+	rule expression    { <number> | <quoted_string> | <ident> };
+	rule quoted_string { \" <-["]>* \" };
+}
+[% endsyntax %]</pre>
+
+	<p>Das parsed eine Konfigurationsdatei, hat aber einen großen
+	Nachteil: Wenn die Datei einen Syntaxfehler hat, dann matched die
+	Regex nicht - aber es gibt keine Fehlermeldung, was schief gelaufen
+	ist.</p>
+
+	<p>Alternative schafft z.B. folgende Konstruktion, hier nur an zwei
+	Beispielen gezeigt:</p>
+
+<pre>[% syntax perl6 %]
+	rule config_line {
+			| <?comment>
+			| <assignment>
+			| <fail: "Expected comment or assignment">
+	};
+	rule assigment     { 
+		<ident> 
+		[ '=' |  <fail: "Expected '='"> ]
+		<expression> 
+		[';' | <fail: "Expected ';'">
+	};
+[% endsyntax %]</pre>
+
+
