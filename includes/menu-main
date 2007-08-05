@@ -1,56 +1,56 @@
 <div id="mainmenu">
-	<ul>
-		[[[item home <li><a {{class="current"}} href="/">Perl 6</a></li>]]]
-		[[[item blog <li><a {{class="current"}} href="/blog/">Blog</a></li>]]]
-		[[[item tut <li><a{{ class="current"}} href="/tutorials/">Tutorials</a></li>]]]
-		[[[item links <li><a {{class="current"}} href="/links/">Links</a></li>]]]
-	</ul>
+    <ul>
+        [% item home <li><a {{class="current"}} href="/">Perl 6</a></li> %]
+        [% item blog <li><a {{class="current"}} href="/blog/">Blog</a></li> %]
+        [% item tut <li><a{{ class="current"}} href="/tutorials/">Tutorials</a></li> %]
+        [% item links <li><a {{class="current"}} href="/links/">Links</a></li> %]
+    </ul>
 </div>
 <div id="wrap">
 
 [[[item home {{
-	<div id="leftside">
-	<ul>
-	[[[item home <li><a href="/" class="nav{{ active}}">Home</a></li>]]]
-	[[[item prinzipien <li><a href="/prinzipien" class="nav{{ active}}">Prinzipien</a></li>]]]
-	</ul>
-	<h1 style="margin-top:2ex">Perl 6 Projekte</h1>
-	<ul>
-		[[[item pugs <li><a href="/pugs" class="nav{{ active}}">Pugs</a></li>]]]
-		[[[item parrot <li><a href="/parrot" class="nav{{ active}}">Parrot</a></li>]]]
-		[[[item pge <li><a href="/parrot-grammar-engine" class="nav{{ active}}">Parrot Grammar Engine</a></li>]]]
-		[[[item kp6 <li><a href="/kp6" class="nav{{ active}}">kp6</a></li>]]]
-	</ul>
-	</div>
+    <div id="leftside">
+    <ul>
+    [[[item home <li><a href="/" class="nav{{ active}}">Home</a></li>]]]
+    [[[item prinzipien <li><a href="/prinzipien" class="nav{{ active}}">Prinzipien</a></li>]]]
+    </ul>
+    <h1 style="margin-top:2ex">Perl 6 Projekte</h1>
+    <ul>
+        [[[item pugs <li><a href="/pugs" class="nav{{ active}}">Pugs</a></li>]]]
+        [[[item parrot <li><a href="/parrot" class="nav{{ active}}">Parrot</a></li>]]]
+        [[[item pge <li><a href="/parrot-grammar-engine" class="nav{{ active}}">Parrot Grammar Engine</a></li>]]]
+        [[[item kp6 <li><a href="/kp6" class="nav{{ active}}">kp6</a></li>]]]
+    </ul>
+    </div>
 
 }}]]]
 
 [[[item tut {{
-	<div id="leftside">
-		<h1><a href="/tutorials/">Tutorials</a></h1>
-		<ul>
-			[[[item anfaenger <li><a href="/tutorials/anfaenger/" class="nav{{ active}}">Für Anfänger</a>
-			{{[[[menu anfaenger]]]}}
-			</li>
-			]]]
-			[[[item umsteiger <li><a href="/tutorials/umsteiger/"
-			class="nav{{ active}}">Für Umsteiger</a></li>]]]
-			[[[item p5 <li><a href="/tutorials/p5/" class="nav{{ active}}">Für Perl 5-
-			Programmierer</a></li>
-			{{<ul>
-				 [[[item regex <li><a class="nav sub{{ active}}"
-					 href="/tutorials/p5/regex">Regexes</a>
-					 </li>]]]
-			 </ul>}}]]]
-		</ul>
-		<h2>Spezielle Themen</h2>
-		<ul>
-			[[[item objekt	 <li><a class="nav{{ active}}"
-			 href="/tutorials/objektmodell">Objektmodell</a></li>]]]
-			[[[item kontext <li><a class="nav{{ active}}"
-			href="/tutorials/kontext">Kontext</a></li>]]]
-			[[[item regex <li><a class="nav{{ active}}"
-			href="/tutorials/regex">Regex</a></li>]]]
-		</ul>
-	</div>
+    <div id="leftside">
+        <h1><a href="/tutorials/">Tutorials</a></h1>
+        <ul>
+            [[[item anfaenger <li><a href="/tutorials/anfaenger/" class="nav{{ active}}">Für Anfänger</a>
+            {{[[[menu anfaenger]]]}}
+            </li>
+            ]]]
+            [[[item umsteiger <li><a href="/tutorials/umsteiger/"
+            class="nav{{ active}}">Für Umsteiger</a></li>]]]
+            [[[item p5 <li><a href="/tutorials/p5/" class="nav{{ active}}">Für Perl 5-
+            Programmierer</a></li>
+            {{<ul>
+                [[[item regex <li><a class="nav sub{{ active}}"
+                    href="/tutorials/p5/regex">Regexes</a>
+                    </li>]]]
+                </ul>}}]]]
+        </ul>
+        <h2>Spezielle Themen</h2>
+        <ul>
+            [[[item objekt <li><a class="nav{{ active}}"
+            href="/tutorials/objektmodell">Objektmodell</a></li>]]]
+            [[[item kontext <li><a class="nav{{ active}}"
+            href="/tutorials/kontext">Kontext</a></li>]]]
+            [[[item regex <li><a class="nav{{ active}}"
+            href="/tutorials/regex">Regex</a></li>]]]
+        </ul>
+    </div>
 }}]]]
