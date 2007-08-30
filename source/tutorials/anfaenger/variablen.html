@@ -1,18 +1,18 @@
 [[[menu main tut anfaenger variablen]]]
 [[[setvar title Variablen]]]
 <div id="content">
-	<h1>Variablen</h1>
+    <h1>Variablen</h1>
 
-	<p>In den Programmen der vorherigen Kapitel hat sich noch nicht so
-	viel bewegt, alle vorkommenden Werte waren konstant. Das soll sich in
-	diesem Kapitel &auml;ndern.</p>
+    <p>In den Programmen der vorherigen Kapitel hat sich noch nicht so
+    viel bewegt, alle vorkommenden Werte waren konstant. Das soll sich in
+    diesem Kapitel &auml;ndern.</p>
 
-	<p>Alle Werte, die sich in einem Programm &auml;ndern k&ouml;nnen
-	w&auml;hrend es ausgef&uuml;hrt wird, werden in <em>Variablen</em>
-	gespeichert.</p>
+    <p>Alle Werte, die sich in einem Programm &auml;ndern k&ouml;nnen
+    w&auml;hrend es ausgef&uuml;hrt wird, werden in <em>Variablen</em>
+    gespeichert.</p>
 
-	<p>In Perl starten alle Variablen mit einem Sonderzeichen (sogenanntem
-	<em>Sigil</em>):</p>
+    <p>In Perl starten alle Variablen mit einem Sonderzeichen (sogenanntem
+    <em>Sigil</em>):</p>
 <pre>[[[syntax perl6]]]
 use v6;
 
@@ -25,95 +25,97 @@ my $summe = $a + $b;
 say "Die Summe von ", $a, " und ", $b, " ist: ", $summe;
 [[[endsyntax]]]
 </pre>
-	<p>Wenn man dieses Programm startet, erwartet es die Eingabe von zwei
-	Zahlen, jeweils gefolgt von Enter, also dem Zeilenende. Wenn man z. B.
-	4 und -10 eingibt, lautet die Ausgabe:</p>
+
+    <p>Wenn man dieses Programm startet, erwartet es die Eingabe von zwei
+    Zahlen, jeweils gefolgt von Enter, also dem Zeilenende. Wenn man z. B.
+    4 und -10 eingibt, lautet die Ausgabe:</p>
+
 <pre >
 Die Summe von 4 und -10 ist -6
 </pre>
-	<h2>Das Programm im Detail</h2>
+    <h2>Das Programm im Detail</h2>
 
-	<p>Die erste Zeile sind die selben wie immer, dann wird es
-	interessant:</p>
+    <p>Die erste Zeile sind die selben wie immer, dann wird es
+    interessant:</p>
 <pre>[[[syntax perl6]]]
 my $a;
 [[[endsyntax]]]</pre>
-	<p><code>my $a</code> sagt dem Perl-Interpreter, dass ab jetzt in dem
-	Programm eine Variable namens <code>$a</code> vorkommt. Man sagt man
-	"deklariert" die Variable.</p>
+    <p><code>my $a</code> sagt dem Perl-Interpreter, dass ab jetzt in dem
+    Programm eine Variable namens <code>$a</code> vorkommt. Man sagt man
+    "deklariert" die Variable.</p>
 
-	<p>Eine Variable besteht aus einem Sonderzeichen (Sigil), in diesem
-	Fall <code>$</code>, und dem eigentlich Namen, der aus Buchstaben,
-	Ziffern und Unterstrichen bestehen kann, wobei er nicht mit einer
-	Ziffer anfangen sollte.</p>
+    <p>Eine Variable besteht aus einem Sonderzeichen (Sigil), in diesem
+    Fall <code>$</code>, und dem eigentlich Namen, der aus Buchstaben,
+    Ziffern und Unterstrichen bestehen kann, wobei er nicht mit einer
+    Ziffer anfangen sollte.</p>
 
-	<p>G&uuml;ltige Variablennamen w&auml;hren zum Beispiel
-	<code>$summe</code>, <code>$anzahl_haeuser</code> oder
-	<code>$MeinAuto</code>. Zwischen Gro&szlig;- und Kleinschreibung wird
-	unterschieden, das heisst <code>$a</code> und <code>$A</code> sind
-	verschiedene Variablen.</p>
+    <p>G&uuml;ltige Variablennamen w&auml;hren zum Beispiel
+    <code>$summe</code>, <code>$anzahl_haeuser</code> oder
+    <code>$MeinAuto</code>. Zwischen Gro&szlig;- und Kleinschreibung wird
+    unterschieden, das heisst <code>$a</code> und <code>$A</code> sind
+    verschiedene Variablen.</p>
 
 <pre>[[[syntax perl6]]]
 $a = =<>;
 [[[endsyntax]]]</pre>
-	<p>Hier wird der Variable <code>$a</code> ein Wert zugewiesen. Der
-	Wert steht auf der rechten Seite des Gleichheitszeichens, hier
-	<code>=&lt;&gt;</code>. 
-	Die Konstruktion <code>=&lt;&gt;</code>weist perl an, eine Zeile von
-	der Tastatur zu lesen, d.h. das Programm pausiert so lange, bis der
-	Benutzer etwas eingegeben hat und dann auf Enter gedrück hat.</p>
+    <p>Hier wird der Variable <code>$a</code> ein Wert zugewiesen. Der
+    Wert steht auf der rechten Seite des Gleichheitszeichens, hier
+    <code>=&lt;&gt;</code>. 
+    Die Konstruktion <code>=&lt;&gt;</code>weist perl an, eine Zeile von
+    der Tastatur zu lesen, d.h. das Programm pausiert so lange, bis der
+    Benutzer etwas eingegeben hat und dann auf Enter gedrück hat.</p>
 
 <pre>[[[syntax perl6]]]
 my $b = =<>;
 [[[endsyntax]]]</pre>
-	<p>Diese beiden Zeilen machen das gleiche wie die drei Zeilen davor,
-	nur dass die Eingabe dismal in der Variablen <code>$b</code>
-	gespeichert wird.</p>
+    <p>Diese beiden Zeilen machen das gleiche wie die drei Zeilen davor,
+    nur dass die Eingabe dieses mal in der Variablen <code>$b</code>
+    gespeichert wird.</p>
 
-	<p>Die Deklaration <code>my $b;</code> und die Zuweiseung <code>$b =
-	=&lt;&gt;;</code> wurden diesmal in eine Zeile zusammengezogen,
-	die das gleiche macht wie die beiden einzelnen Zeilen.</p>
+    <p>Die Deklaration <code>my $b;</code> und die Zuweiseung <code>$b =
+    =&lt;&gt;;</code> wurden diesmal in eine Zeile zusammengezogen,
+    die das gleiche macht wie die beiden einzelnen Zeilen.</p>
 
 <pre>[[[syntax perl6]]]
 my $summe = $a + $b;
 [[[endsyntax]]]</pre>
 
-	<p>Hier wurde wieder eine neue Variable deklariert,
-	<code>$summe</code>, und ihr <code>$a + $b</code> zugewiesen, also die
-	Summe von <code>$a</code> und <code>$b</code>.</p>
+    <p>Hier wurde wieder eine neue Variable deklariert,
+    <code>$summe</code>, und ihr <code>$a + $b</code> zugewiesen, also die
+    Summe von <code>$a</code> und <code>$b</code>.</p>
 
 <pre>[[[syntax perl6]]]
 say "Die Summe von ", $a, " und ", $b, " ist: ", $summe;
 [[[endsyntax]]]</pre>
 
-	<p>In dieser Zeile werden die beiden Variablen <code>$a</code> und
-	<code>$b</code> ausgegeben, zusammen mit dem Ergebnis der Addtion,
-	<code>$summe</code>, zusammen mit ein bisschen Text.</p>
+    <p>In dieser Zeile werden die beiden Variablen <code>$a</code> und
+    <code>$b</code> ausgegeben, zusammen mit dem Ergebnis der Addtion,
+    <code>$summe</code>, zusammen mit ein bisschen Text.</p>
 
-	<h2>Fließkommazahlen</h2>
+    <h2>Fließkommazahlen</h2>
 
-	<p>Die Variablen können natürlich nicht nur ganze Zahlen speichern,
-	sondern auch sogenannte "Fließkommzahlen":</p>
+    <p>Die Variablen können natürlich nicht nur ganze Zahlen speichern,
+    sondern auch sogenannte "Fließkommzahlen":</p>
 <pre>[[[syntax perl6]]]
 my $radius = 0.2;
 my $flaeche = $radius * $radius * pi;
 say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
 [[[endsyntax]]]</pre>
-	<p>Die Ausgabe davon wird etwa so aussehen:</p>
+    <p>Die Ausgabe davon wird etwa so aussehen:</p>
 <pre>Ein Kreis mit Radius 0.2 hat die Fläche 0.125663706</pre>
-	<p>wobei die Anzahl der Nachkommstellen auch anders sein kann.</p>
-	<p>Kommazstellen werden in Perl, wie im englischsprachigen Raum, mit
-	einem Punkt '.' statt einem Komma abgetrennt, daher <code>0.2</code>
-	anstatt <code>0,2</code>.</p>
+    <p>wobei die Anzahl der Nachkommstellen auch anders sein kann.</p>
+    <p>Kommazstellen werden in Perl, wie im englischsprachigen Raum, mit
+    einem Punkt '.' statt einem Komma abgetrennt, daher <code>0.2</code>
+    anstatt <code>0,2</code>.</p>
 
-	<h2>Zeichenketten</h2>
+    <h2>Zeichenketten</h2>
 
-	<p>Natürlich können Variablen nicht nur Zahlen enthalten, sondern auch
-	Zeichenketten, also Text, auf Englisch "Strings".</p>
+    <p>Natürlich können Variablen nicht nur Zahlen enthalten, sondern auch
+    Zeichenketten, also Text, auf Englisch "Strings".</p>
 
-	<p>Tatsächlich ist die Verarbeitung von Text traditionell eine der
-	großen Stärken von Perl gewesen, und ist es auch jetzt noch. Hier ein
-	Beispiel, wie man Strings einer Variable zuweisen kann:</p>
+    <p>Tatsächlich ist die Verarbeitung von Text traditionell eine der
+    großen Stärken von Perl gewesen, und ist es auch jetzt noch. Hier ein
+    Beispiel, wie man Strings einer Variable zuweisen kann:</p>
 
 <pre>[[[syntax perl6]]]
 use v6;
@@ -122,27 +124,27 @@ my $name = "Larry Wall";
 say $name, " ist der Erfinder von Perl";
 [[[endsyntax]]]</pre>
 
-	<p>Dem aufmerksamen Leser fällt an dieser Stelle vielleicht auf, dass
-	wir schon vorher Strings verwendet haben, z. B. in der Zeile</p>
+    <p>Dem aufmerksamen Leser fällt an dieser Stelle vielleicht auf, dass
+    wir schon vorher Strings verwendet haben, z. B. in der Zeile</p>
 <pre>[[[syntax perl6]]]
 say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
 [[[endsyntax]]]</pre>
 
-	<p>Der Text zwischen den Anführungszeichen ist jeweils ein String,
-	hier ein konstanter.</p>
+    <p>Der Text zwischen den Anführungszeichen ist jeweils ein String,
+    hier ein konstanter.</p>
 
-	<p>Obige Zeile hätte man auch anders schreiben können:</p>
+    <p>Obige Zeile hätte man auch anders schreiben können:</p>
 <pre>[[[syntax perl6]]]
 say "Ein Kreis mit Radius $radius hat die Fläche $flaeche";
 [[[endsyntax]]]</pre>
-	<p>Was passiert hier? In einem String, der von doppelten
-	Anführungszeichen <code>"</code> begrenzt ist, werden Variablen, die
-	mit einem Dollarzeichen <code>$</code> anfangen, durch ihren Wert
-	ersetzt. Man sagt der String werde <em>interpoliert</em>.</p>
+    <p>Was passiert hier? In einem String, der von doppelten
+    Anführungszeichen <code>"</code> begrenzt ist, werden Variablen, die
+    mit einem Dollarzeichen <code>$</code> anfangen, durch ihren Wert
+    ersetzt. Man sagt der String werde <em>interpoliert</em>.</p>
 
-	<p>Wenn man das verhindern möchte, z.B. weil man Dollarzeichen
-	ausgeben möchte, kann man den String stattdessen in einfache
-	Anführungszeichen setzen:</p>
+    <p>Wenn man das verhindern möchte, z.B. weil man Dollarzeichen
+    ausgeben möchte, kann man den String stattdessen in einfache
+    Anführungszeichen setzen:</p>
 <pre>[[[syntax perl6]]]
 my $zahl = 12;
 
@@ -152,15 +154,15 @@ my $s2 = 'Nicht-interpolierter String: $zahl';
 say $s1;
 say $s2;
 [[[endsyntax]]]</pre>
-	<p>ergibt folgende Ausgabe:</p>
+    <p>ergibt folgende Ausgabe:</p>
 <pre>
 Interpolierter String: 12
 Nicht-interpolierter String: $zahl
 </pre>
-	<p>Perl hat viele eingebaute Funktionen, die Strings verarbeiten. Hier
-	werden ein paar vorgestellt, die die Groß- und Kleinschreibung
-	(Englisch: Lower Case und Upper Case) beeinflussen. Die meisten
-	wirklich mächtigen Funktionen werden aber erst später vorgestellt.</p>
+    <p>Perl hat viele eingebaute Funktionen, die Strings verarbeiten. Hier
+    werden ein paar vorgestellt, die die Groß- und Kleinschreibung
+    (Englisch: Lower Case und Upper Case) beeinflussen. Die meisten
+    wirklich mächtigen Funktionen werden aber erst später vorgestellt.</p>
 
 <pre>[[[syntax perl6]]]
 my $str = "hEUTe NACht";
@@ -179,3 +181,21 @@ say lcfirst $str;
 say capitalize $str;
 # Heute Nacht
 [[[endsyntax]]]</pre>
+    
+    <h2>Typen</h2>
+
+    <p>Variablen, die mit einem <code>$</code> beginnen, werden Skalare
+    genannt, und können beliebige Werte enthalten.</p>
+
+    <p>Wenn man das einschränken möchte, kann man den Variablen einen
+    sogeannten "Typ" geben:</p>
+
+<pre>[[[syntax perl6]]]
+my Num $zahl;       # $zahl kann nur Zahlen enthalten
+my Int $ganze_zahl; # $ganze_zahl kann nur ganze Zahlen enthalen
+my Str $string;     # $string kann Zeichenketten enthalten
+[[[endsyntax]]]</pre>
+    
+<!-- 
+ vim: sw=4 ts=4 expandtab
+-->

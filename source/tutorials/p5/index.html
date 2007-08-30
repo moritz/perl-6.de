@@ -62,6 +62,14 @@ my %hash = (
 %hahs<foo>      #früher: $hash{foo}
 [[[endsyntax]]]</pre>
 
+    <p>Außerdem gibt es auch noch das Sigil <code>&amp;</code> für
+    Subroutinen, Closures und Regexes:</p>
+<pre>[[[syntax perl6]]]
+my $i = 1;
+my &func =  sub { return $i++; }
+[[[endsyntax]]]</pre>
+
+
     <p>Das Autoquoting beim Zugriff auf Hashes funktioniert in
     geschweiften Klammern nicht mehr, statt dessen gibt es jetzt
     <code>&lt;...&gt;</code>:</p>
