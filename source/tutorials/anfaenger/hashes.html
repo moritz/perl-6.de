@@ -2,26 +2,26 @@
 [[[menu main tut anfaenger hash]]]
 
 <div id="content">
-	<h1>Hashes oder Assoziative Arrays</h1>
+    <h1>Hashes oder Assoziative Arrays</h1>
 
-	<p>Listen sind einfach eine Sammlung von Elementen, auf die man mit
-	ganzen Zahlen als Index zugreifen kann.</p>
+    <p>Listen sind einfach eine Sammlung von Elementen, auf die man mit
+    ganzen Zahlen als Index zugreifen kann.</p>
 
-	<p>Ein <em>Assoziatives Array</em>, auf Englisch auch kurz
-	<em>Hash</em> genannt, speichert ebenfalls Elemente, verwendet aber
-	Strings anstatt ganzer Zahlen als Index.</p>
+    <p>Ein <em>Assoziatives Array</em>, auf Englisch auch <em>Hash Table</em>
+    oder kurz <em>Hash</em> genannt, speichert ebenfalls Elemente, verwendet 
+    aber Strings anstatt ganzer Zahlen als Index.</p>
 
-	<p>Ein Hash beginnt in Perl mit einem Prozentzeichen
-	<code>%</code>:</p>
+    <p>Ein Hash beginnt in Perl mit einem Prozentzeichen
+    <code>%</code>:</p>
 <pre>[[[syntax perl6]]]
 use v6;
 
 my %autoren = ( 
-	"Linux" => "Linus Torvalds",
-	"Perl"	=> "Larry Wall",
-	"Pugs"	=> "Audrey Tang",
-	"Dos"	=> "Bill Gates"
-	);
+    "Linux"   => "Linus Torvalds",
+    "Perl"    => "Larry Wall",
+    "Pugs"    => "Audrey Tang",
+    "Dos"     => "Bill Gates",
+    );
 
 my $programm = "Perl";
 
@@ -29,104 +29,126 @@ say %autoren{$programm}, " hat $programm geschrieben";
 # Ausgabe: Larry Wall hat Perl geschrieben
 [[[endsyntax]]]</pre>
 
-	<p>Dieses kleine Programm speichert Kombinationen von Programmen und
-	ihren Autoren in einem Hash <code>%autoren</code> ab. Dazu wird dem
-	Hash eine Liste von Paaren zugewiesen, wobei ein Paar in der Form
-	<code>schlüssel =&gt; wert</code> geschrieben wird.</p>
+    <p>Dieses kleine Programm speichert Kombinationen von Programmen und
+    ihren Autoren in einem Hash <code>%autoren</code> ab. Dazu wird dem
+    Hash eine Liste von Paaren zugewiesen, wobei ein Paar in der Form
+    <code>schlüssel =&gt; wert</code> geschrieben wird.</p>
 
-	<p>Dann wird auf ein Element des Hashes zugegriffen, indem der
-	Schlüssel dahinter in geschweiften Klammern angegeben
-	wird: <code>%autoren{$programm}</code>.</p>
+    <p>Dann wird auf ein Element des Hashes zugegriffen, indem der
+    Schlüssel dahinter in geschweiften Klammern angegeben
+    wird: <code>%autoren{$programm}</code>.</p>
 
-	<p>Wie auch bei Arrays kann man einem Hash auch im Nachhinein noch
-	einen Wert einfügen:</p>
+    <p>Wie auch bei Arrays kann man einem Hash auch im Nachhinein noch
+    einen Wert einfügen:</p>
 
 <pre>[[[syntax perl6]]]
 %autoren{"perl-6.de"} = "Moritz Lenz";
 [[[endsyntax]]]</pre>
 
-	<p>Wenn man einem Hash ein Element hinzufügen will, dessen Schlüssel
-	schon einmal vorhanden ist, wird der alte Werte überschrieben:</p>
+    <p>Wenn man einem Hash ein Element hinzufügen will, dessen Schlüssel
+    schon einmal vorhanden ist, wird der alte Werte überschrieben:</p>
 <pre>[[[syntax perl6]]]
 %autoren{"Perl"} = "Die Perl-Community";
 
 say %autoren{$programm}, " hat $programm geschrieben";
 # Ausgabe: Die Perl-Community hat Perl geschrieben
 [[[endsyntax]]]</pre>
+    
+    <h2>Einfachere Syntax</h2>
 
-	<h2>Hashes ausgeben</h2>
+    <p>Da man relativ häufig einen konstanten String benutzt um auf ein
+    Element eines Hashes zuzugreifen, gibt es dafür eine eigene Syntax:</p>
 
-	<p>Wie auch Listen kann man Hashes mit <code>for</code>-Schleifen
-	ausgeben. Dazu benutzt man die Funktion <code>kv</code>, die bei jedem
-	Aufruf ein neues Paar von Schlüssel und Wert zurückliefert:</p>
+<pre>[[[syntax perl6]]]
+%autoren<Perl>;     # das gleiche wie %autoren{"Perl"}
+
+# Wenn man keine Leerzeichen im Schlüssel verwendet, kann man die
+# Anführungszeichen um die Schlüssel weglassen:
+my %autoren = ( 
+    Linux     => "Linus Torvalds",
+    Perl      => "Larry Wall",
+    Pugs      => "Audrey Tang",
+    Dos       => "Bill Gates",
+    );
+[[[endsyntax]]]</pre>
+
+    <h2>Hashes ausgeben</h2>
+
+    <p>Wie auch Listen kann man Hashes mit <code>for</code>-Schleifen
+    ausgeben. Dazu benutzt man die Funktion <code>kv</code>, die bei jedem
+    Aufruf ein neues Paar von Schlüssel und Wert zurückliefert:</p>
 
 <pre>[[[syntax perl6]]]
 for %autoren.kv -> my $projekt, $autor {
-	say "$projekt ist von $autor gestartet worden";
+    say "$projekt ist von $autor gestartet worden";
 }[[[endsyntax]]]</pre>
 
-	<p>Wenn Sie das Programm ausführen, werden Sie vielleicht bemerken,
-	dass die Reihenfolge der Ausgabe nicht mit der übereinstimmt, in der
-	sie ursprünglich geschrieben wurde. Tatsächlich geht die Information
-	über die Reihenfolge der Elemente beim einfügen in den Hash verloren.
-	Wenn man das Programm mehrfach startet, kann sogar bei jedem Durchlauf
-	eine andere Reihenfolge bei der Ausgabe herauskommen.</p>
+    <p>Wenn Sie das Programm ausführen, werden Sie vielleicht bemerken,
+    dass die Reihenfolge der Ausgabe nicht mit der übereinstimmt, in der
+    sie ursprünglich geschrieben wurde. Tatsächlich geht die Information
+    über die Reihenfolge der Elemente beim einfügen in den Hash verloren.
+    Wenn man das Programm mehrfach startet, kann sogar bei jedem Durchlauf
+    eine andere Reihenfolge bei der Ausgabe herauskommen.</p>
 
-	<p>Wenn man eine feste Reihenfolge möchte, kann man die Schlüssel
-	eines Hashs vor dem ausgeben sortieren:</p>
+    <p>Wenn man eine feste Reihenfolge möchte, kann man die Schlüssel
+    eines Hashs vor dem ausgeben sortieren:</p>
 
 <pre>[[[syntax perl6]]]
 for %autoren.keys.sort -> my $projekt {
-	my $autor = %autoren{$projekt};
-	say "$projekt ist von $autor gestartet worden";
+    my $autor = %autoren{$projekt};
+    say "$projekt ist von $autor gestartet worden";
 }[[[endsyntax]]]</pre>
 
-	<h2>Komplexe Datenstrukturen</h2>
+    <h2>Komplexe Datenstrukturen</h2>
 
-	<p>Man kann problemlos Listen und Hashes in Listen und Hashes
-	speichern. Damit kann man sich beliebig komplizierte Datenstrukturen
-	bauen. Hier erst mal ein einfaches Beispiel für Listen in Hashes:</p>
+    <p>Man kann problemlos Listen und Hashes in Listen und Hashes
+    speichern. Damit kann man sich beliebig komplizierte Datenstrukturen
+    bauen. Hier erst mal ein einfaches Beispiel für Listen in Hashes:</p>
 
 <pre>[[[syntax perl6]]]
 my %autoren  = (
-	"Linux"	=> ["Linus Torvalds", "Andrew Morton", "Chris Wright"],
-	"Pugs"	=> ["Audrey Tang", "Damian Conway"],
-	"Perl"	=> ["Larry Wall", "Randal Schwartz"], 
-	);
+    Linux      => ["Linus Torvalds", "Andrew Morton", "Chris Wright"],
+    Pugs       => ["Audrey Tang", "Damian Conway"],
+    Perl       => ["Larry Wall", "Randal Schwartz"], 
+    );
 # Die Listen sind alles andere als vollständig
 
 # Alle Projekte mit Autoren ausgeben:
 for %autoren.kv -> my $projekt, @autoren {
-	say "Autoren von $projekt: ", @autoren.join(", ");
+    say "Autoren von $projekt: ", @autoren.join(", ");
 }
 
 # Einen Autor zum Perl-Projekt hinzufügen:
 %autoren{"Perl"}.push("Tom Christiansen");
 # (push fügt einem Array ein Element hinzu)
 [[[endsyntax]]]</pre>
-	
-	<p>Die Verschachtelungen können beliebig sein, also z.B. Hashes in
-	Hashes in Listen, oder wie auch immer man es braucht:</p>
+    
+    <p>Die Verschachtelungen können beliebig sein, also z.B. Hashes in
+    Hashes in Listen, oder wie auch immer man es braucht:</p>
 
 <pre>[[[syntax perl6]]]
 my %autoren  = (
-	"Linux"	=> [
-		{
-			'Person'	=> 'Linus Torvalds',
-			'Position'	=> 'Gründer',
-			'Arbeitgeber'	=> 'Linux Foundation',
-		},
-		{
-			'Person'	=> 'Andrew Morton',
-			'Position'	=> 'Maintainer des 2.6er Kernels',
-			'Arbeitgeber'	=> 'Google',
-		}
-	],
-	"Perl"	=> [
-			{
-			'Person'	=> "Larry Wall", 
-			'Position'	=> 'Wohlmeinender Diktator',
-			},
-	],
-	);
+    "Linux"    => [
+        {
+            Person          => 'Linus Torvalds',
+            Position        => 'Gründer',
+            Arbeitgeber     => 'Linux Foundation',
+        },
+        {
+            Person          => 'Andrew Morton',
+            Position        => 'Maintainer des 2.6er Kernels',
+            Arbeitgeber     => 'Google',
+        }
+    ],
+    "Perl"    => [
+        {
+            Person          => "Larry Wall", 
+            Position        => 'Wohlmeinender Diktator',
+        },
+    ],
+    );
 [[[endsyntax]]]</pre>
+
+<!-- 
+ vim: sw=4 ts=4 expandtab
+-->

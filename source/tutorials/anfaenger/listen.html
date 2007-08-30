@@ -2,13 +2,13 @@
 [[[setvar title Listen]]]
 
 <div id="content">
-	<h1>Listen</h1>
+    <h1>Listen</h1>
 
-	<p>Angenommen, Sie wollen ein Programm schreiben, das Namen und
-	Adressen von Personen speichert, eben eine Adressverwaltung.</p>
-	
-	<p>Dann müßen Sie irgendwie auf die verschiedene Personen zugreifen,
-	das könnte etwa so aussehen:</p>
+    <p>Angenommen, Sie wollen ein Programm schreiben, das Namen und
+    Adressen von Personen speichert, eben eine Adressverwaltung.</p>
+    
+    <p>Dann müßen Sie irgendwie auf die verschiedene Personen zugreifen,
+    das könnte etwa so aussehen:</p>
 <pre>[[[syntax perl6]]]
 my $name1;
 my $name2;
@@ -25,130 +25,130 @@ $name3 = =<>;
 say "Welchen Namen wollen Sie sich anzeigen lassen?"
 my $auswahl = =<>;
 if $auswahl == 1 {
-	say $name1;
+    say $name1;
 } elsif $auswahl == 2 {
-	say $name2;
+    say $name2;
 } else {
-	say $name3;
+    say $name3;
 } 
 [[[endsyntax]]]</pre>
-	<p>Sie sehen schon: das wird hässlich. Und dieses Programm kann erst
-	drei Namen speichern, in dem Arbeitsspeicher Ihres Computers ist aber
-	vermutlich genug Platz, um Millionen von Namen zu speichern.</p>
+    <p>Sie sehen schon: das wird hässlich. Und dieses Programm kann erst
+    drei Namen speichern, in dem Arbeitsspeicher Ihres Computers ist aber
+    vermutlich genug Platz, um Millionen von Namen zu speichern.</p>
 
-	<p>Wie kann man dieses Dilemma umgehen?</p>
+    <p>Wie kann man dieses Dilemma umgehen?</p>
 
-	<p>Die Antwort ist: mit Listen. Listen können beliebig viele Elemente
-	enthalten, und man kann einfach auf diese Elemente zugreifen.</p>
+    <p>Die Antwort ist: mit Listen. Listen können beliebig viele Elemente
+    enthalten, und man kann einfach auf diese Elemente zugreifen.</p>
 
-	<p>Tatsächlich kamen in den bisherigen Programmen schon ab und zu
-	Listen vor, vermutlich ohne, dass Sie das bemerkt hatten:</p>
+    <p>Tatsächlich kamen in den bisherigen Programmen schon ab und zu
+    Listen vor, vermutlich ohne, dass Sie das bemerkt hatten:</p>
 
 <pre>[[[syntax perl6]]]
 say "Die Summe von ", $a, " und ", $b, " ist ", $a + $b;
 [[[endsyntax]]]</pre>
 
-	<p>Die verschiedenen Ausdrücke, die von <code>say</code> ausgegeben
-	werden sollen, werden in einer Liste geschrieben, bei der die
-	einzelnen Ausdrücke durch Kommata <code>,</code> voneinander getrennt
-	werden.</p>
+    <p>Die verschiedenen Ausdrücke, die von <code>say</code> ausgegeben
+    werden sollen, werden in einer Liste geschrieben, bei der die
+    einzelnen Ausdrücke durch Kommata <code>,</code> voneinander getrennt
+    werden.</p>
 
-	<p>Aber wie speichert man eine Liste? Das folgende Beispiel zeigt
-	es:</p>
+    <p>Aber wie speichert man eine Liste? Das folgende Beispiel zeigt
+    es:</p>
 <pre>[[[syntax perl6]]]
 my @namen;
 
 loop (my $i = 0; $i < 3; $i++){
-	say "Geben Sie Namen Nr.", $i + 1, " ein:";
-	@namen[$i] = =<>;
+    say "Geben Sie Namen Nr.", $i + 1, " ein:";
+    @namen[$i] = =<>;
 }
 
 say "Welchen Namen wollen Sie sich anzeigen lassen?"
 my $auswahl = =<>;
 say @namen[$auswahl - 1];
 [[[endsyntax]]]</pre>
-	
-	<p>Dieses Beispiel macht das fast das gleiche wie das vorherige, und
-	ist deutlich kürzer. Und es hat noch einen Vorteil: nur an einer
-	einzigen Stelle steht im Quelltext, dass drei Namen gespeichert werden
-	- man kann die Zahl also leicht erhöhen.</p>
+    
+    <p>Dieses Beispiel macht das fast das gleiche wie das vorherige, und
+    ist deutlich kürzer. Und es hat noch einen Vorteil: nur an einer
+    einzigen Stelle steht im Quelltext, dass drei Namen gespeichert werden
+    - man kann die Zahl also leicht erhöhen.</p>
 
-	<h2>Das Programm im Detail</h2>
+    <h2>Das Programm im Detail</h2>
 <pre>[[[syntax perl6]]]
 my @namen;
 [[[endsyntax]]]</pre>
-	<p>Hier ist schon die erste Neuerung. Bisher fingen alle Variablen mit
-	einem Dollar an, diese hier fängt mit einem <code>@</code> an
-	(gesprochen "ät").</p>
+    <p>Hier ist schon die erste Neuerung. Bisher fingen alle Variablen mit
+    einem Dollar an, diese hier fängt mit einem <code>@</code> an
+    (gesprochen "ät").</p>
 
-	<p>Das sagt dem Perl-Interpreter, dass die Variable
-	<code>@namen</code> ein <em>Array</em> ist, also eine Variable, die
-	Listen speichern kann.</p>
+    <p>Das sagt dem Perl-Interpreter, dass die Variable
+    <code>@namen</code> ein <em>Array</em> ist, also eine Variable, die
+    Listen speichern kann.</p>
 
 <pre>[[[syntax perl6]]]
 loop (my $i = 0; $i < 3; $i++){
-	...
+    ...
 }
 [[[endsyntax]]]</pre>
-	<p>Wie bei den <a href="schleifen">Schleifen</a> beschrieben, läuft
-	der Block dieser Schleife drei mal durch, mit den Werten 0, 1 und 2
-	für <code>$i</code>.</p>
+    <p>Wie bei den <a href="schleifen">Schleifen</a> beschrieben, läuft
+    der Block dieser Schleife drei mal durch, mit den Werten 0, 1 und 2
+    für <code>$i</code>.</p>
 
 <pre>[[[syntax perl6]]]
-	say "Geben Sie Namen Nr.", $i + 1, " ein:";
-	@namen[$i] = =<>;
+    say "Geben Sie Namen Nr.", $i + 1, " ein:";
+    @namen[$i] = =<>;
 [[[endsyntax]]]</pre>
-	<p>Hier wird erst der Benutzer aufgefordert, einen Namen einzugeben.
-	Dabei ist zu beachten, dass <code>$i</code> von 0 bis 2 läuft, aber
-	weil Benutzer meistens verwirrt sind, wenn man sie bittet, den Namen
-	Nummer 0 einzugeben, wir <code>$i + 1</code> ausgegeben.</p>
+    <p>Hier wird erst der Benutzer aufgefordert, einen Namen einzugeben.
+    Dabei ist zu beachten, dass <code>$i</code> von 0 bis 2 läuft, aber
+    weil Benutzer meistens verwirrt sind, wenn man sie bittet, den Namen
+    Nummer 0 einzugeben, wir <code>$i + 1</code> ausgegeben.</p>
 
-	<p>Die zweite Zeile ist auch wieder etwas neues:
-	<code>@name[$i]</code> ist der <code>$i</code>-te Eintrag des Arrays
-	<code>@name</code>. Dabei wird allerdings bei 0 das Zählen angefangen,
-	das heißt der erste Eintrag hat den Index 0, der zweite den Index 1
-	und so weiter.</p>
-	<p>Dem <code>$i</code>-ten Eintrag wird hier die Eingabe des Benutzer
-	zugewiesen. Wenn <code>$i</code> den Wert 0 hat, und der Benutzer
-	"Hans" eingibt, beutet diese Zeile das gleiche wie</p>
+    <p>Die zweite Zeile ist auch wieder etwas neues:
+    <code>@name[$i]</code> ist der <code>$i</code>-te Eintrag des Arrays
+    <code>@name</code>. Dabei wird allerdings bei 0 das Zählen angefangen,
+    das heißt der erste Eintrag hat den Index 0, der zweite den Index 1
+    und so weiter.</p>
+    <p>Dem <code>$i</code>-ten Eintrag wird hier die Eingabe des Benutzer
+    zugewiesen. Wenn <code>$i</code> den Wert 0 hat, und der Benutzer
+    "Hans" eingibt, beutet diese Zeile das gleiche wie</p>
 
 <pre>[[[syntax perl6]]]
-	@namen[0] = "Hans";
+    @namen[0] = "Hans";
 [[[endsyntax]]]</pre>
 
-	<p>Danach hat das Array <code>@namen</code> einen Eintrag.</p>
+    <p>Danach hat das Array <code>@namen</code> einen Eintrag.</p>
 
-	<p>Wenn der Benutzer beim zweiten Durchlauf "Horst" eingibt, hat die
-	Variable <code>$i</code> bereits den Wert 1, und an die zweite Stelle
-	des Arrays wird "Horst" geschrieben:</p>
+    <p>Wenn der Benutzer beim zweiten Durchlauf "Horst" eingibt, hat die
+    Variable <code>$i</code> bereits den Wert 1, und an die zweite Stelle
+    des Arrays wird "Horst" geschrieben:</p>
 
 <pre>[[[syntax perl6]]]
-	@namen[1] = "Horst";
+    @namen[1] = "Horst";
 [[[endsyntax]]]</pre>
-	<p>Danach hat das Array die Einträge <code>@namen = "Hans",
-	"Horst"</code>.</p>
+    <p>Danach hat das Array die Einträge <code>@namen = "Hans",
+    "Horst"</code>.</p>
 
-	<p>Wenn der Benutzer beim dritten Durchlauf "Heinz" eingibt, hat das
-	Array die Elemete <code>"Hans", "Horst", "Heinz"</code>.
+    <p>Wenn der Benutzer beim dritten Durchlauf "Heinz" eingibt, hat das
+    Array die Elemete <code>"Hans", "Horst", "Heinz"</code>.
 
 <pre>[[[syntax perl6]]]
 say "Welchen Namen wollen Sie sich anzeigen lassen?"
 my $auswahl = =<>;
 say @namen[$auswahl - 1];
 [[[endsyntax]]]</pre>
-	<p>Hier hat der Benutzer die Möglichkeit, eine Zahl einzugeben, die
-	hoffentlich zwischen 1 und 3 ist.</p>
+    <p>Hier hat der Benutzer die Möglichkeit, eine Zahl einzugeben, die
+    hoffentlich zwischen 1 und 3 ist.</p>
 
-	<p>Diese Zahl wird in <code>$auswahl</code> gespeichert, und dann wird
-	<code>@namen[$auswahl - 1]</code> ausgegeben. Wenn
-	<code>$auswahl</code> z.B. 2 ist, wird <code>@namen[1]</code>
-	ausgegeben, also das zweite Element - "Horst".</p>
+    <p>Diese Zahl wird in <code>$auswahl</code> gespeichert, und dann wird
+    <code>@namen[$auswahl - 1]</code> ausgegeben. Wenn
+    <code>$auswahl</code> z.B. 2 ist, wird <code>@namen[1]</code>
+    ausgegeben, also das zweite Element - "Horst".</p>
 
-	<h2>Mehr zu Listen</h2>
+    <h2>Mehr zu Listen</h2>
 
-	<p>Listen können für sehr viele Aufgaben extrem praktisch sein.
-	Deswegen gibt es viele Möglichketen, Listen zu initialiseren,
-	auszulesen und sie zu bearbeiten.</p>
+    <p>Listen können für sehr viele Aufgaben extrem praktisch sein.
+    Deswegen gibt es viele Möglichketen, Listen zu initialiseren,
+    auszulesen und sie zu bearbeiten.</p>
 
 <pre>[[[syntax perl6]]]
 my @a = 1 .. 10;
@@ -161,43 +161,48 @@ my @b = 0 xx 5;
 # dieser Befehlt hat die Elemente 1 und 2 an @b angehängt,
 # d.h. @b ist jetzt 0, 0, 0, 0, 0, 1, 2
 
-@a[2];		# ist 3
-@a[2, 3, 5];	# ergibt die Liste 3, 4, 6
+@a[2];          # ist 3
+@a[2, 3, 5];    # ergibt die Liste 3, 4, 6
 
-@a.elems;	# Anzahl der Elemete in @a, also 10
-@a.end;		# Index des letzten Elements von @a, also 9
+@a.elems;       # Anzahl der Elemete in @a, also 10
+@a.end;         # Index des letzten Elements von @a, also 9
+
+# Ein Stern steht für "irgend etwas" oder "alles":
+
+@a[3..*]        # Alle Elemente ab dem vierten
 
 # Ein negativer Index wird von hinten gezählt:
-@a[-1]		# letztes Element
+@a[*-1]         # letztes Element
 [[[endsyntax]]]</pre>
-	<p>Listen können beliebige Elemente enthalten, das heißt man z.B.
-	Strings und Zahlen gemischt in Listen packen:</p>
+
+    <p>Listen können beliebige Elemente enthalten, das heißt man z.B.
+    Strings und Zahlen gemischt in Listen packen:</p>
 
 <pre>[[[syntax perl6]]]
 my @a = "hallo", 1, 2, "Welt";
 [[[endsyntax]]]</pre>
 
-	<p>Tatsächlich kann man sogar Listen als Elemente von Listen nehmen,
-	dann muss man die Liste allerdings in eckige Klammern schreiben:</p>
+    <p>Tatsächlich kann man sogar Listen als Elemente von Listen nehmen,
+    dann muss man die Liste allerdings in eckige Klammern schreiben:</p>
 
 <pre>[[[syntax perl6]]]
 my @a = 1, 2, [3, 4, 5], 6;
-@a.elems;	# 4 Elemente: 1, 2, eine Liste, und 6
+@a.elems;    # 4 Elemente: 1, 2, eine Liste, und 6
 [[[endsyntax]]]</pre>
 
-	<p>Da man relativ häufig Arrays initialisieren muss, die aus einzelnen
-	Worten bestehen, gibt es dafür eine eigene Schreibweise:</p>
+    <p>Da man relativ häufig Arrays initialisieren muss, die aus einzelnen
+    Worten bestehen, gibt es dafür eine eigene Schreibweise:</p>
 <pre>[[[syntax perl6]]]
 my @werktage = <Montag Dienstag Mittwoch Donnerstag Freitag>;
 # das Gleiche wie @werktage = "Montag", "Dienstag", ...
 [[[endsyntax]]]</pre>
 
-	<h3>Listen ausgeben</h3>
+    <h3>Listen ausgeben</h3>
 
-	<p>Wenn man eine Liste ohne irgend welche Trennzeichen ausgeben will,
-	kann man sie einfach an <code>say</code> übergeben. Wenn man die
-	Elemente trennen möchte, z.B. durch Kommata oder Leerzeichen, kann man
-	diese Trennzeichen mit <code>join</code> übergeben:</p>
+    <p>Wenn man eine Liste ohne irgend welche Trennzeichen ausgeben will,
+    kann man sie einfach an <code>say</code> übergeben. Wenn man die
+    Elemente trennen möchte, z.B. durch Kommata oder Leerzeichen, kann man
+    diese Trennzeichen mit <code>join</code> übergeben:</p>
 
 <pre>[[[syntax perl6]]]
 my @werktage = <Montag Dienstag Mittwoch Donnerstag Freitag>;
@@ -209,10 +214,10 @@ say @werktage.join(", ");
 # Ausgabe: Montag, Dienstag, Mittwoch, Donnerstag, Freitag
 [[[endsyntax]]]</pre>
 
-	<p>Für verschachtelte Listen ist Ergebnis nicht immer unbedingt das,
-	was man erwartet. Um die Struktur von beliebig verschachtelten Listen
-	auszugeben, kann man sich mit der Funktion <code>perl</code> eine
-	String-Repräsentation ausgeben lassen:</p>
+    <p>Für verschachtelte Listen ist Ergebnis nicht immer unbedingt das,
+    was man erwartet. Um die Struktur von beliebig verschachtelten Listen
+    auszugeben, kann man sich mit der Funktion <code>perl</code> eine
+    String-Repräsentation ausgeben lassen:</p>
 
 <pre>[[[syntax perl6]]]
 my @a = 1, 2, 3, [4, 5, 6], 7;
@@ -220,37 +225,41 @@ say @a.perl;
 # Ausgabe: [1, 2, 3, [4, 5, 6], 7]
 [[[endsyntax]]]</pre>
 
-	<p>Das eignet sich zwar nicht für schön formatierte Ausgaben, aber um
-	zu wissen, wie eine Liste (oder etwas beliebiges anderes) aussieht,
-	reicht es.</p>
+    <p>Das eignet sich zwar nicht für schön formatierte Ausgaben, aber um
+    zu wissen, wie eine Liste (oder etwas beliebiges anderes) aussieht,
+    reicht es.</p>
 
-	<h3>Listen durchlaufen</h3>
+    <h3>Listen durchlaufen</h3>
 
-	<p>Eine Möglichkeit, alle Elemente einer Liste auszugeben, haben Sie
-	oben (in ein wenig anderer Form) schon gesehen:</p>
+    <p>Eine Möglichkeit, alle Elemente einer Liste auszugeben, haben Sie
+    oben (in ein wenig anderer Form) schon gesehen:</p>
 
 <pre>[[[syntax perl6]]]
 my @wochentag = <Montag Dienstag Mittwoch Donnerstag Freitag>;
 loop(my $i = 0; $i < @wochentag.end; $i++){
-	say @wochentag[$i];
+    say @wochentag[$i];
 }
 [[[endsyntax]]]</pre>
 
-	<p>Weil das so häufig gebraucht wird, gibt es eine eigene, kompaktere
-	Schreibweise dafür:</p>
+    <p>Weil das so häufig gebraucht wird, gibt es eine eigene, kompaktere
+    Schreibweise dafür:</p>
 
 <pre>[[[syntax perl6]]]
 my @wochentag = <Montag Dienstag Mittwoch Donnerstag Freitag>;
 my @wochentag -> my $tag {
-	say $tag;
+    say $tag;
 }
 [[[endsyntax]]]</pre>
 
-	<p>Die <code>for</code>-Schleife nimmt eine Liste, hier
-	<code>@wochentag</code>, und dahinter ist mit einem Pfeil, der aus
-	Minus-Zeichen und Größer-Zeichen besteht, eine Variable angegeben.
-	(<code>$tag</code>).</p>
+    <p>Die <code>for</code>-Schleife nimmt eine Liste, hier
+    <code>@wochentag</code>, und dahinter ist mit einem Pfeil, der aus
+    Minus-Zeichen und Größer-Zeichen besteht, eine Variable angegeben.
+    (<code>$tag</code>).</p>
 
-	<p>Bei jedem Durchlauf der Schleife der wird die Variable
-	<code>$tag</code> auf ein anderes Element der Liste gesetzt, in der
-	Reihenfolge, wie sie in der Liste auftauchen.</p>
+    <p>Bei jedem Durchlauf der Schleife der wird die Variable
+    <code>$tag</code> auf ein anderes Element der Liste gesetzt, in der
+    Reihenfolge, wie sie in der Liste auftauchen.</p>
+
+<!-- 
+ vim: sw=4 ts=4 expandtab
+-->
