@@ -151,6 +151,112 @@ if $text ~~ m/ (<digit>+) <space> (Euro|Dollar|Yen) / {
     </tr>
     </table>
 
+    <h2>Regexes deklarieren</h2>
+
+    <p>Wie Funktionen kann man auch Regexes definieren und Namen geben:</p>
+
+<pre>[% syntax perl6 %]
+token zahl {
+    <digit>+
+}
+token waehrung {
+    Euro | Dollar | Yen | Drachmen | Pesos
+}
+rule preis {
+    <zahl> <waehrung>
+}
+if $text ~~ m/ <preis> / {
+    say "Preis $/<zahl> mit Wähung $/<waehrung> gefunden";
+}
+[% endsyntax %]</pre>
+
+    <p>Hier wird mit dem Schlüsselwort <code>token</code> eine Regex mit Namen
+    <code>zahl</code> definiert. Ein <em>token</em> ist eine einfache Regex,
+    hier passt sie auf eine oder mehrere Ziffern.</p> 
+
+    <p>Dann wird ein token <code>waehrung</code> erzeugt, und dann eine
+    <code>rule</code> <code>preis</code> definiert. Eine <em>rule</em> ist das
+    gleiche wie ein <code>token</code>, nur dass überall, wo Leerzeichen in
+    der Regex sind, auch optionale Leerzeichen erwartet werden.</p>
+
+    <p>In der rule <code>preis</code> wird mit spitzen Klammern
+    <code>&lt;...&gt;</code> auf die anderen Regexes zugegriffen.</p>
+
+    <p>Später wird mit <code>$/&lt;zahl&gt;</code> auf den Text zugegriffen,
+    auf den die Regex <code>zahl</code> gepasst hat. (Eine kürzere
+    Schreibweise wäre <code>$&lt;zahl&gt;</code>, also ohne den Schrägstrich).
+    </p>
+
+    <p>Die runden Klammern haben also Matchergebnisse in <code>$/[0]</code>,
+    <code>$/[1]</code> usw. gespeichert, die spitzen Klammern in
+    <code>$/&lt;name&gt;</code> - einmal wird <code>$/</code> wie ein Array
+    verwendet, das andere mal als Hash.</p>
+
+    <p>Beides kann man auch kombinieren:</p>
+
+<pre>[% syntax perl6 %]
+token zahl {
+    <digit>+
+}
+if $text ~~ m/ <zahl> <space>+ ([Euro | Dollar | Yen | Drachmen | Pesos]) / {
+    say "Preis $/<zahl> mit Wähung $0 gefunden";
+}
+[% endsyntax %]</pre>
+
+    <p>Vielleicht ist Ihnen aufgefallen, dass <code>&lt;zahl&gt;</code> und
+    <code>&lt;space&gt;</code> gleich verwendet werden - konsequenterweise
+    kann man auch auf <code>$/&lt;space&gt;</code> zuweisen. Doch weil darin
+    nur Leerzeichen stehen, interessiert das nicht besonders.</p>
+
+    <p>Wenn man Rechenzeit sparen will, kann man dafür sorgen, dass
+    <code>$/&lt;space&gt;</code> nicht gespeichert wird, indem man es als
+    <code>&lt;?space&gt;</code> verwendet:</p>
+ 
+<pre>[% syntax perl6 %]
+token zahl {
+    <digit>+
+}
+token waehrung {
+    Euro | Dollar | Yen | Drachmen | Pesos
+}
+if $text ~~ m/ <zahl> <?space>+ <waehrung> / {
+    say "Preis $<zahl> mit Wähung $<waehrung> gefunden";
+}
+[% endsyntax %]</pre>
+
+    <h2>Modifier</h2>
+
+    <p>Mit sogenannten <em>Modifiers</em> kann man das Verhalten von Regexes
+    verändern. Ein einfaches Beispiel ist der <code>:i</code> oder
+    <code>:ignorecase</code>-Modifier, der dafür sorgt, dass Groß- und
+    Kleinschreibung ignoriert wird. Modifier können entweder vor eine Regex
+    geschrieben werden, oder in die Regex hinein:</p>
+
+<pre>[% syntax perl6 %]
+if $text ~~ m:i/Flugzeug/ {
+    # Passt auch auf 'flugzeug', 'FlUgZeug' etc.
+}
+
+token waehrung {
+    :ignorecase         # gilt ab hier in dieser Regex
+    Euro | Dollar | Yen | Drachmen | Pesos
+}
+[% endsyntax %]</pre>
+
+    <p>Mit dem <code>:b</code> oder <code>:basechar</code>-Modifier werden
+    alle Akzentuierungen ignoriert, d.h. die folgenden Zeichen werden als
+    gleich behandelt: <code>óôõöøo</code>.</p>
+
+    <p>Mit dem <code>:g</code> oder <code>:global</code>-Modifier werden alle
+    möglichen, nicht überlappende Matches gefunden:</p>
+
+<pre>[% syntax perl6 %]
+my $text = "2 + 3 * (52 - 3)";
+my @zahlen = $text ~~ m:g/<digit>+/;
+say @zahlen.join(", ") # Ausgabe: "2, 3, 52, 3"
+[% endsyntax %]</pre>
+    
+
 <!-- 
  vim: sw=4 ts=4 expandtab
 -->
