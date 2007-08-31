@@ -2,219 +2,213 @@
 [[[setvar title Regular Expressions und Rules]]]
 
 <div id="content">
-	<h1>Regular Expressions und Rules</h1>
+    <h1>Regular Expressions und Rules</h1>
 
-	<p>Regular Expressions, kurz Regexes, sind Muster, die Text
-	beschreiben. Wenn man sie auf einen String "anwendet", überprüft man,
-	ob der String auf zu dem Muster passt.</p>
+    <p>Regular Expressions, kurz Regexes, sind Muster, die Text
+    beschreiben. Wenn man sie auf einen String "anwendet", überprüft man,
+    ob der String auf zu dem Muster passt.</p>
 
 <pre>[[[syntax perl6]]]
 if "Mein Name ist Hase" ~~ m/Hase/ {
-	say "In dem Text kam 'Hase' vor";
+    say "In dem Text kam 'Hase' vor";
 }
 [[[endsyntax]]]</pre>
 
-	<p>In diesem Beispiel wird ein Text darauf überprüft, ob der String
-	"Hase" darin vorkommt. Dabei ist "Hase" die regex, und wird mit
-	<code>m/.../</code> begrenzt.</p>
+    <p>In diesem Beispiel wird ein Text darauf überprüft, ob der String
+    "Hase" darin vorkommt. Dabei ist "Hase" die regex, und wird mit
+    <code>m/.../</code> begrenzt.</p>
 
-	<p>Die Regex wird mit dem <em>Smart Match Operator</em>
-	<code>~~</code> auf den String angewandt, oder gematched wie man
-	sagt.</p>
+    <p>Die Regex wird mit dem <em>Smart Match Operator</em>
+    <code>~~</code> auf den String angewandt, oder gematched wie man
+    sagt.</p>
 
-	<h2>Aufbau von Regexes</h2>
+    <h2>Aufbau von Regexes</h2>
 
-	<p>Im einfachsten Fall bestehen Regexes einfach auch Text, ein
-	Buchstabe nach dem anderen.</p>
+    <p>Im einfachsten Fall bestehen Regexes einfach auch Text, ein
+    Buchstabe nach dem anderen.</p>
 
-	<p>Dabei sollte man beachten, dass Leerzeichen keinerlei Bedeutung
-	haben, d.h. <code>m/Hase/</code> und <code>m/Ha se/</code> haben die
-	gleiche Bedeutung.</p>
+    <p>Dabei sollte man beachten, dass Leerzeichen keinerlei Bedeutung
+    haben, d.h. <code>m/Hase/</code> und <code>m/Ha se/</code> haben die
+    gleiche Bedeutung.</p>
 
-	<p>Zusätlich gibt es Zeichen, die eine Sonderfunktion haben, z.B. der
-	Punkt <code>.</code> steht für ein beliebiges Zeichen:</p>
+    <p>Zusätlich gibt es Zeichen, die eine Sonderfunktion haben, z.B. der
+    Punkt <code>.</code> steht für ein beliebiges Zeichen:</p>
 
 <pre>[[[syntax perl6]]]
 my $str = "Hosenträger";
 if $str ~~ m/H.se/ {
-	# passt auch.
+    # passt auch.
 }
 if "Haase" ~~ m/H.se/ {
-	# passt nicht, der Punkt steht für genau ein Zeichen
+    # passt nicht, der Punkt steht für genau ein Zeichen
 }
 [[[endsyntax]]]</pre>
 
-	<p>Es gibt auch Zeichenkombinationen, die etwas besonderes bedeuten,
-	z.B. <code>\d</code> steht für eine Ziffer (Englisch digit =
-	Ziffer).</p>
+    <p>Es gibt auch Zeichenkombinationen, die etwas besonderes bedeuten,
+    z.B. <code>\d</code> steht für eine Ziffer (Englisch digit =
+    Ziffer).</p>
 
 <pre>[[[syntax perl6]]]
 my $zeit = "6:30";
 if $zeit ~~ m/\d:\d\d/ {
-	say "gültige Weckzeit";
+    say "gültige Weckzeit";
 } else {
-	say "Damit kann ich nichts anfangen";
+    say "Damit kann ich nichts anfangen";
 }
 [[[endsyntax]]]</pre>
-	<p>Die folgende Tabelle fasst die wichtigsten dieser
-	Zeichenkombinationen zusammen. Dabei gilt, dass jeweils genau ein
-	Zeichen gematched wird.</p>
+    <p>Die folgende Tabelle fasst die wichtigsten dieser
+    Zeichenkombinationen zusammen. Dabei gilt, dass jeweils genau ein
+    Zeichen gematched wird.</p>
 
-	<p>Die Negation ist die Verneinung, d.h. wenn <code>\d</code> auf eine
-	Ziffer passt, passt <code>\D</code> auf alles außer einer Ziffer.</p>
+    <p>Die Negation ist die Verneinung, d.h. wenn <code>\d</code> auf eine
+    Ziffer passt, passt <code>\D</code> auf alles außer einer Ziffer.</p>
 
 <table summary="Regex-Sonderzeichen 1">
 <tr><th>Zeichen</th><th>Bedeutung</th><th>Beispiel</th><th>Herkunft</th><th>Negation</th>
 <tr>
-	<td>.</td>
-	<td>beliebiges Zeichen</td>
-	<td>/</td>
-	<td>?</td>
-	<td></td>
+    <td>.</td>
+    <td>beliebiges Zeichen</td>
+    <td>/</td>
+    <td>?</td>
+    <td></td>
 </tr>
 <tr>
-	<td>\d</td>
-	<td>Ziffer</td>
-	<td>7</td>
-	<td>digit = Ziffer</td>
-	<td>\D</td>
+    <td>\d</td>
+    <td>Ziffer</td>
+    <td>7</td>
+    <td>digit = Ziffer</td>
+    <td>\D</td>
 </tr>
 <tr>
-	<td>\t</td>
-	<td>Tabulator</td>
-	<td>	</td>
-	<td>tab = Tabulator</td>
-	<td>\T</td>
+    <td>\t</td>
+    <td>Tabulator</td>
+    <td>    </td>
+    <td>tab = Tabulator</td>
+    <td>\T</td>
 </tr>
 <tr>
-	<td>\n</td>
-	<td>Zeilenumbruch</td>
-	<td>	</td>
-	<td>newline = neue Zeile</td>
-	<td>\N</td>
+    <td>\n</td>
+    <td>Zeilenumbruch</td>
+    <td>    </td>
+    <td>newline = neue Zeile</td>
+    <td>\N</td>
 </tr>
 <tr>
-	<td>\w</td>
-	<td>Buchstabe, Ziffer oder Unterstrich</td>
-	<td>H</td>
-	<td>word = Wort</td>
-	<td>\W</td>
+    <td>\w</td>
+    <td>Buchstabe, Ziffer oder Unterstrich</td>
+    <td>H</td>
+    <td>word = Wort</td>
+    <td>\W</td>
 </tr>
 <tr>
-	<td>\s</td>
-	<td>(Unicode)-Leerzeichen</td>
-	<td> </td>
-	<td>space = Leerzeichen</td>
-	<td>\S</td>
+    <td>\s</td>
+    <td>(Unicode)-Leerzeichen</td>
+    <td> </td>
+    <td>space = Leerzeichen</td>
+    <td>\S</td>
 </table>
 
-	<h2>Alternativen</h2>
+    <h2>Alternativen</h2>
 
-	<p>Alternativen sind <em>oder</em>-Verknüpfungen, d.h. die Regex
-	matched, wenn eine von mehreren Alternativen passt:</p>
+    <p>Alternativen sind <em>oder</em>-Verknüpfungen, d.h. die Regex
+    matched, wenn eine von mehreren Alternativen passt:</p>
 
 <pre>[[[syntax perl6]]]
 if $str ~~ m/der|die|das/ {
-	say "Bestimmten Artikel gefunden";
+    say "Bestimmten Artikel gefunden";
 }
 [[[endsyntax]]]</pre>
 
-	<p>Wenn sich die Alternative nicht über die gesamte Regex erstrecken
-	soll, kann man ihren Gültigkeitsbereich mit eckigen Klammern
-	einschränken:</p>
+    <p>Wenn sich die Alternative nicht über die gesamte Regex erstrecken
+    soll, kann man ihren Gültigkeitsbereich mit eckigen Klammern
+    einschränken:</p>
 
 <pre>[[[syntax perl6]]]
 m/ [ der | die | das ] \s Artikel / 
 # passt auf "der Artikel", "die Artikel" oder "das Artikel"
 [[[endsyntax]]]</pre>
-	
-	<p>Nur zur Erinnerung: Leerzeichen in Regexes werden Ignoriert, wenn
-	man Leerzeichen matchen will, muss man z.B. mit <code>\s</code>
-	angeben.</p>
+    
+    <p>Nur zur Erinnerung: Leerzeichen in Regexes werden Ignoriert, wenn
+    man Leerzeichen matchen will, muss man z.B. mit <code>\s</code>
+    angeben.</p>
 
 
-	<h2>Quantifier, oder: "Wie oft darf's denn sein?"</h2>
+    <h2>Quantifier, oder: "Wie oft darf's denn sein?"</h2>
 
-	<p>Mit sogenannten Quantifiern kann man angeben, wie häufig ein
-	bestimmtes Zeichen oder Teilmuster vorkommen darf.</p>
+    <p>Mit sogenannten Quantifiern kann man angeben, wie häufig ein
+    bestimmtes Zeichen oder Teilmuster vorkommen darf.</p>
 
-	<p>Dabei steht ein Fragezeichen für "0 mal oder einmal":</p>
+    <p>Dabei steht ein Fragezeichen für "0 mal oder einmal":</p>
 
 <pre>[[[syntax perl6]]]
-m/abc?d/
-# passt auf abcd oder abd
-m/a[bc]?d/
-# passt auf abcd oder ad
+m/abc?d/        # passt auf abcd oder abd
+m/a[bc]?d/      # passt auf abcd oder ad
 [[[endsyntax]]]</pre>
-	<p>Ein <code>+</code> steht für "Ein mal oder beliebig oft":</p>
+    <p>Ein <code>+</code> steht für "Ein mal oder beliebig oft":</p>
 
 <pre>[[[syntax perl6]]]
-m/abc+d/
-# passt auf abcd, abccd, abcccd, ...
-m/a[bc]+d/
-# passt auf abcd, abcbcd, abcbcbcd, ...
+m/abc+d/        # passt auf abcd, abccd, abcccd, ...
+m/a[bc]+d/      # passt auf abcd, abcbcd, abcbcbcd, ...
 
 if $str ~~ m/\d+/ {
-	say "in $str kommt eine Zahl vor";
+    say "in $str kommt eine Zahl vor";
 }
 [[[endsyntax]]]</pre>
 
-	<p>Ein <code>*</code> passt auf keine, eine oder beliebig
-	viele Wiederholungen:</p>
+    <p>Ein <code>*</code> passt auf keine, eine oder beliebig
+    viele Wiederholungen:</p>
 
 <pre>[[[syntax perl6]]]
-m/abc*d/
-# passt auf abd, abcd, abccd, abcccd, ...
-m/a[bc]*d/
-# passt auf ab, abcd, abcbcd, abcbcbcd, ...
+m/abc*d/        # passt auf abd, abcd, abccd, abcccd, ...
+m/a[bc]*d/      # passt auf ab, abcd, abcbcd, abcbcbcd, ...
 [[[endsyntax]]]</pre>
 
-	<p>Wenn man z.B. eine Wiederholung genau vier mal haben will, kann man
-	das mit der <code>**{4}</code>-Notation angeben:</p>
+    <p>Wenn man z.B. eine Wiederholung genau vier mal haben will, kann man
+    das mit der <code>**{4}</code>-Notation angeben:</p>
 
 <pre>[[[syntax perl6]]]
-m/ab**{4}c/	# passt auf abbbbc
-m/ab**{2,4}c/	# passt auf abbc oder abbbbc
-m/ab**{2..4}c/	# passt auf abbc oder abbbc oder abbbbc
-m/ab**{2..*}c/	# passt auf abbc, abbbc, abbbbc, abbbbbc, ...
+m/ab**{4}c/     # passt auf abbbbc
+m/ab**{2,4}c/   # passt auf abbc oder abbbbc
+m/ab**{2..4}c/  # passt auf abbc oder abbbc oder abbbbc
+m/ab**{2..*}c/  # passt auf abbc, abbbc, abbbbc, abbbbbc, ...
 [[[endsyntax]]]</pre>
 
-	<h2>Regexes sinnvoll einsetzen</h2>
+    <h2>Regexes sinnvoll einsetzen</h2>
 
-	<p>Bisher haben Sie gesehen, wie man mit Regexes überprüft, ob ein
-	Muster in einem String vorkommt oder nicht.</p>
+    <p>Bisher haben Sie gesehen, wie man mit Regexes überprüft, ob ein
+    Muster in einem String vorkommt oder nicht.</p>
 
-	<p>Natürlich kann man auch abfragen, welcher Teil eines Strings auf
-	eine Regex passt:</p>
+    <p>Natürlich kann man auch abfragen, welcher Teil eines Strings auf
+    eine Regex passt:</p>
 
 <pre>[[[syntax perl6]]]
 my $str = "Du schuldest mir 122 Euro";
 
 if $str ~~ m/\d+/ {
-	say "$/ Euro, verstanden?";
+    say "$/ Euro, verstanden?";
 }
 [[[endsyntax]]]</pre>
 
-	<p>Das Ergebnis des letzten Matches wird in der speziellen Variable
-	<code>$/</code> gespeichert, und im String-<a
-	href="kontext">Kontext</a> wird daraus automatisch der Teil des
-	Strings, auf den die Regex gepasst hat.</p>
+    <p>Das Ergebnis des letzten Matches wird in der speziellen Variable
+    <code>$/</code> gespeichert, und im String-<a
+    href="kontext">Kontext</a> wird daraus automatisch der Teil des
+    Strings, auf den die Regex gepasst hat.</p>
 
-	<p>Man kann das Ergebnis auch explizit einer Variable zuweisen, und
-	auf weitere Eigenschaften zugreifen:</p>
+    <p>Man kann das Ergebnis auch explizit einer Variable zuweisen, und
+    auf weitere Eigenschaften zugreifen:</p>
 
 <pre>[[[syntax perl6]]]
 my $match = "foobar" ~~ m/o+/;
-say "Anfangsposition des Matches: ", 	$match.from;
-say "Endposition des Matches: ", 	$match.to;
-say "Passender Text:", 			$match.str
+say "Anfangsposition des Matches: ",    $match.from;
+say "Endposition des Matches: ",        $match.to;
+say "Passender Text:",                  $match.str;
 [[[endsyntax]]]</pre>
 
-	<p>Mit den Funktionen <code>comb</code> und <code>split</code> kann
-	man Strings in Arrays zerlegen.</p>
+    <p>Mit den Funktionen <code>comb</code> und <code>split</code> kann
+    man Strings in Arrays zerlegen.</p>
 
-	<p><code>comb</code> liefert dabei alle Treffer einer Regex
-	zurück:</p>
+    <p><code>comb</code> liefert dabei alle Treffer einer Regex
+    zurück:</p>
 
 <pre>[[[syntax perl6]]]
 my $text = "20 mal 2 ist 40";
@@ -223,9 +217,9 @@ my @zahlen = $text.comb(m/\d+/);
 # Ergebnis: @zahlen = 20, 2, 40;
 [[[endsyntax]]]</pre>
 
-	<p><code>split</code> trennt einen String mithilfe einer Regex, wobei
-	der String überall dort getrennt wird, wo die Regex passt. Der
-	passende Teil wird nicht zurückgeliefert:</p>
+    <p><code>split</code> trennt einen String mithilfe einer Regex, wobei
+    der String überall dort getrennt wird, wo die Regex passt. Der
+    passende Teil wird nicht zurückgeliefert:</p>
 
 <pre>[[[syntax perl6]]]
 my $text = "20 mal 2 ist 40";
@@ -234,125 +228,126 @@ my @worte = $text.split(m/\s+/);
 # Ergebnis: @worte = "20", "mal", "2", "ist", "40";
 [[[endsyntax]]]</pre>
 
-	<p>Wenn man in einer Regex häufig einen Schrägstrich <code>/<code>
-	benutzt, muss man ihn mit einem Rückstrich escapen: <code>\/</code>.
-	Eine andere Möglichkeit ist, ein anderes Zeichen als Begrenzung der
-	Regex zu verwenden:</p>
+    <p>Wenn man in einer Regex häufig einen Schrägstrich <code>/<code>
+    benutzt, muss man ihn mit einem Rückstrich escapen: <code>\/</code>.
+    Eine andere Möglichkeit ist, ein anderes Zeichen als Begrenzung der
+    Regex zu verwenden:</p>
 <pre>[[[syntax perl6]]]
 my $cmd = "/usr/bin/perl -w";
 if $cmd ~~ m#^(/.*/)perl# {
-	say "Perl liegt im Verzeichnis $/[0]";
+    say "Perl liegt im Verzeichnis $/[0]";
 }
 [[[endsyntax]]]</pre>
-	<p>Man kann fast beliebige Sonderzeichen zur Begrenzung verwenden,
-	wenn man Klammern verwendet wird die Regex mit der entsprechenden
-	schliessenden Klammer beendet.</p>
 
-	<h2>Gierige und bescheidene Quantifier</h2>
+    <p>Man kann fast beliebige Sonderzeichen zur Begrenzung verwenden,
+    wenn man Klammern verwendet wird die Regex mit der entsprechenden
+    schliessenden Klammer beendet.</p>
 
-	<p>Angenommen, man lässt die Regex <code>m/a.*b/</code> auf den String
-	<code>afffbffb</code> los. Die meisten Anfänger erwarten, dass die
-	Regex auf "afffb" passt, aber wenn man sich <code>$/.str</code>
-	ausgeben lässt, erlebt man eine Überrasschung: Der ganze String passt
-	auf die Regex.</p>
+    <h2>Gierige und bescheidene Quantifier</h2>
 
-	<p>Der Grund dafür ist, dass die Quantifier <code>+</code>,
-	<code>*</code>, <code>?</code> und <code>**{...}</code>
-	<em>gierig</em>, englisch <em>greedy</em> sind, d.h. sie passen immer 
-	auf einen möglichst langen String.</p>
+    <p>Angenommen, man lässt die Regex <code>m/a.*b/</code> auf den String
+    <code>afffbffb</code> los. Die meisten Anfänger erwarten, dass die
+    Regex auf "afffb" passt, aber wenn man sich <code>$/.str</code>
+    ausgeben lässt, erlebt man eine Überrasschung: Der ganze String passt
+    auf die Regex.</p>
 
-	<p>Wenn der Programmteil von Perl, der die Regexes verarbeitet, auf
-	eine Konstruktion wie <code>m/a.*c/</code> trifft, sucht er nach dem
-	ersten "a", geht dann ans Ende des Strings, und sucht dann rückwärts
-	nach dem ersten "c", wenn er das gefunden hat, ist er fertig.</p>
+    <p>Der Grund dafür ist, dass die Quantifier <code>+</code>,
+    <code>*</code>, <code>?</code> und <code>**{...}</code>
+    <em>gierig</em>, englisch <em>greedy</em> sind, d.h. sie passen immer 
+    auf einen möglichst langen String.</p>
 
-	<p>Um das zu verhindern, und dafür zu sorgen, dass ein möglichst
-	kurzer String gefunden wird, kann man hinter jeden Quantifier ein
-	Fragezeichen <code>?</code> stellen:</p>
+    <p>Wenn der Programmteil von Perl, der die Regexes verarbeitet, auf
+    eine Konstruktion wie <code>m/a.*c/</code> trifft, sucht er nach dem
+    ersten "a", geht dann ans Ende des Strings, und sucht dann rückwärts
+    nach dem ersten "c", wenn er das gefunden hat, ist er fertig.</p>
+
+    <p>Um das zu verhindern, und dafür zu sorgen, dass ein möglichst
+    kurzer String gefunden wird, kann man hinter jeden Quantifier ein
+    Fragezeichen <code>?</code> stellen:</p>
 
 <pre>[[[syntax perl6]]]
 $m = "affbeeb" ~~ m/a .* b/;
-say $m.str;	# Ausgabe: affbeeb
+say $m.str;         # Ausgabe: affbeeb
 $m = "affbeeb" ~~ m/a .*? b/;
-say $m.str;	# Ausgabe: affb
+say $m.str;         # Ausgabe: affb
 [[[endsyntax]]]</pre>
 
-	<p>Genauso kann man aus <code>+</code> mit der Schreibweise
-	<code>+?</code> "einen oder mehr, aber möglichst wenig davon" machen,
-	aus <code>**{2...6}</code> mit <code>**{2..6}?</code> "zwei bis sechs
-	Wiederholungen, aber möglichst wenig davon" usw.</p>
+    <p>Genauso kann man aus <code>+</code> mit der Schreibweise
+    <code>+?</code> "einen oder mehr, aber möglichst wenig davon" machen,
+    aus <code>**{2...6}</code> mit <code>**{2..6}?</code> "zwei bis sechs
+    Wiederholungen, aber möglichst wenig davon" usw.</p>
 
-	<p>Man nennt diese Quantifier dann <em>non-greedy</em>, also
-	nicht gierig.</p>
+    <p>Man nennt diese Quantifier dann <em>non-greedy</em>, also
+    nicht gierig.</p>
 
 
-	<h2>Anker</h2>
+    <h2>Anker</h2>
 
-	<p>Die bisherigen Regexes haben immer nur überprüft, ob ein bestimmtes
-	Must in einem String vorkommt, aber nicht, ob der gesamte String zu
-	dem Muster passt.</p>
+    <p>Die bisherigen Regexes haben immer nur überprüft, ob ein bestimmtes
+    Must in einem String vorkommt, aber nicht, ob der gesamte String zu
+    dem Muster passt.</p>
 
-	<p>Das geht, indem man die Regex <em>verankert</em>. Dazu gibt es die
-	Sonderzeichen <code>^</code> und <code>$</code>, die auf Anfang bzw.
-	Ende des Strings passen. Wenn man also überprüfen will, ob ein String
-	mit einer Ziffer anfängt, geht das <code>m/^\d/</code>, und wenn man
-	überprüfen will, ob ein String eine positive, ganze Zahl ist, geht das
-	mit <code>m/^\d+$</code>.</p>
+    <p>Das geht, indem man die Regex <em>verankert</em>. Dazu gibt es die
+    Sonderzeichen <code>^</code> und <code>$</code>, die auf Anfang bzw.
+    Ende des Strings passen. Wenn man also überprüfen will, ob ein String
+    mit einer Ziffer anfängt, geht das <code>m/^\d/</code>, und wenn man
+    überprüfen will, ob ein String eine positive, ganze Zahl ist, geht das
+    mit <code>m/^\d+$</code>.</p>
 
-	<p>Dabei sollte man beachten, dass <code>^</code> und <code>$</code>
-	keine Zeichen "aufbrauchen", d.h. <code>^a$</code> passt genau auf den
-	String <code>"a"</code>.</p>
+    <p>Dabei sollte man beachten, dass <code>^</code> und <code>$</code>
+    keine Zeichen "aufbrauchen", d.h. <code>^a$</code> passt genau auf den
+    String <code>"a"</code>.</p>
 
-	<p>Wenn man sich nicht für Anfang und Ende eines Strings interessiert,
-	sondern für Zeilenanfang und -Ende, so kann man <code>^^</code> und
-	<code>$$</code> als Anker verwenden.</p>
+    <p>Wenn man sich nicht für Anfang und Ende eines Strings interessiert,
+    sondern für Zeilenanfang und -Ende, so kann man <code>^^</code> und
+    <code>$$</code> als Anker verwenden.</p>
 
 <pre>[[[syntax perl6]]]
 my $s = "He shouted\nRUN\nAnd I ran";
 
 if $s ~~ m/ ^^ \w+ $$ / {
-	# passt auf eine Zeile, die aus nur einem Wort 
-	# besteht, matched also
-	say $/;
-	# Ausgabe: RUN
+    # passt auf eine Zeile, die aus nur einem Wort 
+    # besteht, matched also
+    say $/;
+    # Ausgabe: RUN
 }
 
 if $s ~~ m/ ^ \w+ $ / {
-	# passt nicht, da der String nicht nur 
-	# aus einem Wort besteht.
+    # passt nicht, da der String nicht nur 
+    # aus einem Wort besteht.
 }
 [[[endsyntax]]]</pre>
 
-	<p>Dabei gelten Anfang und Ende eines Strings auch immer als logischer
-	Zeilenanfang bzw. -Ende.</p>
+    <p>Dabei gelten Anfang und Ende eines Strings auch immer als logischer
+    Zeilenanfang bzw. -Ende.</p>
 
 
-	<h2>Captures</h2>
+    <h2>Captures</h2>
 
-	<p>Mit den bisher vorgestellten Elementen von Regexes ist es nicht
-	möglich, nach einem Muster wie <em>Ein Wort, gefolgt von einem
-	Leerzeichen, gefolgt von dem selben Wort</em> zu suchen.</p>
+    <p>Mit den bisher vorgestellten Elementen von Regexes ist es nicht
+    möglich, nach einem Muster wie <em>Ein Wort, gefolgt von einem
+    Leerzeichen, gefolgt von dem selben Wort</em> zu suchen.</p>
 
-	<p>Das ändert sich mit sogenannten <em>captures</em>, die mit runden
-	Klammern eingerichtet werden:</p>
+    <p>Das ändert sich mit sogenannten <em>captures</em>, die mit runden
+    Klammern eingerichtet werden:</p>
 
 <pre>[[[syntax perl6]]]
 m/ (\w+) \s $0 /
 [[[endsyntax]]]</pre>
 
-	<p>Dabei wird der Match des in den runden Klammern stehenden Teils der
-	Regex in der Variable <code>$0</code> gespeichert.</p>
+    <p>Dabei wird der Match des in den runden Klammern stehenden Teils der
+    Regex in der Variable <code>$0</code> gespeichert.</p>
 
-	<p>Der String <code>"foo foo"</code> würde z.B. zu der Regex passen,
-	nicht aber <code>"foo bar"</code>.</p>
+    <p>Der String <code>"foo foo"</code> würde z.B. zu der Regex passen,
+    nicht aber <code>"foo bar"</code>.</p>
 
-	<p>Wenn es mehrere <em>Capturing Groups</em> gibt, wird das Ergebnis
-	der ersten in <code>$0</code> abgespeichert, der zweiten in
-	<code>$1</code> usw.</p>
+    <p>Wenn es mehrere <em>Capturing Groups</em> gibt, wird das Ergebnis
+    der ersten in <code>$0</code> abgespeichert, der zweiten in
+    <code>$1</code> usw.</p>
 
-	<p>Außerdem kann man das Match-Objekt, das beim Anwenden einer Regex
-	entsteht, als Array verwenden, das als Elemente die verschiedenen
-	Capturing Groups hat.</p>
+    <p>Außerdem kann man das Match-Objekt, das beim Anwenden einer Regex
+    entsteht, als Array verwenden, das als Elemente die verschiedenen
+    Capturing Groups hat.</p>
 
 <pre>[[[syntax perl6]]]
 my @a = "der Artikel, das Adverb",
@@ -368,248 +363,278 @@ for @a -> my $s {
 # Schiff und Monster haben den gleichen Artikel: das
 [[[endsyntax]]]</pre>
 
-	<p>Dieses Muster sucht nach einem Wort <code>\w+</code> und speichert
-	das Ergebnis in der Variablen <code>$0</code>, einem Leerzeichen
-	<code>\s</code>, noch einem Wort, das in <code>$1</code> gespeichert
-	wird, einem Komma, einem Leerzeichen, dem zuerst gefunden Wort, und
-	dann noch einem Wort, das in <code>$2</code> gespeichert wird.</p>
+    <p>Dieses Muster sucht nach einem Wort <code>\w+</code> und speichert
+    das Ergebnis in der Variablen <code>$0</code>, einem Leerzeichen
+    <code>\s</code>, noch einem Wort, das in <code>$1</code> gespeichert
+    wird, einem Komma, einem Leerzeichen, dem zuerst gefunden Wort, und
+    dann noch einem Wort, das in <code>$2</code> gespeichert wird.</p>
 
-	<p>Außerhalb der Regex kann auf <code>$0</code> mit <code>$/[0]</code>
-	oder mit <code>$0</code> zugegriffen werden, auf <code>$1</code> mit
-	<code>$/[1]</code> oder mit <code>$1</code> usw.</p>
+    <p>Außerhalb der Regex kann auf <code>$0</code> mit <code>$/[0]</code>
+    oder mit <code>$0</code> zugegriffen werden, auf <code>$1</code> mit
+    <code>$/[1]</code> oder mit <code>$1</code> usw.</p>
 
-	<p>Ab dem 11. Capture mit Nummer 10 kann nur noch mit der
-	<code>$/[$index]</code>-Notation darauf zugegriffen werden.</p>
+    <p>Ab dem 11. Capture mit Nummer 10 kann nur noch mit der
+    <code>$/[$index]</code>-Notation darauf zugegriffen werden.</p>
 
-	<p>Wenn man z.B. eine Datei einliest, kann man mit der folgenden Regex
-	nach Strings suchen, die entweder mit <code>"</code> oder
-	<code>'</code> begrenzt sind:</p>
+    <p>Wenn man z.B. eine Datei einliest, kann man mit der folgenden Regex
+    nach Strings suchen, die entweder mit <code>"</code> oder
+    <code>'</code> begrenzt sind:</p>
 
 <pre>[[[syntax perl6]]]
 m/ ('|") .*? $0 /
 [[[endsyntax]]]</pre>
 
-	<p>Das sucht nach einem einfach oder doppelten Anführungszeichen, dann
-	beliebig viele (aber möglichst wenig) Zeichen, und dann noch einmal
-	dem Anfangszeichen.</p>
+    <p>Das sucht nach einem einfach oder doppelten Anführungszeichen, dann
+    beliebig viele (aber möglichst wenig) Zeichen, und dann noch einmal
+    dem Anfangszeichen.</p>
 
-	<h2>Eigene Zeichenklassen, Grammatiken</h2>
+    <h2>Eigene Zeichenklassen, Grammatiken</h2>
 
-	<p>Wenn einem die vorgefertigten Zeichenklassen wie <code>\d</code>
-	und <code>\w</code> nicht ausreichen, kann man sich selbst welche
-	erzeugen, allerdings mit anderer Notation:</p>
+    <p>Wenn einem die vorgefertigten Zeichenklassen wie <code>\d</code>
+    und <code>\w</code> nicht ausreichen, kann man sich selbst welche
+    erzeugen, allerdings mit anderer Notation:</p>
 
 <pre>[[[syntax perl6]]]
 m/ <[a..yB..J_]> /
 [[[endsyntax]]]</pre>
 
-	<p>Damit werden Zeichen aus dem Bereich "a" bis "y" oder "B" bis "J"
-	oder der Unterstrich "_" gefunden.</p>
+    <p>Damit werden Zeichen aus dem Bereich "a" bis "y" oder "B" bis "J"
+    oder der Unterstrich "_" gefunden.</p>
 
-	<p>Man kann auch Zeichenklassen mit einem Minuszeichen negieren:</p>
+    <p>Man kann auch Zeichenklassen mit einem Minuszeichen negieren:</p>
 
 <pre>[[[syntax perl6]]]
-m/<-[a..z]>/;		# alle Zeichen ausser Kleinbuchstaben
-m/<[a..z]-[ij]>/;	# alle Kleinbuchstaben außer i und j	
+m/<-[a..z]>/;        # alle Zeichen ausser Kleinbuchstaben
+m/<[a..z]-[ij]>/;    # alle Kleinbuchstaben außer i und j    
 [[[endsyntax]]]</pre>
 
 
-	<p>Man kann Zeichklassen und Regexes auch Namen geben:</p>
+    <p>Man kann Zeichklassen und Regexes auch Namen geben:</p>
 
 <pre>[[[syntax perl6]]]
-token meine_zeichen 	{ <[a..zA-U]> };
-regex identifier	{ <meine_zeichen> \w* };	
+token meine_zeichen     { <[a..zA-U]> };
+regex identifier        { <meine_zeichen> \w* };    
 [[[endsyntax]]]</pre>
 
-	<p>Dabei werden Regexes wie Funktionen definiert, und werden mit dem
-	Schlüsselwort <code>token</code> oder <code>regex</code>
-	eingeleitet.</p>
+    <p>Dabei werden Regexes wie Funktionen definiert, und werden mit dem
+    Schlüsselwort <code>token</code> oder <code>regex</code>
+    eingeleitet.</p>
 
-	<p>Innerhalb anderer Regexes kann man dann mit der Notation
-	<code>&lt;name&gt;</code> auf die Regex zugreifen (dabei sind keine
-	Leerzeichen vor oder nach dem Namen erlaubt).</p>
+    <p>Innerhalb anderer Regexes kann man dann mit der Notation
+    <code>&lt;name&gt;</code> auf die Regex zugreifen (dabei sind keine
+    Leerzeichen vor oder nach dem Namen erlaubt).</p>
 
-	<p>Der Unterschied zwischen <code>token</code> und <code>regex</code>
-	ist, dass mit <code>token</code> kein Backtracking durchgeführt wird,
-	während <code>regex</code> wie eine normale Regex verarbeitet
-	wird.</p>
+    <p>Der Unterschied zwischen <code>token</code> und <code>regex</code>
+    ist, dass mit <code>token</code> kein Backtracking durchgeführt wird,
+    während <code>regex</code> wie eine normale Regex verarbeitet
+    wird.</p>
 
-	<p>Ein Beispiel soll das demonstrieren: die Regex <code>\w+? _ \d</code>
-	passt auf beliebig viele  Buchstaben, Zahlen oder Unterstrich (aber
-	möglichst wenige davon), gefolgt von einem Unterstrich und und einer 
-	Ziffer. Der String <code>"abc_d_1"</code> passt sicher auf diese
-	Regex. Wenn der Interpreter oder Compiler aber versucht, die Regex
-	anzuwenden, wird er erst <code>"abc"</code> als Match für
-	<code>\w</code> finden, dann <code>"_"</code> als Match für
-	<code>_</code>, und stellt fest, dass <code>"d"</code> nicht auf
-	<code>\d</code> (Ziffer) passt.</p>
+    <p>Ein Beispiel soll das demonstrieren: die Regex <code>\w+? _ \d</code>
+    passt auf beliebig viele  Buchstaben, Zahlen oder Unterstrich (aber
+    möglichst wenige davon), gefolgt von einem Unterstrich und und einer 
+    Ziffer. Der String <code>"abc_d_1"</code> passt sicher auf diese
+    Regex. Wenn der Interpreter oder Compiler aber versucht, die Regex
+    anzuwenden, wird er erst <code>"abc"</code> als Match für
+    <code>\w</code> finden, dann <code>"_"</code> als Match für
+    <code>_</code>, und stellt fest, dass <code>"d"</code> nicht auf
+    <code>\d</code> (Ziffer) passt.</p>
 
-	<p>Wenn die Regex als <code>token</code> deklariert ist, wird an
-	dieser Stelle die Suche abgebrochen, weil kein Match gefunden ist.</p>
+    <p>Wenn die Regex als <code>token</code> deklariert ist, wird an
+    dieser Stelle die Suche abgebrochen, weil kein Match gefunden ist.</p>
 
-	<p>Ist die Regex dagegen als <code>regex</code> deklariert, wird der
-	Interpreter weiter versuchen, und wird den ersten Unterstrich als
-	Match auf <code>\w</code> interpretieren, ebenso das <code>"d"</code>,
-	den zweiten Unterstrich als Match auf <code>_</code> und die Ziffer
-	<code>"1"</code> als Match auf <code>\d</code> - d.h. als
-	<code>regex</code> wird der String gematched, als <code>token</code>
-	nicht.</p>
+    <p>Ist die Regex dagegen als <code>regex</code> deklariert, wird der
+    Interpreter weiter versuchen, und wird den ersten Unterstrich als
+    Match auf <code>\w</code> interpretieren, ebenso das <code>"d"</code>,
+    den zweiten Unterstrich als Match auf <code>_</code> und die Ziffer
+    <code>"1"</code> als Match auf <code>\d</code> - d.h. als
+    <code>regex</code> wird der String gematched, als <code>token</code>
+    nicht.</p>
 
-	<p>Wem das jetzt zu kompliziert war: Einfach vergessen, und fürs erste
-	nur ganz einfaches Regexes als <code>token</code> deklarieren.</p>
+    <p>Wem das jetzt zu kompliziert war: Einfach vergessen, und fürs erste
+    nur ganz einfaches Regexes als <code>token</code> deklarieren.</p>
 
-	<h3>Named Captures</h3>
+    <h3>Named Captures</h3>
 
-	<p>Einer Regex einen Namen zu geben und in einer andere Regex zu
-	verwenden hat noch einen weiteren Effekt:</p>
+    <p>Einer Regex einen Namen zu geben und in einer andere Regex zu
+    verwenden hat noch einen weiteren Effekt:</p>
 
 <pre>[[[syntax perl6]]]
 token integer { \d+ };
 my $str = "zahl: 25";
 my $match =  $str ~~ m/ ^zahl: \s <integer> /;
 if $match {
-	say "Die Zahl war: $match<integer>";
+    say "Die Zahl war: $match<integer>";
 }
 # Ausgabe: Die Zahl war 25
 [[[endsyntax]]]</pre>
 
-	<p>Da die <em>subrule</em>, hier <code>integer</code>, einen Namen
-	hat, wird eine sogenannte <em>named capture</em> angelegt. Wenn man
-	das Match-Objekt als Hash verwendet, kann man unter dem Namen der
-	subrule auf den Teil des Strings zugreifen, auf den die subrule
-	gepasst hat.</p>
+    <p>Da die <em>subrule</em>, hier <code>integer</code>, einen Namen
+    hat, wird eine sogenannte <em>named capture</em> angelegt. Wenn man
+    das Match-Objekt als Hash verwendet, kann man unter dem Namen der
+    subrule auf den Teil des Strings zugreifen, auf den die subrule
+    gepasst hat.</p>
 
-	<p>Der Inhalt einer <em>named capture</em> ist ebenfalls ein
-	Match-Objekt:</p>
+    <p>Der Inhalt einer <em>named capture</em> ist ebenfalls ein
+    Match-Objekt:</p>
 
 <pre>[[[syntax perl6]]]
 token integer { \d+ };
 my $str = "zahl: 25";
 my $match =  $str ~~ m/ ^zahl: \s <integer> /;
 if $match {
-	my $z = $match{"zahl"};
-	say $z.from, " bis ", $z.to;
-	say $z.WHAT;
+    my $z = $match{"zahl"};
+    say $z.from, " bis ", $z.to;
+    say $z.WHAT;
 }
 # Ausgabe: 
 # 7 bis 8
 # Match
 [[[endsyntax]]]</pre>
 
-	<p>Wenn eine subrule mehrfach verwendet, wird unter dem Namen ein
-	Array von Matches erstellt:</p>
+    <p>Wenn eine subrule mehrfach verwendet, wird unter dem Namen ein
+    Array von Matches erstellt:</p>
 
 <pre>[[[syntax perl6]]]
 token integer { \d+ };
 token add_op  { \+ | - };
 
 if my $match = "23+42" ~~ m/ <integer> <add_op> <integer>/ {
-	say $match<integer>.elems; 	# Ausgabe: 2
-	say $match<integer>[0];		# Ausgabe: 23
+    say $match<integer>.elems;     # Ausgabe: 2
+    say $match<integer>[0];        # Ausgabe: 23
 }
 [[[endsyntax]]]</pre>
 
-	<p>Wenn man kein Freund von Arrays ist, kann man auch einen anderen
-	Namen für den Match angeben:</p>
+    <p>Wenn man kein Freund von Arrays ist, kann man auch einen anderen
+    Namen für den Match angeben:</p>
 
 <pre>[[[syntax perl6]]]
 token integer { \d+ };
 token add_op  { \+ | - };
 
 if my $match = "23+42" ~~ m/ $<lhs>:=<integer> <add_op> $<rhs>:=<integer>/ {
-	say $match<lhs>;		# Ausgabe: 23
-	say $match<rhs>;		# Ausgabe: 42
+    say $match<lhs>;        # Ausgabe: 23
+    say $match<rhs>;        # Ausgabe: 42
 }
 [[[endsyntax]]]</pre>
 
 
-	<h3>Named Captures auslassen</h3>
+    <h3>Named Captures auslassen</h3>
 
-	<p>Angenommen, man möchte obige Regex so erweitern, dass auch
-	Leerzeichen zugelassen werden (aber optional sind), könnte man das so
-	machen:</p>
+    <p>Angenommen, man möchte obige Regex so erweitern, dass auch
+    Leerzeichen zugelassen werden (aber optional sind), könnte man das so
+    machen:</p>
 
 <pre>[[[syntax perl6]]]
 token integer { \d+ };
 token add_op  { \+ | - };
 
 if "3 + b" ~~ m/<integer> <ws> <add_op> <ws> <integer>/ {
-	...
+    ...
 }
 [[[endsyntax]]]</pre>
 
-	<p><code>&lt;ws&gt;</code> ist eine "builtin" regex, und steht für ein
-	(kontextsensitiv) optionales Leerzeichen (oder mehrere davon).</p>
+    <p><code>&lt;ws&gt;</code> ist eine "builtin" regex, und steht für ein
+    (kontextsensitiv) optionales Leerzeichen (oder mehrere davon).</p>
 
-	<p>Dabei wird im Match-Objekt eine Liste von Leerzeichen angelegt -
-	wenn man aber nur an dem verarbeiteten mathematischen Ausdruck
-	interessiert ist, interessieren die Leerzeichen aber nicht. Wenn man
-	sie nicht im Match-Objekt haben möchte, kann man vor den Namen ein
-	Fragezeichen stellen:</p>
+    <p>Dabei wird im Match-Objekt eine Liste von Leerzeichen angelegt -
+    wenn man aber nur an dem verarbeiteten mathematischen Ausdruck
+    interessiert ist, interessieren die Leerzeichen aber nicht. Wenn man
+    sie nicht im Match-Objekt haben möchte, kann man vor den Namen ein
+    Fragezeichen stellen:</p>
 
 <pre>[[[syntax perl6]]]
 token integer { \d+ };
 token add_op  { \+ | - };
 
 if "3 + b" ~~ m/<integer> <?ws> <add_op> <?ws> <integer>/ {
-	# $/ hat hier keinen <ws>-Eintrag
+    # $/ hat hier keinen <ws>-Eintrag
 }
 [[[endsyntax]]]</pre>
 
-	<h3>Grammatiken</h3>
+    <h3>Grammatiken</h3>
 
-	<p>Durch das verschachteln von regexes und tokens kann man ganze
-	Grammatiken aufstellen und wie eine regex benutzen. In diesem Fall
-	spricht man von <em>rules</em>, also Regeln:</p>
+    <p>Durch das verschachteln von regexes und tokens kann man ganze
+    Grammatiken aufstellen und wie eine regex benutzen. In diesem Fall
+    spricht man von <em>rules</em>, also Regeln:</p>
 
 <pre>[[[syntax perl6]]]
-token integer 	 { \d+ };
-token add_op  	 { \+ | - };
-token mul_op	 { \* | \/ };
-regex factor	 { <integer> [ <?ws> <mul_op> <?ws> <integer> ]* }
-regex expression { <factor>  [ <?ws> <add_op> <?ws> <factor>  ]* }
+token integer       { \d+ };
+token add_op        { \+ | - };
+token mul_op        { \* | \/ };
+regex factor        { <integer> [ <?ws> <mul_op> <?ws> <integer> ]* }
+regex expression    { <factor>  [ <?ws> <add_op> <?ws> <factor>  ]* }
 [[[endsyntax]]]</pre>
 
-	<p>Damit kann man Mathematische Ausdrücke wie <code>2 + 3*5 -
-	4/23</code> erkennen (und entsprechend verarbeiten), während z.B.
-	<code>2 3</code> (also zwei Zahlen, die nicht von einem Operator
-	getrennt werden) korrekterweise nicht erkannt werden.</p>
+    <p>Damit kann man Mathematische Ausdrücke wie <code>2 + 3*5 -
+    4/23</code> erkennen (und entsprechend verarbeiten), während z.B.
+    <code>2 3</code> (also zwei Zahlen, die nicht von einem Operator
+    getrennt werden) korrekterweise nicht erkannt werden.</p>
 
-	<h2>Weitere Elemente von Regexes</h2>
+    <h2>Modifier</h2>
 
-	<h3>Konjunktionen</h3>
+    <p>Mit sogenannten <em>Modifiern</em> kann man das Verhalten von Regexes
+    auf verschiedene Arten verändern.</p> 
 
-	<p>Regexes unter Perl 6 können Konjunktionen enthalten, d.h. zwei
-	(oder mehr) Regexes, die gemeinsam mit dem selben Start- und Endpunkt
-	matchen müssen:</p>
+    <h3><code>:ignorecase</code></h3>
+
+    <p>Mit dem <code>:i</code> oder <code>:ignorecase</code>-Modifier wird
+    Groß- und Kleinschreibung ignoriert. Das gilt nicht nur für latinische
+    Zeichen, sondern für beliebige Schriften, die das Konzept von Groß- und
+    Kleinschreibung kennen.</p>
+
+<pre>[% syntax perl6 %]
+my $str = "Ab";
+$str ~~ m:i/ab/;        # matched
+regex foo {
+    :ignorecase         # kann auch innerhalb einer Regex stehen
+    ab                  # passt auf ab, Ab, aB und AB
+}
+[% endsyntax %]</pre>
+
+    <h3><code>:basechar</code></h3>
+
+    <p>Mit <code>:basechar</code> oder <code>:b</code> werden alle Arten von
+    Akzente von der Regex ignoriert.</p>
+
+    <p><code>m:b/a/</code> matched also nicht nur "a", sondern auch "ä",
+    "à", "á", "â", "ã", "ä" oder "å".</p>
+
+
+    <h2>Weitere Elemente von Regexes</h2>
+
+    <h3>Konjunktionen</h3>
+
+    <p>Regexes unter Perl 6 können Konjunktionen enthalten, d.h. zwei
+    (oder mehr) Regexes, die gemeinsam mit dem selben Start- und Endpunkt
+    matchen müssen:</p>
 
 <pre>[[[syntax perl6]]]
 if "1 + 3 * 4" ~~ m/^[<expression> & ^<-[4]>+4 ]$/ {
-	...
+    ...
 }
 [[[endsyntax]]]</pre>
 
-	<p>Dieses Beispiel passt auf mathematische Ausdrücke, die mit 1
-	anfangen, auf 4 enden und dazwischen keine weitere 4 haben.</p>
+    <p>Dieses Beispiel passt auf mathematische Ausdrücke, die mit 1
+    anfangen, auf 4 enden und dazwischen keine weitere 4 haben.</p>
 
-	<h3>Code in Regexes ausführen</h3>
+    <h3>Code in Regexes ausführen</h3>
 
-	<p>Mit der Konstruktion <code>&lt;{...}&gt;</code> kann man Perl-code
-	ausführen, dessen Rückgabewert als Regex ausgewertet wird.</p>
+    <p>Mit der Konstruktion <code>&lt;{...}&gt;</code> kann man Perl-code
+    ausführen, dessen Rückgabewert als Regex ausgewertet wird.</p>
 
-	<p>Zum Beispiel kann man damit eine ganze Zahl, gefolgt von ihrer 
-	Wurzel, abgerundet auf die nächste ganze Zahl, gematched werden:</p>
+    <p>Zum Beispiel kann man damit eine ganze Zahl, gefolgt von ihrer 
+    Wurzel, abgerundet auf die nächste ganze Zahl, gematched werden:</p>
 
 <pre>[[[syntax perl6]]]
 m/ (\d+) <ws> <{ return $0.sqrt.int; }> /
 [[[endsyntax]]]</pre>
 
-	<h3>Lookahead- und Lookbehind-Assertions</h3>
+    <h3>Lookahead- und Lookbehind-Assertions</h3>
 
-	<p>Mit <code>&lt;before ...&gt;</code> und 
-	<code>&lt;after ...&gt;</code>
-	kann man vor und hinter eine Regex schauen, der Rest in den spitzen
-	Klammern wird als Regex interpretiert.</p>
+    <p>Mit <code>&lt;before ...&gt;</code> und 
+    <code>&lt;after ...&gt;</code>
+    kann man vor und hinter eine Regex schauen, der Rest in den spitzen
+    Klammern wird als Regex interpretiert.</p>
 
 <pre>[[[syntax perl6]]]
 m/ <before foo> \d+ <after bar> /
@@ -617,54 +642,54 @@ m/ <before foo> \d+ <after bar> /
 m /foo \d+ bar/
 [[[endsyntax]]]</pre>
 
-	<p>Der Unterschied ist, dass bei der zweiten Regex <code>foo</code>
-	und <code>bar</code> zum Match gehören, bei der ersten nicht.</p>
+    <p>Der Unterschied ist, dass bei der zweiten Regex <code>foo</code>
+    und <code>bar</code> zum Match gehören, bei der ersten nicht.</p>
 
-	<p>Man kann alle Konstruktionen in spitzen Klammern auch mit einem
-	Ausrufezeichen negieren:</p>
+    <p>Man kann alle Konstruktionen in spitzen Klammern auch mit einem
+    Ausrufezeichen negieren:</p>
 
 <pre>[[[syntax perl6]]]
 m/ \d+ <!after <sp> Euro>/ 
 # passt auf "3 Dollar", aber nicht auf "3 Euro"
 [[[endsyntax]]]</pre>
 
-	<h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
+    <h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
 
 <pre>[[[syntax perl6]]]
 my $str = "12+3";
 token op { \+ };
 $str ~~ m:rw/(\d+) <op> (\+d)/;
-$<op> = '(irgendwas)';	# $str ist jetzt "12(irgendwas)3"
+$<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
 [[[endsyntax]]]</pre>
-	
-	<p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
-	beschreibbar machen, wie oben demonstriert.</p>
+    
+    <p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
+    beschreibbar machen, wie oben demonstriert.</p>
 
-	<p>Dabei ändern sich automatisch auch die anderen Captures,
-	insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
+    <p>Dabei ändern sich automatisch auch die anderen Captures,
+    insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
 
 <pre>[[[syntax perl6]]]
 my $str = "ab";
 $str ~~ m:rw/(a)(b)/;
-say $/[1].from;		# 1
-$/[0] = 'aa';	
-say $/[1].from;		# 2
-say ~$/;		# aab
+say $/[1].from;        # 1
+$/[0] = 'aa';    
+say $/[1].from;        # 2
+say ~$/;        # aab
 [[[endsyntax]]]</pre>
 
-	<h2>Mit Rules parsen</h2>
+    <h2>Mit Rules parsen</h2>
 
-	<p>Mit Rules kann man sehr leicht Parser schreiben, also Programme,
-	die einen Text in eine interne Struktur verarbeiten.</p>
+    <p>Mit Rules kann man sehr leicht Parser schreiben, also Programme,
+    die einen Text in eine interne Struktur verarbeiten.</p>
 
-	<p>Als Beispiel sollen einfache Konfigurationsdateien gelesen
-	werden:</p>
+    <p>Als Beispiel sollen einfache Konfigurationsdateien gelesen
+    werden:</p>
 
 <pre>[% syntax sh %]
 # Das ist ein Kommentar
 
 # Strings werden mit doppelten Anführungszeichen
-ip = "127.0.0.1";	
+ip = "127.0.0.1";    
 
 timeout = 120; # Zahlen können einfach so darstehen
 
@@ -672,44 +697,46 @@ timeout = 120; # Zahlen können einfach so darstehen
 other_timeout = timeout; 
 [% endsyntax %]</pre>
 
-	<p>Das ist zwar noch leicht ohne Rules zu parsen, aber des
-	pädagogischen Wertes wegen soll es mit Rules geparsed werden.</p>
+    <p>Das ist zwar noch leicht ohne Rules zu parsen, aber des
+    pädagogischen Wertes wegen soll es mit Rules geparsed werden.</p>
 
-	<p>Ein erster naiver, aber gar nicht so schlechter Ansatz sieht so
-	aus:</p>
+    <p>Ein erster naiver, aber gar nicht so schlechter Ansatz sieht so
+    aus:</p>
 
 <pre>[% syntax perl6 %]
 grammar config_file {
-	rule config 	   { <config_line>* };
-	# Kommentare müssen nicht gespeichert werden:
-	rule confg_line    { <?comment> | <assignment> };
-	token comment      { '#' \N* \n };
-	rule assigment     { <ident> '=' <expression> ';' };
-	rule expression    { <number> | <quoted_string> | <ident> };
-	rule quoted_string { \" <-["]>* \" };
+    rule config        { <config_line>* };
+    # Kommentare müssen nicht gespeichert werden:
+    rule confg_line    { <?comment> | <assignment> };
+    token comment      { '#' \N* \n };
+    rule assigment     { <ident> '=' <expression> ';' };
+    rule expression    { <number> | <quoted_string> | <ident> };
+    rule quoted_string { \" <-["]>* \" };
 }
 [% endsyntax %]</pre>
 
-	<p>Das parsed eine Konfigurationsdatei, hat aber einen großen
-	Nachteil: Wenn die Datei einen Syntaxfehler hat, dann matched die
-	Regex nicht - aber es gibt keine Fehlermeldung, was schief gelaufen
-	ist.</p>
+    <p>Das parsed eine Konfigurationsdatei, hat aber einen großen
+    Nachteil: Wenn die Datei einen Syntaxfehler hat, dann matched die
+    Regex nicht - aber es gibt keine Fehlermeldung, was schief gelaufen
+    ist.</p>
 
-	<p>Alternative schafft z.B. folgende Konstruktion, hier nur an zwei
-	Beispielen gezeigt:</p>
+    <p>Alternative schafft z.B. folgende Konstruktion, hier nur an zwei
+    Beispielen gezeigt:</p>
 
 <pre>[% syntax perl6 %]
-	rule config_line {
-			| <?comment>
-			| <assignment>
-			| <fail: "Expected comment or assignment">
-	};
-	rule assigment     { 
-		<ident> 
-		[ '=' |  <fail: "Expected '='"> ]
-		<expression> 
-		[';' | <fail: "Expected ';'">
-	};
+    rule config_line {
+            | <?comment>
+            | <assignment>
+            | <fail: "Expected comment or assignment">
+    };
+    rule assigment     { 
+        <ident> 
+        [ '=' |  <fail: "Expected '='"> ]
+        <expression> 
+        [ ';' | <fail: "Expected ';'"> ]
+    };
 [% endsyntax %]</pre>
 
-
+<!--
+    vim: expandtab sw=4 ts=4
+-->
