@@ -19,6 +19,8 @@
 		sub{{ active}}">Listen</a></li>]]]
 		[[[item funktionen <li><a href="eigene-funktionen" class="nav
 		sub{{ active}}">Eigene Funktionen</a></li>]]]
-		[[[item funktionen <li><a href="hashes" class="nav
+		[[[item hashes <li><a href="hashes" class="nav
 		sub{{ active}}">Hashes</a></li>]]]
+		[% item regex1 <li><a href="regulaere-ausdruecke-1" class="nav sub{{
+		active}}">Reguläre Audrücke (1)</a></li> %]
 	</ul>

@@ -1,0 +1,156 @@
+[[[setvar title Reguläre Ausdrücke (1)]]]
+[[[menu main tut anfaenger regex1]]]
+
+<div id="content">
+    <h1>Reguläre Ausdrücke (1)</h1>
+
+    <p>Wie in einem vorhigen Kapitel schon erwähnt, ist die Verarbeitung von
+    Text eine der Stärken von Perl.</p>
+
+    <p>Das liegt zu großen Teilen an Perls <em>Regulären Ausdrücken</em>, auf
+    Englisch <em>regular expressions</em> oder kurz <em>regex</em>
+    genannt.</p>
+
+    <p>Reguläre Ausdrücke sind Muster, und auf Wunsch überprüft Perl, ob ein
+    bestimmter Text zu diesem Muster passt, beziehungsweise welcher Teil eines
+    Strings zu dem Muster passt.</p>
+
+    <h2>Ein Beispiel: Preise extrahieren</h2>
+
+    <p>Angenommen, Sie müssen ein Programm schreiben, das Text darauf
+    untersucht, ob darin Preisangaben stehen.</p>
+
+    <p>Der Text könnte so aussehen: <em>"Für 400 Euro würde ich den Flug
+    buchen, 450 Euro wären mir schon zu viel"</em>.</p>
+
+    <p>Darin tauchen zwei Preisangaben auf, beide in dem Format <code>Zahl
+    Leehrzeichen 'Euro'</code>.</p>
+
+    <p>Also suchen wir danach:</p>
+<pre>[% syntax perl6 %]
+my $text = "Für 400 Euro würde ich ...";
+
+if $text ~~ m/ <digit>+ <space> 'Euro' / {
+    say "Der Text enthält eine Preisangabe";
+};
+[% endsyntax %]</pre>
+
+    <p>Was geht hier vor? Neu ist diese Zeile:</p>
+<pre>[% syntax perl6 %]
+if $text ~~ m/ <digit>+ <space> 'Euro' / {
+[% endsyntax %]</pre>
+
+    <p>Neu ist zuerst einmal der Operator, der aus zwei Tilden <code>~~</code> 
+    besteht und der <em>Smart Match Operator</em> heisst, und der Dinge
+    vergleicht - hier einen String <code>$text</code> mit einer Regex.</p>
+
+    <p>Die Regex selbst sieht so aus: <code>m/ &lt;digit&gt;+ &lt;space&gt; 
+    'Euro' /</code>. Sieht beginnt mit einem <code>m</code>, das für 
+    <em>Match</em> steht, und einen Schrägstrich. Sie geht bis zum nächsten 
+    Schrägstrich weiter.</p>
+
+    <p><code>&lt;digit&gt;</code> steht für eine beliebige Ziffer, also 0, 1,
+    2, usw. Das Plus <code>+</code> bedeutet, dass sie beliebig oft wiederholt
+    werden darf, aber mindestens ein mal vorkommen muss.</p>
+
+    <p><code>&lt;space&gt;</code> steht für ein Leerzeichen, und
+    <code>'Euro'</code> steht für den Text <code>Euro</code>.</p>
+
+    <p>Die Zeile könnte man also so ins Deutsche übersetzen: <em>Suche in dem
+    String <code>$text</code> nach einer Zeichenkette, die aus einer oder mehr
+    Ziffern besteht, gefolgt von einem Leerzeichen, gefolgt von dem Text Euro.
+    Wenn der String so etwas enthält, führe die folgende Zeile aus</em>.</p>
+
+    <p>Man gibt nicht an, <strong>wie</strong> nach diesem Muster gesucht
+    werden soll - diese Arbeit nimmt einem der Perlinterpreter ab.</p>
+
+    <h2>"Capturing Groups" - Informationen extrahieren</h2>
+
+    <p>In dem vorherigen Beispiel ist man sicher nicht nur daran interessiert,
+    ob eine Preisangabe in dem Text vorkommt, sondern auch auch wie groß
+    der Betrag ist.</p>
+
+    <p>Dafür gibt es einfache Lösung:</p>
+
+<pre>[% syntax perl6 %]
+my $text = "Für 400 Euro würde ich ...";
+
+if $text ~~ m/ (<digit>+) <space> 'Euro' / {
+    say "Der Text enthält eine Preisangabe von $/[0] Euro";
+};
+[% endsyntax %]</pre>
+
+    <p>Die Regex wurde nur ein wenig verändert: aus <code>&lt;digit&gt;+</code>
+    wurde <code>(&lt;digit&gt;+)</code>. Die Klammern bedeuten so viel wie
+    <em>"Speichere den Text, auf den Teil der Regex in den Klammern
+    passt"</em>.</p>
+
+    <p>Beim Anwenden einer Regex auf einen String, also beim Matchen, wird
+    automatisch die Variable <code>$/</code> erzeugt, das unter anderem wie
+    ein Array verwendet werden kann. Das erste Element dieses Arrays ist der
+    Text, der auf <code>&lt;digit&gt;+</code> passt - also in dem oberen 
+    Beispiel <code>400</code>.</p>
+
+    <h2>Alternativen</h2>
+
+    <p>Mit Regexes kann man noch mehr machen. Als Beispiel soll die vorherige
+    Suche auf andere Währungen ausgeweitet werden:</p>
+
+<pre>[% syntax perl6 %]
+my $text = "It's 2 Dollar for each pancake";
+
+if $text ~~ m/ (<digit>+) <space> (Euro|Dollar|Yen) / {
+    say "Ein Preis: $/[0] $/[1]";
+};
+[% endsyntax %]</pre>
+
+    <p>Neu ist, dass statt <code>'Euro'</code> jetzt
+    <code>(Euro|Dollar|Yen)</code> steht. Die Funktion der Runden Klammern ist
+    ja schon bekannt: sie speichern den Text, der auf den Teil der Rexes in
+    den Klammern steht.</p>
+
+    <p>In den Klammern stehen die Namen von verschiedenen Währungen, getrennt
+    durch senkrechte Striche <code>|</code>. Das bedeutet, dass eine der
+    Alternativen im String vorkommen muss.</p>
+
+    <p>Dadurch, dass zwei Paare von Klammern verwendet wurden, steht nicht nur
+    <code>$/[0]</code> zur Verfügung, sondern auch <code>$/[1]</code>, das
+    zweite Element in dem Array <code>$/</code>.</p>
+
+    <h2>Quantifier</h2>
+
+    <p>Neben dem <code>+</code> gibt es noch weitere sogenannte
+    <code>Quantifier</code>, d.h. Operatoren die kontrollieren, wie häufig ein
+    bestimmtes Konstrukt vorkommt.</p>
+
+    <table summary="Quantifier in Regexes">
+    <tr>
+        <th>Quantifier</th>
+        <th>Bedeutung</th>
+        <th>Beispiel</th>
+    </tr>
+    <tr>
+        <td><code>*</code></td>
+        <td>Beliebig viele Widerholungen, auch gar keine</td>
+        <td>m/'ab'*/ passt auf "", "ab", "ababa", "ababab", ...</td>
+    </tr>
+    <tr>
+        <td><code>+</code></td>
+        <td>Beliebig viele Widerholungen, mindestens eine</td>
+        <td>m/'ab'+/ passt auf "ab", "ababa", "ababab", ...</td>
+    </tr>
+    <tr>
+        <td><code>?</code></td>
+        <td>Null oder eine Widerholung</td>
+        <td>m/'ab'?/ passt auf "" oder "ab"</td>
+    </tr>
+    <tr>
+        <td><code>**{1..3}</code></td>
+        <td>Ein bis drei Widerholung</td>
+        <td>m/'ab'**{1..3}/</code> passt auf "ab", "abab" oder "ababab"</td>
+    </tr>
+    </table>
+
+<!-- 
+ vim: sw=4 ts=4 expandtab
+-->
