@@ -575,7 +575,7 @@ regex expression    { <factor>  [ <?ws> <add_op> <?ws> <factor>  ]* }
     <p>Mit sogenannten <em>Modifiern</em> kann man das Verhalten von Regexes
     auf verschiedene Arten verändern.</p> 
 
-    <h3><code>:ignorecase</code></h3>
+    <h3>Groß- und Kleinschreibung ignorieren - <code>:ignorecase</code></h3>
 
     <p>Mit dem <code>:i</code> oder <code>:ignorecase</code>-Modifier wird
     Groß- und Kleinschreibung ignoriert. Das gilt nicht nur für latinische
@@ -591,7 +591,7 @@ regex foo {
 }
 [% endsyntax %]</pre>
 
-    <h3><code>:basechar</code></h3>
+    <h3>Akzente ignorieren - <code>:basechar</code></h3>
 
     <p>Mit <code>:basechar</code> oder <code>:b</code> werden alle Arten von
     Akzente von der Regex ignoriert.</p>
@@ -599,6 +599,67 @@ regex foo {
     <p><code>m:b/a/</code> matched also nicht nur "a", sondern auch "ä",
     "à", "á", "â", "ã", "ä" oder "å".</p>
 
+    <h3>Alle Treffer finden - <code>:global</code></h3>
+
+    <p>Mit dem <code>:g</code> oder <code>:global</code>-Modifier kann man
+    nach allen, nichtüberlappenden Treffern einer Regex suchen:</p>
+
+<pre>[% syntax perl6 %]
+my $str = "3 = (4 - 2) + 1";
+my @zahlen = $str ~~m:g/\d+/;
+say @zahlen.join(", ");         # 3, 4, 2, 1
+[% endsyntax %]</pre>
+
+    <h3>Überlappende Treffer finden - <code>:overlap</code></h3>
+
+    <p>Mit dem <code>:overlap</code> oder <code>:ov</code>-Modifier findet 
+    man auch überlappende Treffer, aber pro Anfangsposition nur eines:</p>
+<pre>[% syntax perl6 %]
+my @treffer = 'abababa' ~~ m:ov/a.+a/;
+# Ergebnis: 'abababa', 'ababa', 'aba'
+[% endsyntax %]</pre>
+
+    <h3>Wirklich alle Treffer finden - <code>:exhaustive</code></h3>
+
+    <p>Mit dem <code>:exhaustive</code> oder <code>:ex</code>-Modifier kann
+    man jedem möglichen Treffer suchen lassen:</p>
+
+<pre>[% syntax perl6 %]
+$str = "abracadabra";
+
+for $str ~~ m:exhaustive/ a (.*?) a / -> $match {
+    say $match[0];  # br brac bracad bracadabr c cad cadabr d dabr br
+}
+[% endsyntax %]</pre>
+
+    <h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
+
+<pre>[[[syntax perl6]]]
+my $str = "12+3";
+token op { \+ };
+$str ~~ m:rw/(\d+) <op> (\+d)/;
+$<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
+[[[endsyntax]]]</pre>
+    
+    <p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
+    beschreibbar machen, wie oben demonstriert.</p>
+
+    <p>Dabei ändern sich automatisch auch die anderen Captures,
+    insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
+
+<pre>[[[syntax perl6]]]
+my $str = "ab";
+$str ~~ m:rw/(a)(b)/;
+say $/[1].from;        # 1
+$/[0] = 'aa';    
+say $/[1].from;        # 2
+say ~$/;        # aab
+[[[endsyntax]]]</pre>
+
+<!--    <h3>Backtracking verhindern - <code>:ratchet</code></h3>
+
+    <p>
+-->
 
     <h2>Weitere Elemente von Regexes</h2>
 
@@ -651,30 +712,6 @@ m /foo \d+ bar/
 <pre>[[[syntax perl6]]]
 m/ \d+ <!after <sp> Euro>/ 
 # passt auf "3 Dollar", aber nicht auf "3 Euro"
-[[[endsyntax]]]</pre>
-
-    <h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
-
-<pre>[[[syntax perl6]]]
-my $str = "12+3";
-token op { \+ };
-$str ~~ m:rw/(\d+) <op> (\+d)/;
-$<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
-[[[endsyntax]]]</pre>
-    
-    <p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
-    beschreibbar machen, wie oben demonstriert.</p>
-
-    <p>Dabei ändern sich automatisch auch die anderen Captures,
-    insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
-
-<pre>[[[syntax perl6]]]
-my $str = "ab";
-$str ~~ m:rw/(a)(b)/;
-say $/[1].from;        # 1
-$/[0] = 'aa';    
-say $/[1].from;        # 2
-say ~$/;        # aab
 [[[endsyntax]]]</pre>
 
     <h2>Mit Rules parsen</h2>
