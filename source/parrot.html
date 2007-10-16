@@ -1,62 +1,67 @@
 [[[menu main home parrot]]]
 [[[setvar title Parrot - Virtual Maschine für Perl 6]]]
 <div id="content">
-<h1>The Parrot - die VM für Perl 6</h1>
+    <h1>The Parrot - die VM für Perl 6</h1>
 
-<p>Schon Perl 5 ist kein reiner Interpreter, sondern kompiliert den Code in
-einen Bytecode, der von einer virtuelle Maschine (VM) ausgeführt wird.</p>
+    <p>Schon Perl 5 ist kein reiner Interpreter, sondern kompiliert den Code in
+    einen Bytecode, der von einer virtuelle Maschine (VM) ausgeführt wird.</p>
 
-<p>Perl 6 wird das genauso machen, allerdings wird der Compiler und die VM
-wesentlich klarer getrennt sein. Und die VM ist "The Parrot"</p>
+    <p>Perl 6 wird das genauso machen, allerdings werden Compiler und VM
+    wesentlich klarer getrennt sein. Und die VM ist "The Parrot"</p>
 
-<p>Der Name kam ursprünglich von einem <a
-href="http://www.perl.com/pub/a/2001/04/01/parrot.htm">Aprilscherz</a>, in dem
-Larry Wall (Perl) und Guido van Rossum (Python) unterstellt wurde
-anzukündigen, dass sie Perl und Python zu einer Programmiersprache
-zusammenfassen werden.</p>
+    <p>Der Name kam ursprünglich von einem <a
+    href="http://www.perl.com/pub/a/2001/04/01/parrot.htm">Aprilscherz</a>, 
+    in dem Larry Wall (Perl) und Guido van Rossum (Python) unterstellt wurde
+    anzukündigen, dass sie Perl und Python zu einer Programmiersprache
+    verschmelzen würden.</p>
 
-<h2>Design</h2>
+    <h2>Design</h2>
 
-<p>Es gibt schon viele VMs, wieso also eine neue schreiben?</p>
+    <p>Es gibt schon viele VMs, wieso also eine neue schreiben?</p>
 
-<p>Einer der Hauptgründe für die Neuentwicklung einer VM war, dass die meisten
-bisherigen VMs für statisch typisierte Sprachen (Java, .NET) geschrieben und
-optimiert sind, während Perl und viele anderen interpretierten Sprachen
-dynamisch typisiert sind, d.h. Typ-Überprüfungen für Variablen werden zur
-Laufzeit gemacht, nicht zur Compile-Zeit.</p>
+    <p>Einer der Hauptgründe für die Neuentwicklung einer VM war, dass die 
+    meisten bisherigen VMs für statisch typisierte Sprachen (Java, .NET) 
+    geschrieben und
+    optimiert sind, während Perl und viele anderen interpretierten Sprachen
+    dynamisch typisiert sind, d.h. Typ-Überprüfungen für Variablen werden zur
+    Laufzeit gemacht, nicht zur Compile-Zeit.</p>
 
-<p>Um hohe Geschwindigkeiten zu erreichen, ist Parrot Registerbasiert, im
-Gegensatz zu Stackbasierten VMs wie z.B. die von Java.</p>
+    <p>Um hohe Geschwindigkeiten zu erreichen, ist Parrot Registerbasiert, im
+    Gegensatz zu Stackbasierten VMs wie z.B. die von Java.</p>
 
-<p>Parrot kennt beliebig komplexe Datentypen und bringt seinen eigenen Garbage
-Collector mit, der sich darum kümmert, ungenutzen Arbeitsspeicher zu befreien
-und dem Betriebssystem zurück zu geben.</p>
+    <p>Parrot kennt beliebig komplexe Datentypen und bringt seinen eigenen 
+    Garbage Collector mit, der sich darum kümmert, ungenutzen Arbeitsspeicher 
+    zu befreien und dem Betriebssystem zurück zu geben.</p>
 
-<h2>Parrot Assembler</h2>
+    <h2>Parrot Assembler</h2>
 
-<p>Parrot unterstützt vier verschiedene Code-Formate:</p>
+    <p>Parrot unterstützt vier verschiedene Code-Formate:</p>
 
-<ol>
-	<li id="pir"><strong>PIR</strong>, "Parrot Intermediate Representation", 
-	ist eine
-	einfach zu schreibende Assembler-Sprache, die recht viel abstrahiert, d.h.
-	als Programmierer muss man sich um recht wenig kümmern, es schreibt sich
-	fast wie eine höhere Programmiersprache.</li>
-	<li><strong>PASM</strong>, "Parrot Assembly", ist ein einfacherer
-	Assembler, und zwingt den Programmier (oder den Compiler, der PASM
-	produziert) z.B. dazu, sich selbst um die Allokierung von Variablen zu
-	kümmern, wie man das von X86-Assembler kennt.</li>
-	<li><strong>PBC</strong>, "Parrot Byte Code" ist das, was Parrot
-	letztendlich ausführt. Alle anderen Eingabeformate werden nach PBC
-	umgewandelt bevor sie ausgeführt werden.</li>
-	<li><strong>PAST</strong>, "Parrot Abstract Syntax Tree" ist eine
-	Darstellung als AST, die nur dafür gedacht ist, von Compilern generiert zu
-	werden, nicht von Menschen per Hand erzeugt zu werden.</li>
-</ol>
+    <ol>
+        <li id="pir"><strong>PIR</strong>, "Parrot Intermediate 
+        Representation", ist eine
+        einfach zu schreibende Assembler-Sprache, die recht viel abstrahiert, 
+        d.h.  als Programmierer muss man sich um recht wenig kümmern, es 
+        schreibt sich fast wie eine höhere Programmiersprache.</li>
+        <li><strong>PASM</strong>, "Parrot Assembly", ist ein einfacherer
+        Assembler, und zwingt den Programmier (oder den Compiler, der PASM
+        produziert) z.B. dazu, sich selbst um die Allokierung von Variablen zu
+        kümmern, wie man das von X86-Assembler kennt.</li>
+        <li><strong>PBC</strong>, "Parrot Byte Code" ist das, was Parrot
+        letztendlich ausführt. Alle anderen Eingabeformate werden nach PBC
+        umgewandelt bevor sie ausgeführt werden.</li>
+        <li><strong>PAST</strong>, "Parrot Abstract Syntax Tree" ist eine
+        Darstellung als AST, die nur dafür gedacht ist, von Compilern generiert zu
+        werden, nicht von Menschen per Hand erzeugt zu werden.</li>
+    </ol>
 
-<h2>Links</h2>
-<ul>
-	<li><a href="http://www.parrotcode.org/">Ofizielle Parrot-
-	Homepage</a></li>
-	<li><a href="http://rakudo.org/parrot">Parrot-Wiki</a></li>
-</ul>
+    <h2>Links</h2>
+    <ul>
+        <li><a href="http://www.parrotcode.org/">Ofizielle Parrot-
+        Homepage</a></li>
+        <li><a href="http://rakudo.org/parrot">Parrot-Wiki</a></li>
+    </ul>
+
+<!--
+    vim: sw=4 ts=4 expandtab
+-->
