@@ -117,8 +117,8 @@ if $zeit ~~ m/\d H \d\d/ {
 
     <h2>Alternativen</h2>
 
-    <p>Alternativen sind <em>oder</em>-Verknüpfungen, d.h. die Regex
-    matched, wenn eine von mehreren Alternativen passt:</p>
+    <p>Alternativen sind <em>oder</em>-Verknüpfungen, das heißt die Regex
+    matcht, wenn eine von mehreren Alternativen passt:</p>
 
 <pre>[[[syntax perl6]]]
 if $str ~~ m/der|die|das/ {
@@ -135,14 +135,14 @@ m/ [ der | die | das ] \s Artikel /
 # passt auf "der Artikel", "die Artikel" oder "das Artikel"
 [[[endsyntax]]]</pre>
     
-    <p>Nur zur Erinnerung: Leerzeichen in Regexes werden Ignoriert, wenn
-    man Leerzeichen matchen will, muss man z.B. mit <code>\s</code>
-    angeben.</p>
+    <p>Nur zur Erinnerung: Leerzeichen in Regexes werden ignoriert, wenn
+    man Leerzeichen matchen will, muss man das zum Beispiel mit 
+    <code>\s</code> angeben.</p>
 
 
-    <h2>Quantifier, oder: "Wie oft darf's denn sein?"</h2>
+    <h2>Quantoren, oder: "Wie oft darf's denn sein?"</h2>
 
-    <p>Mit sogenannten Quantifiern kann man angeben, wie häufig ein
+    <p>Mit sogenannten Quantoren kann man angeben, wie häufig ein
     bestimmtes Zeichen oder Teilmuster vorkommen darf.</p>
 
     <p>Dabei steht ein Fragezeichen für "0 mal oder einmal":</p>
@@ -250,7 +250,7 @@ if $cmd ~~ m#^(/.*/)perl# {
     wenn man Klammern verwendet wird die Regex mit der entsprechenden
     schliessenden Klammer beendet.</p>
 
-    <h2>Gierige und bescheidene Quantifier</h2>
+    <h2>Gierige und bescheidene Quantoren</h2>
 
     <p>Angenommen, man lässt die Regex <code>m/a.*b/</code> auf den String
     <code>afffbffb</code> los. Die meisten Anfänger erwarten, dass die
@@ -258,7 +258,7 @@ if $cmd ~~ m#^(/.*/)perl# {
     ausgeben lässt, erlebt man eine Überrasschung: Der ganze String passt
     auf die Regex.</p>
 
-    <p>Der Grund dafür ist, dass die Quantifier <code>+</code>,
+    <p>Der Grund dafür ist, dass die Quantoren <code>+</code>,
     <code>*</code>, <code>?</code> und <code>**{...}</code>
     <em>gierig</em>, englisch <em>greedy</em> sind, d.h. sie passen immer 
     auf einen möglichst langen String.</p>
@@ -269,7 +269,7 @@ if $cmd ~~ m#^(/.*/)perl# {
     nach dem ersten "c", wenn er das gefunden hat, ist er fertig.</p>
 
     <p>Um das zu verhindern, und dafür zu sorgen, dass ein möglichst
-    kurzer String gefunden wird, kann man hinter jeden Quantifier ein
+    kurzer String gefunden wird, kann man hinter jeden Quantoren ein
     Fragezeichen <code>?</code> stellen:</p>
 
 <pre>[[[syntax perl6]]]
@@ -284,7 +284,7 @@ say $m.str;         # Ausgabe: affb
     aus <code>**{2...6}</code> mit <code>**{2..6}?</code> "zwei bis sechs
     Wiederholungen, aber möglichst wenig davon" usw.</p>
 
-    <p>Man nennt diese Quantifier dann <em>non-greedy</em>, also
+    <p>Man nennt diese Quantoren dann <em>non-greedy</em>, also
     nicht gierig.</p>
 
 
