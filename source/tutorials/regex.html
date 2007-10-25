@@ -175,7 +175,6 @@ m/a[bc]*d/      # passt auf ab, abcd, abcbcd, abcbcbcd, ...
 
 <pre>[[[syntax perl6]]]
 m/ab**{4}c/     # passt auf abbbbc
-m/ab**{2,4}c/   # passt auf abbc oder abbbbc
 m/ab**{2..4}c/  # passt auf abbc oder abbbc oder abbbbc
 m/ab**{2..*}c/  # passt auf abbc, abbbc, abbbbc, abbbbbc, ...
 [[[endsyntax]]]</pre>
@@ -208,7 +207,6 @@ if $str ~~ m/\d+/ {
 my $match = "foobar" ~~ m/o+/;
 say "Anfangsposition des Matches: ",    $match.from;
 say "Endposition des Matches: ",        $match.to;
-say "Passender Text:",                  $match.str;
 [[[endsyntax]]]</pre>
 
     <p>Mit den Funktionen <code>comb</code> und <code>split</code> kann
@@ -224,6 +222,9 @@ my @zahlen = $text.comb(m/\d+/);
 # Ergebnis: @zahlen = 20, 2, 40;
 [[[endsyntax]]]</pre>
 
+    <p>(Der Name kommt von <em>to comb</em>, was auch "etwas durchkämmen" im
+    Sinne von "systematisch Durchsuchen" heißt.)</p>
+
     <p><code>split</code> trennt einen String mithilfe einer Regex, wobei
     der String überall dort getrennt wird, wo die Regex passt. Der
     passende Teil wird nicht zurückgeliefert:</p>
@@ -235,13 +236,13 @@ my @worte = $text.split(m/\s+/);
 # Ergebnis: @worte = "20", "mal", "2", "ist", "40";
 [[[endsyntax]]]</pre>
 
-    <p>Wenn man in einer Regex häufig einen Schrägstrich <code>/<code>
+    <p>Wenn man in einer Regex einen Schrägstrich <code>/<code>
     benutzt, muss man ihn mit einem Rückstrich escapen: <code>\/</code>.
     Eine andere Möglichkeit ist, ein anderes Zeichen als Begrenzung der
     Regex zu verwenden:</p>
 <pre>[[[syntax perl6]]]
 my $cmd = "/usr/bin/perl -w";
-if $cmd ~~ m#^(/.*/)perl# {
+if $cmd ~~ m{^(/.*/)perl} {
     say "Perl liegt im Verzeichnis $/[0]";
 }
 [[[endsyntax]]]</pre>
@@ -254,14 +255,14 @@ if $cmd ~~ m#^(/.*/)perl# {
 
     <p>Angenommen, man lässt die Regex <code>m/a.*b/</code> auf den String
     <code>afffbffb</code> los. Die meisten Anfänger erwarten, dass die
-    Regex auf "afffb" passt, aber wenn man sich <code>$/.str</code>
+    Regex auf "afffb" passt, aber wenn man sich <code>$/</code>
     ausgeben lässt, erlebt man eine Überrasschung: Der ganze String passt
     auf die Regex.</p>
 
     <p>Der Grund dafür ist, dass die Quantoren <code>+</code>,
     <code>*</code>, <code>?</code> und <code>**{...}</code>
-    <em>gierig</em>, englisch <em>greedy</em> sind, d.h. sie passen immer 
-    auf einen möglichst langen String.</p>
+    <strong>gierig</strong>, englisch <em>greedy</em> sind, d.h. sie 
+    passen immer auf einen möglichst langen String.</p>
 
     <p>Wenn der Programmteil von Perl, der die Regexes verarbeitet, auf
     eine Konstruktion wie <code>m/a.*c/</code> trifft, sucht er nach dem
@@ -274,9 +275,9 @@ if $cmd ~~ m#^(/.*/)perl# {
 
 <pre>[[[syntax perl6]]]
 $m = "affbeeb" ~~ m/a .* b/;
-say $m.str;         # Ausgabe: affbeeb
+say $m;             # Ausgabe: affbeeb
 $m = "affbeeb" ~~ m/a .*? b/;
-say $m.str;         # Ausgabe: affb
+say $m;             # Ausgabe: affb
 [[[endsyntax]]]</pre>
 
     <p>Genauso kann man aus <code>+</code> mit der Schreibweise
@@ -312,9 +313,9 @@ say $m.str;         # Ausgabe: affb
 <pre>[[[syntax perl6]]]
 my $s = "He shouted\nRUN\nAnd I ran";
 
-if $s ~~ m/ ^^ \w+ $$ / {
-    # passt auf eine Zeile, die aus nur einem Wort 
-    # besteht, matched also
+if $s ~~ m/ ^^ \w+ \n $$ / {
+    # passt auf eine Zeile, die aus nur einem Wort  
+    # und einem newline besteht, matched also
     say $/;
     # Ausgabe: RUN
 }
@@ -335,7 +336,8 @@ if $s ~~ m/ ^ \w+ $ / {
     möglich, nach einem Muster wie <em>Ein Wort, gefolgt von einem
     Leerzeichen, gefolgt von dem selben Wort</em> zu suchen.</p>
 
-    <p>Das ändert sich mit sogenannten <em>captures</em>, die mit runden
+    <p>Das ändert sich mit sogenannten <em>captures</em> (auf Deutsch auch
+    manchmal <em>fangende Klammern</em> genannt), die mit runden
     Klammern eingerichtet werden:</p>
 
 <pre>[[[syntax perl6]]]
@@ -361,7 +363,7 @@ my @a = "der Artikel, das Adverb",
         "das Schiff, das Monster",
         "der Berg, das Schaf";
 
-for @a -> my $s {
+for @a -> $s {
     if $s ~~ m/(\w+) \s (\w+), \s  $0 \s (\w+)/ {
         say "$/[1] und $/[2] haben den gleichen Artikel: $/[0]";
     }
@@ -371,14 +373,14 @@ for @a -> my $s {
 [[[endsyntax]]]</pre>
 
     <p>Dieses Muster sucht nach einem Wort <code>\w+</code> und speichert
-    das Ergebnis in der Variablen <code>$0</code>, einem Leerzeichen
-    <code>\s</code>, noch einem Wort, das in <code>$1</code> gespeichert
-    wird, einem Komma, einem Leerzeichen, dem zuerst gefunden Wort, und
-    dann noch einem Wort, das in <code>$2</code> gespeichert wird.</p>
+    das Ergebnis in der Variablen <code>$0</code>, sucht weiter nach einem 
+    Leerzeichen <code>\s</code>, nach noch einem Wort, das in <code>$1</code> 
+    gespeichert wird, einem Komma, einem Leerzeichen, dem zuerst gefunden 
+    Wort, und dann noch einem Wort, das in <code>$2</code> gespeichert wird.</p>
 
     <p>Außerhalb der Regex kann auf <code>$0</code> mit <code>$/[0]</code>
-    oder mit <code>$0</code> zugegriffen werden, auf <code>$1</code> mit
-    <code>$/[1]</code> oder mit <code>$1</code> usw.</p>
+    oder mit <code>$0</code> zugegriffen werden, auf <code>$1</code> auch mit
+    <code>$/[1]</code> usw.</p>
 
     <p>Ab dem 11. Capture mit Nummer 10 kann nur noch mit der
     <code>$/[$index]</code>-Notation darauf zugegriffen werden.</p>
@@ -392,8 +394,102 @@ m/ ('|") .*? $0 /
 [[[endsyntax]]]</pre>
 
     <p>Das sucht nach einem einfach oder doppelten Anführungszeichen, dann
-    beliebig viele (aber möglichst wenig) Zeichen, und dann noch einmal
+    beliebig viele (aber möglichst wenige) Zeichen, und dann noch einmal
     dem Anfangszeichen.</p>
+
+    <h2>Modifier</h2>
+
+    <p>Mit sogenannten <em>Modifiern</em> kann man das Verhalten von Regexes
+    auf verschiedene Arten verändern.</p> 
+
+    <h3>Groß- und Kleinschreibung ignorieren - <code>:ignorecase</code></h3>
+
+    <p>Mit dem <code>:i</code> oder <code>:ignorecase</code>-Modifier wird
+    Groß- und Kleinschreibung ignoriert. Das gilt nicht nur für latinische
+    Zeichen, sondern für beliebige Schriften, die das Konzept von Groß- und
+    Kleinschreibung kennen.</p>
+
+<pre>[% syntax perl6 %]
+my $str = "Ab";
+$str ~~ m:i/ab/;        # matched
+regex foo {
+    :ignorecase         # kann auch innerhalb einer Regex stehen
+    ab                  # passt auf ab, Ab, aB und AB
+}
+[% endsyntax %]</pre>
+
+    <h3>Akzente ignorieren - <code>:basechar</code></h3>
+
+    <p>Mit <code>:basechar</code> oder <code>:b</code> werden alle Arten von
+    Akzente von der Regex ignoriert.</p>
+
+    <p><code>m:b/a/</code> matched also nicht nur "a", sondern auch "ä",
+    "à", "á", "â", "ã", "ä" oder "å".</p>
+
+    <h3>Alle Treffer finden - <code>:global</code></h3>
+
+    <p>Mit dem <code>:g</code> oder <code>:global</code>-Modifier kann man
+    nach allen, nichtüberlappenden Treffern einer Regex suchen:</p>
+
+<pre>[% syntax perl6 %]
+my $str = "3 = (4 - 2) + 1";
+my @zahlen = $str ~~m:g/\d+/;
+say @zahlen.join(", ");         # 3, 4, 2, 1
+[% endsyntax %]</pre>
+
+    <h3>Überlappende Treffer finden - <code>:overlap</code></h3>
+
+    <p>Mit dem <code>:overlap</code> oder <code>:ov</code>-Modifier findet 
+    man auch überlappende Treffer, aber pro Anfangsposition nur eines:</p>
+<pre>[% syntax perl6 %]
+my @treffer = 'abababa' ~~ m:ov/a.+a/;
+# Ergebnis: 'abababa', 'ababa', 'aba'
+[% endsyntax %]</pre>
+
+    <h3>Wirklich alle Treffer finden - <code>:exhaustive</code></h3>
+
+    <p>Mit dem <code>:exhaustive</code> oder <code>:ex</code>-Modifier kann
+    man jedem möglichen Treffer suchen lassen:</p>
+
+<pre>[% syntax perl6 %]
+$str = "abracadabra";
+
+for $str ~~ m:exhaustive/ a (.*?) a / -> $match {
+    say $match[0];  # br brac bracad bracadabr c cad cadabr d dabr br
+}
+[% endsyntax %]</pre>
+
+    <h3 id="sigspace-modifer">:sigspace</h3>
+
+    <h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
+
+<pre>[[[syntax perl6]]]
+my $str = "12+3";
+token op { \+ };
+$str ~~ m:rw/(\d+) <op> (\+d)/;
+$<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
+[[[endsyntax]]]</pre>
+    
+    <p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
+    beschreibbar machen, wie oben demonstriert.</p>
+
+    <p>Dabei ändern sich automatisch auch die anderen Captures,
+    insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
+
+<pre>[[[syntax perl6]]]
+my $str = "ab";
+$str ~~ m:rw/(a)(b)/;
+say $/[1].from;        # 1
+$/[0] = 'aa';    
+say $/[1].from;        # 2
+say ~$/;        # aab
+[[[endsyntax]]]</pre>
+
+<!--    <h3>Backtracking verhindern - <code>:ratchet</code></h3>
+
+    <p>
+-->
+
 
     <h2>Eigene Zeichenklassen, Grammatiken</h2>
 
@@ -424,7 +520,7 @@ regex identifier        { <meine_zeichen> \w* };
 [[[endsyntax]]]</pre>
 
     <p>Dabei werden Regexes wie Funktionen definiert, und werden mit dem
-    Schlüsselwort <code>token</code> oder <code>regex</code>
+    Schlüsselwort <code>token</code>, <code>rule</code> oder <code>regex</code>
     eingeleitet.</p>
 
     <p>Innerhalb anderer Regexes kann man dann mit der Notation
@@ -577,96 +673,6 @@ regex expression    { <factor>  [ <?ws> <add_op> <?ws> <factor>  ]* }
     <code>2 3</code> (also zwei Zahlen, die nicht von einem Operator
     getrennt werden) korrekterweise nicht erkannt werden.</p>
 
-    <h2>Modifier</h2>
-
-    <p>Mit sogenannten <em>Modifiern</em> kann man das Verhalten von Regexes
-    auf verschiedene Arten verändern.</p> 
-
-    <h3>Groß- und Kleinschreibung ignorieren - <code>:ignorecase</code></h3>
-
-    <p>Mit dem <code>:i</code> oder <code>:ignorecase</code>-Modifier wird
-    Groß- und Kleinschreibung ignoriert. Das gilt nicht nur für latinische
-    Zeichen, sondern für beliebige Schriften, die das Konzept von Groß- und
-    Kleinschreibung kennen.</p>
-
-<pre>[% syntax perl6 %]
-my $str = "Ab";
-$str ~~ m:i/ab/;        # matched
-regex foo {
-    :ignorecase         # kann auch innerhalb einer Regex stehen
-    ab                  # passt auf ab, Ab, aB und AB
-}
-[% endsyntax %]</pre>
-
-    <h3>Akzente ignorieren - <code>:basechar</code></h3>
-
-    <p>Mit <code>:basechar</code> oder <code>:b</code> werden alle Arten von
-    Akzente von der Regex ignoriert.</p>
-
-    <p><code>m:b/a/</code> matched also nicht nur "a", sondern auch "ä",
-    "à", "á", "â", "ã", "ä" oder "å".</p>
-
-    <h3>Alle Treffer finden - <code>:global</code></h3>
-
-    <p>Mit dem <code>:g</code> oder <code>:global</code>-Modifier kann man
-    nach allen, nichtüberlappenden Treffern einer Regex suchen:</p>
-
-<pre>[% syntax perl6 %]
-my $str = "3 = (4 - 2) + 1";
-my @zahlen = $str ~~m:g/\d+/;
-say @zahlen.join(", ");         # 3, 4, 2, 1
-[% endsyntax %]</pre>
-
-    <h3>Überlappende Treffer finden - <code>:overlap</code></h3>
-
-    <p>Mit dem <code>:overlap</code> oder <code>:ov</code>-Modifier findet 
-    man auch überlappende Treffer, aber pro Anfangsposition nur eines:</p>
-<pre>[% syntax perl6 %]
-my @treffer = 'abababa' ~~ m:ov/a.+a/;
-# Ergebnis: 'abababa', 'ababa', 'aba'
-[% endsyntax %]</pre>
-
-    <h3>Wirklich alle Treffer finden - <code>:exhaustive</code></h3>
-
-    <p>Mit dem <code>:exhaustive</code> oder <code>:ex</code>-Modifier kann
-    man jedem möglichen Treffer suchen lassen:</p>
-
-<pre>[% syntax perl6 %]
-$str = "abracadabra";
-
-for $str ~~ m:exhaustive/ a (.*?) a / -> $match {
-    say $match[0];  # br brac bracad bracadabr c cad cadabr d dabr br
-}
-[% endsyntax %]</pre>
-
-    <h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
-
-<pre>[[[syntax perl6]]]
-my $str = "12+3";
-token op { \+ };
-$str ~~ m:rw/(\d+) <op> (\+d)/;
-$<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
-[[[endsyntax]]]</pre>
-    
-    <p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
-    beschreibbar machen, wie oben demonstriert.</p>
-
-    <p>Dabei ändern sich automatisch auch die anderen Captures,
-    insbesondere <code>.from</code> und <code>.to</code> der Captures:</p>
-
-<pre>[[[syntax perl6]]]
-my $str = "ab";
-$str ~~ m:rw/(a)(b)/;
-say $/[1].from;        # 1
-$/[0] = 'aa';    
-say $/[1].from;        # 2
-say ~$/;        # aab
-[[[endsyntax]]]</pre>
-
-<!--    <h3>Backtracking verhindern - <code>:ratchet</code></h3>
-
-    <p>
--->
 
     <h2>Weitere Elemente von Regexes</h2>
 
