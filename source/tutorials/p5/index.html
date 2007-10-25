@@ -17,7 +17,7 @@
     sind Einzeiler die mit <code>perl -e '$code'</code> ausgeführt
     werden.</p>
 
-    <p>Für Objektmethoden gibt es jetzt die <code>.</code>-Notation (anstatt
+    <p>Für Objektmethoden gibt es jetzt die <code>.</code>-Notation (anstelle
     von <code>-&gt;</code>), die meisten Builtins sind jetzt Methoden:</p>
 
 <pre>[[[syntax perl6]]]
@@ -67,6 +67,8 @@ my %hash = (
 <pre>[[[syntax perl6]]]
 my $i = 1;
 my &func =  sub { return $i++; }
+# und später
+say func;
 [[[endsyntax]]]</pre>
 
 
