@@ -461,6 +461,81 @@ for $str ~~ m:exhaustive/ a (.*?) a / -> $match {
 
     <h3 id="sigspace-modifer">:sigspace</h3>
 
+    <p>Mit dem <code>:sigspace</code> oder <code>:s</code>-Modifier werden
+    alle Leerzeichen so interpreteirt, als stünde an ihrere Stelle die Regex
+    <code>&lt;.ws&gt;</code>.</p>
+
+    <p>Die matcht, wenn sie zwischen zwei Wörtern steht, <code>\s+</code>, und
+    sonst <code>\s*</code>.</p>
+
+    <p>(Der Punkt am Anfang bewirkt, dass keine <a href="#named_capture">Named
+    Capture</a> erstellt wird.)</p>
+
+<pre>[[[syntax perl6]]]
+m:sigspace/ \d+ [\+ | \*] \d+ /
+# matcht: '2+3', '2 + 3', ' 2 + 3 ', ... 
+[[[endsyntax]]]</pre>
+
+    <h3 id="ratchet-modifier">Backtracking verhindern -
+    <code>:ratchet</code></h3>
+
+    <p>Bisher haben wir so getan, also ob die Regex-Engine auf magische Weise
+    wüßte, ob eine Regex zu einem String passt oder nicht.</p>
+    <p>Das ist natürlich nicht der Fall, sie muss in dem String suchen.</p>
+    <p>Dabei gibt es häufig anfangs mehrere Möglichkeiten, wie die
+    Regex-Engine einen String matchen könnte.</p>
+
+    <p>Ein Beispiel: Wenn die Regex <code>\w+\d+</code> in dem String
+    <code>"ab123"</code> das erste Mal auf eine Ziffer trifft, könnte das 
+    immer noch zu <code>\w+</code> gehören, oder
+    aber schon zu <code>\d+</code>. Da die Engine das noch nicht entscheiden
+    kann, ohne den Rest des Strings zu kennen, merkt sie sich, dass es an 
+    dieser Stelle noch eine andere Möglichkeit gegeben hätte, und fährt damit
+    fort, <code>\w+</code> zu matchen.</p>
+
+    <p>Bei der nächsten Ziffer, <code>2</code> passiert genau das Gleiche,
+    ebenso bei der dritten.</p>
+
+    <p>Dann ist die Engine am Ende des Strings angelangt, die Regex ist aber
+    noch nicht zuende. Also geht die Regex Engine zu dem letzten Punkt zurück,
+    an dem es mehrere Möglichkeiten gab, das war beim letzten Zeichen, der
+    <code>3</code>.</p>
+
+    <p>Dort wird versucht, die verbleibende Möglichkeit, <code>\d+</code>, zu
+    matchen. Das ist erfolgreich, also matcht die ganze Regex.</p>
+
+    <p>Dieser Vorgang des Speicherns von mehrdeutigen Stellen und wieder
+    darauf zurückzugehen, wenn auf keine andere Art gematcht werden kann,
+    nennt sich <em>Backtracking</em>.</p>
+
+    <p>Manchmal möchte man dieses Verhalten jedoch abschalten, meistens um das
+    Matchen einer Regex zu beschleunigen.</p>
+
+    <p>Das geht mit dem <code>:ratchet</code>-Modifier.</p>
+
+    <p>Die Idee dahinter ist, dass man häufig genauer als die Regex-Engine
+    weiß, auf was eine Regex matchen soll und auf was nicht.</p>
+
+    <p>Wenn man z.B. eine Datei der Form</p>
+
+<pre>
+name1 = wert1
+name2 = wert2
+</pre>
+
+    <p>parsen will, nimmt eine Regex der Form <code>^^(\w+) \s* \= \s*
+    (\N+)\n$$</code> - und man weiss genau, dass wenn das <code>=</code> nicht
+    matcht, muss die Engine gar nicht erst versuchen, den vorherigen String zu
+    kürzen (der vorher gematchte String waren null oder mehr Leerzeichen, das
+    kann niemals ein <code>=/<code> sein).</p>
+
+    <p>Also sagt man der Engine, dass sie es gar nicht erst versuchen
+    soll:</p>
+
+<pre>[% syntax perl6 %]
+m:ratchet:global/ ^^(\w+) \s* \= \s* (\N+)\n$$/
+[% endsyntax %]</pre>
+
     <h3 id="rw-modifier">Regexes können beschreibbar sein</h3>
 
 <pre>[[[syntax perl6]]]
@@ -527,36 +602,12 @@ regex identifier        { <meine_zeichen> \w* };
     <code>&lt;name&gt;</code> auf die Regex zugreifen (dabei sind keine
     Leerzeichen vor oder nach dem Namen erlaubt).</p>
 
-    <p>Der Unterschied zwischen <code>token</code> und <code>regex</code>
-    ist, dass mit <code>token</code> kein Backtracking durchgeführt wird,
-    während <code>regex</code> wie eine normale Regex verarbeitet
-    wird.</p>
+    <p>Dabei ist <code>token</code> ein <code>regex</code> mit einem
+    impliziten <code>:ratchet</code>-Modifier (d.h. es findet kein
+    Backtracking innerhalb des Tokens statt), eine <code>rule</code> ist eine
+    <code>regex</code> mit implizitem <code>:ratchet :sigspace</code>.</p>
 
-    <p>Ein Beispiel soll das demonstrieren: die Regex <code>\w+? _ \d</code>
-    passt auf beliebig viele  Buchstaben, Zahlen oder Unterstrich (aber
-    möglichst wenige davon), gefolgt von einem Unterstrich und und einer 
-    Ziffer. Der String <code>"abc_d_1"</code> passt sicher auf diese
-    Regex. Wenn der Interpreter oder Compiler aber versucht, die Regex
-    anzuwenden, wird er erst <code>"abc"</code> als Match für
-    <code>\w</code> finden, dann <code>"_"</code> als Match für
-    <code>_</code>, und stellt fest, dass <code>"d"</code> nicht auf
-    <code>\d</code> (Ziffer) passt.</p>
-
-    <p>Wenn die Regex als <code>token</code> deklariert ist, wird an
-    dieser Stelle die Suche abgebrochen, weil kein Match gefunden ist.</p>
-
-    <p>Ist die Regex dagegen als <code>regex</code> deklariert, wird der
-    Interpreter weiter versuchen, und wird den ersten Unterstrich als
-    Match auf <code>\w</code> interpretieren, ebenso das <code>"d"</code>,
-    den zweiten Unterstrich als Match auf <code>_</code> und die Ziffer
-    <code>"1"</code> als Match auf <code>\d</code> - d.h. als
-    <code>regex</code> wird der String gematched, als <code>token</code>
-    nicht.</p>
-
-    <p>Wem das jetzt zu kompliziert war: Einfach vergessen, und fürs erste
-    nur ganz einfaches Regexes als <code>token</code> deklarieren.</p>
-
-    <h3>Named Captures</h3>
+    <h3 id="named_capture">Named Captures</h3>
 
     <p>Einer Regex einen Namen zu geben und in einer andere Regex zu
     verwenden hat noch einen weiteren Effekt:</p>
@@ -649,7 +700,7 @@ if "3 + b" ~~ m/<integer> <ws> <add_op> <ws> <integer>/ {
 token integer { \d+ };
 token add_op  { \+ | - };
 
-if "3 + b" ~~ m/<integer> <?ws> <add_op> <?ws> <integer>/ {
+if "3 + b" ~~ m/<integer> <.ws> <add_op> <.ws> <integer>/ {
     # $/ hat hier keinen <ws>-Eintrag
 }
 [[[endsyntax]]]</pre>
@@ -664,8 +715,8 @@ if "3 + b" ~~ m/<integer> <?ws> <add_op> <?ws> <integer>/ {
 token integer       { \d+ };
 token add_op        { \+ | - };
 token mul_op        { \* | \/ };
-regex factor        { <integer> [ <?ws> <mul_op> <?ws> <integer> ]* }
-regex expression    { <factor>  [ <?ws> <add_op> <?ws> <factor>  ]* }
+rule factor         { <integer> [ <mul_op> <integer> ]* }
+rule expression     { <factor>  [ <add_op> <factor>  ]* }
 [[[endsyntax]]]</pre>
 
     <p>Damit kann man Mathematische Ausdrücke wie <code>2 + 3*5 -
