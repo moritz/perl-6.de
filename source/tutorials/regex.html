@@ -49,8 +49,8 @@ if "Haase" ~~ m/H.se/ {
     Ziffer).</p>
 
 <pre>[[[syntax perl6]]]
-my $zeit = "6:30";
-if $zeit ~~ m/\d:\d\d/ {
+my $zeit = "6H30";
+if $zeit ~~ m/\d H \d\d/ {
     say "gültige Weckzeit";
 } else {
     say "Damit kann ich nichts anfangen";
@@ -61,51 +61,58 @@ if $zeit ~~ m/\d:\d\d/ {
     Zeichen gematched wird.</p>
 
     <p>Die Negation ist die Verneinung, d.h. wenn <code>\d</code> auf eine
-    Ziffer passt, passt <code>\D</code> auf alles außer einer Ziffer.</p>
+    Ziffer passt, passt <code>\D</code> auf ein beliebiges Zeichen, das keine
+    Ziffer ist.</p>
 
 <table summary="Regex-Sonderzeichen 1">
-<tr><th>Zeichen</th><th>Bedeutung</th><th>Beispiel</th><th>Herkunft</th><th>Negation</th>
-<tr>
-    <td>.</td>
-    <td>beliebiges Zeichen</td>
-    <td>/</td>
-    <td>?</td>
-    <td></td>
-</tr>
-<tr>
-    <td>\d</td>
-    <td>Ziffer</td>
-    <td>7</td>
-    <td>digit = Ziffer</td>
-    <td>\D</td>
-</tr>
-<tr>
-    <td>\t</td>
-    <td>Tabulator</td>
-    <td>    </td>
-    <td>tab = Tabulator</td>
-    <td>\T</td>
-</tr>
-<tr>
-    <td>\n</td>
-    <td>Zeilenumbruch</td>
-    <td>    </td>
-    <td>newline = neue Zeile</td>
-    <td>\N</td>
-</tr>
-<tr>
-    <td>\w</td>
-    <td>Buchstabe, Ziffer oder Unterstrich</td>
-    <td>H</td>
-    <td>word = Wort</td>
-    <td>\W</td>
-</tr>
-<tr>
-    <td>\s</td>
-    <td>(Unicode)-Leerzeichen</td>
-    <td> </td>
-    <td>space = Leerzeichen</td>
-    <td>\S</td>
+    <tr>
+        <th>Zeichen</th>
+        <th>Bedeutung</th>
+        <th>Beispiel</th>
+        <th>Herkunft</th>
+        <th>Negation</th>
+    <tr>
+        <td>.</td>
+        <td>beliebiges Zeichen</td>
+        <td>/</td>
+        <td>...</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>\d</td>
+        <td>Ziffer</td>
+        <td>7</td>
+        <td>digit = Ziffer</td>
+        <td>\D</td>
+    </tr>
+    <tr>
+        <td>\t</td>
+        <td>Tabulator</td>
+        <td>    </td>
+        <td>tab = Tabulator</td>
+        <td>\T</td>
+    </tr>
+    <tr>
+        <td>\n</td>
+        <td>Zeilenumbruch</td>
+        <td>    </td>
+        <td>newline = neue Zeile</td>
+        <td>\N</td>
+    </tr>
+    <tr>
+        <td>\w</td>
+        <td>Buchstabe, Ziffer oder Unterstrich</td>
+        <td>H</td>
+        <td>word = Wort</td>
+        <td>\W</td>
+    </tr>
+    <tr>
+        <td>\s</td>
+        <td>(Unicode)-Leerzeichen</td>
+        <td> </td>
+        <td>space = Leerzeichen</td>
+        <td>\S</td>
+    </tr>
 </table>
 
     <h2>Alternativen</h2>
