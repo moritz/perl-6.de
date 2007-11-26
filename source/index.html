@@ -73,7 +73,7 @@ my %braces = ( '('  => ')',
 my @stack;
 
 for =$file -> my $line {
-    for ($line.comb(m/<[()\[\]\{\}]>/)) -> my $match {
+    for $line.comb(m/<[()\[\]\{\}]>/) -> my $match {
         if %braces{$match} {
             # öffnende Klammer gefunden
             push @stack, ~$match;
@@ -101,10 +101,10 @@ if @stack.elems == 0 {
 
 	<p><a href="http://moritz.faui2k3.org/de/me">Moritz Lenz</a> studiert 
 	Physik mit Nebenfach Informatik in Würzburg,
-	ist Perl 6-Entwickler (v.a. Testcases, <a
-	href="http://moritz.faui2k3.org/irclog/out.pl?channel=perl6">IRC
-	logs</a>) und liebt die Perls Möglichkeit, mit möglichst wenigen
-	Einschränkungen programmieren zu können.</p>
+	ist Perl 6-Entwickler (v.a. Testcases, 
+    <a href="http://irclog.perlgeek.de/perl6/today">IRC logs</a>) und liebt 
+    Perls Möglichkeit, mit möglichst wenigen Einschränkungen programmieren 
+    zu können.</p>
 
 <!--
  vim: sw=4 ts=4 expandtab
