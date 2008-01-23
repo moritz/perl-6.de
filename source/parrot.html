@@ -1,19 +1,28 @@
 [[[menu main home parrot]]]
-[[[setvar title Parrot - Virtual Maschine für Perl 6]]]
+[[[setvar title Parrot - Mehr als eine Virtual Machine]]]
 <div id="content">
-    <h1>The Parrot - die VM für Perl 6</h1>
+    <h1>The Parrot - Mehr als eine Virtual Machine</h1>
 
     <p>Schon Perl 5 ist kein reiner Interpreter, sondern kompiliert den Code in
     einen Bytecode, der von einer virtuelle Maschine (VM) ausgeführt wird.</p>
 
-    <p>Perl 6 wird das genauso machen, allerdings werden Compiler und VM
-    wesentlich klarer getrennt sein. Und die VM ist "The Parrot"</p>
+    <p>Schnell wurde klar, dass der perl5-Interpreter keine geeigne Plattform
+    ist, um Perl 6-Code auszuführen. Also haben sie viele bekannte Perlhacker,
+    wie z.B. Allison Randal daran gemacht, eine neue Virtual Maschine zu
+    schreiben.</p>
 
     <p>Der Name kam ursprünglich von einem <a
     href="http://www.perl.com/pub/a/2001/04/01/parrot.htm">Aprilscherz</a>, 
     in dem Larry Wall (Perl) und Guido van Rossum (Python) unterstellt wurde
     anzukündigen, dass sie Perl und Python zu einer Programmiersprache
     verschmelzen würden.</p>
+
+    <p>Tatsächlich wird es aber nicht unbedingt eine offizielle 
+    Perl 6-Implementierung geben wie bei Perl 5, sondern Perl 6 ist eine
+    Sprachspezifikation, so wie Ansi C. Die auf Parrot basierte Perl
+    6-Implementierung <a href="http://rakudo.de/">Rakudo</a> ist auch nicht
+    offizieller oder weniger offiziell als der Rest, gilt aber innerhalb der
+    Gemeinde der Perlprogrammierer als sehr erfolgsversprechend.</p>
 
     <h2>Design</h2>
 
@@ -55,11 +64,24 @@
         werden, nicht von Menschen per Hand erzeugt zu werden.</li>
     </ol>
 
+    <h2>Parrot Compiler Tools</h2>
+
+    <p>Parrot ist nicht nur eine Virtuelle Maschine, sondern kommt auch mit
+    einigen Tools, die das schreiben neuer Compiler besonders einfach machen
+    soll.</p>
+
+    <p>Dazu gehört die <a href="/parrot-grammar-engine">Parrot Grammar
+    Engine (PGE)</a>, eine Implementierung von Perl 6 Rules, die das 
+    parsen einer Programmiersprache so einfach wie möglichen machen soll, 
+    und die Tree Grammar Engine (TGE), die es sehr einfach macht,
+    AST-Transformationen durchzuführen.</p> 
+
     <h2>Links</h2>
     <ul>
         <li><a href="http://www.parrotcode.org/">Ofizielle Parrot-
         Homepage</a></li>
-        <li><a href="http://rakudo.org/parrot">Parrot-Wiki</a></li>
+        <li><a href="http://rakudo.org/">Rakudo, der Perl 6-Compiler auf
+        Parrot</a></li>
     </ul>
 
 <!--
