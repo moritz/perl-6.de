@@ -33,8 +33,9 @@ my @list;
 @list.push: 'foo';
 [[[endsyntax]]]</pre>
 
-    <p>Die <code>print</code>-Funktion hat eine eine Schwester, die ein
-    Newline am Ende anhängt:<code>say</code></p>
+    <p>Die <code>print</code>-Funktion hat eine Schwester, die ein
+    Newline am Ende anhängt:<code>say</code> (auch schon in perl 5.10
+	vorhanden).</p>
 
 <pre>[[[syntax perl6]]]
 my $answer  = 7 * 6;
@@ -59,14 +60,14 @@ my %hash = (
     );
 @list[0]        #früher: $list[0]
 %hash{'foo'}    #früher: $hash{'foo'}
-%hahs<foo>      #früher: $hash{foo}
+%hash<foo>      #früher: $hash{foo}
 [[[endsyntax]]]</pre>
 
     <p>Außerdem gibt es auch noch das Sigil <code>&amp;</code> für
     Subroutinen, Closures und Regexes:</p>
 <pre>[[[syntax perl6]]]
 my $i = 1;
-my &func =  sub { return $i++; }
+my &func :=  sub { return $i++; }
 # und später
 say func;
 [[[endsyntax]]]</pre>
@@ -89,15 +90,18 @@ my $str = "foo";
 my $a = [1, 2, [3, 4, 5], 6];
 $a[0]       # früher: $a->[0]
 $a[2][0]    # früher $a->[0]->[0] oder $a->[0][0]
+
 my $b = { 'a' => 'b', 'c' => [1, 2, 3]};
 $b{'a'}     # früher $b->{a}
 $b<a>       # das gleiche
 $b<c>[0]    # früher: $b->{c}[0] oder $b->{c}->[0]
 [[[endsyntax]]]</pre>
-    <p>Auch beim Zugriff auf Objekte ist der Pfeil dem Punkt gewichen.</p>
 
-    <p>Die Anzahl der Elemente eines Arrays bekommt man nun nicht mehr
-    über <code>scalar @list</code>, sondern mit elems:</p>
+    <p>Auch beim Zugriff auf Objektmethoden ist der Pfeil dem Punkt 
+	gewichen.</p>
+
+    <p>Die Anzahl der Elemente eines Arrays bekommt man nun mit
+	<code>elems</code>:</p>
 <pre>[[[syntax perl6]]]
 # man beachte, dass hier keine Klammern mehr nötig sind:
 my @list = 1, 2, 4, 5;
@@ -106,7 +110,12 @@ my $num = @list.elems;            # früher: scalar @list;
 $num = elems @list;               # das gleiche
 my $last_index = @list.end;       # früher: $#list
 my $last_elem = @list[@list.end]; # früher: $list[$#list]
-$last_eleme = @list[-1];          # das gleiche
+$last_elem = @list[*-1];          # früher: $list[-1]
+
+# funktioniert immer noch:
+if @list < 3 {
+	...
+}
 [[[endsyntax]]]</pre>
 
     <p><code>qw()</code> wird durch <code>&lt;...&gt;</code> ersetzt und
@@ -126,14 +135,14 @@ my @l2 = <<foo $str bar>>;  # liefert ['foo', 'bla', 'blubb', 'bar']
 @*ARGS              # früher @ARGV
 $*IN, $*OUT, $ERR   # früher STDIN, STDOUT, STDERR
 
-# zur Kompilezeit bekannte Symbole:
+# zur Compilezeit bekannte Symbole:
 $?LINE          # früher __LINE__
 $?FILE          # früher __FILE__
 $?PACKAGE       # früher __PACKAGE__
 
-# Implizite Variablen haben ein ^ als twigl:
+# Implizit deklarierte Variablen haben ein ^ als Twigl:
 # in absteigender Reihenfolge sortieren:
-sort {$^b <=> $^a}, @list # bisher sort {$b <=> $a} @list
+sort {$^b <=> $^a}, @list # bisher: sort {$b <=> $a} @list
 [[[endsyntax]]]</pre>
 
     <h2>Kontrollstrukturen</h2>
@@ -146,8 +155,9 @@ if $a < 0 {         # if ($a < 0) {
     say "Negativ";  #   print "Negativ\n";
 }                   # }
 [[[endsyntax]]]</pre>
-    <p><code>foreach</code> wird zu <code>for</code>, <code>for</code> zu
-    <code>loop</code>:</p>
+
+    <p><code>foreach</code> und <code>for</code> wird zu <code>for</code>, 
+	die C-artige <code>for</code>-Schleife zu <code>loop</code>:</p>
 
 <pre>[[[syntax perl6]]]
 my @nums = 1, 2, 3, 23, 42;
@@ -174,6 +184,7 @@ loop (my $i = 0; $i < 10; $i++){
     # tolle Berechnung mit $i hier
 }
 [[[endsyntax]]]</pre>
+
     <p><code>while</code> bleibt unverändert (außer dass es auch keine
     runden Klammern mehr um die Bedingung braucht), <code>eval { ...
     }</code> ist jetzt <code>try { ... }</code>.</p>
@@ -181,16 +192,18 @@ loop (my $i = 0; $i < 10; $i++){
     <h2>Die Standardvarible <code>$_</code></h2>
 
     <p><code>for</code>-Schleifen ohne eine explizite Variable benutzen
-    auch weiterhin <code>$_</code> als Standard, allerdings kann man sie
-    nicht mehr mit <code>print;</code> ausgeben, sondern man braucht ein
-    <code>.print</code>. Das gleiche gilt für Funktionen wie
+    auch weiterhin <code>$_</code> als Standard, allerdings wird sie niemals
+	von Funktionen wie <code>print</code> als Default verwendet. Dazu braucht 
+	man ein <code>.print</code>. Das gleiche gilt für Funktionen wie
     <code>uc</code> und <code>lc</code>:</p>
+
 <pre>[[[syntax perl6]]]
                 # früher:
 for =<> {       # while (<STDIN>){
-    .uc.say;    # print uc;
+    .uc.say;    #     print uc;
 }               # }
 [[[endsyntax]]]</pre>
+
     <p>Allerdings gibt es auch noch eine andere Möglichkeit: mit dem
     Twigil <code>^</code> kann man Variablen mit beliebigen Namen
     verwenden, und man kann sogar mehrere davon in einem einer Schleife
@@ -205,6 +218,7 @@ for 1 .. 4 {
 [[[endsyntax]]]</pre>
     <p>Dabei wird den Variablen, die mit <code>$^</code> anfangen, in
     alphabetischer Reihenfolge die Werte zugewiesen:</p>
+
 <pre>[[[syntax perl6]]]
 for 1 .. 4 {
     say $^foo, ": ", $^bar;
@@ -213,7 +227,6 @@ for 1 .. 4 {
 # 2: 1
 # 4: 3
 [[[endsyntax]]]</pre>
-
 
     <h2>Funktionen</h2>
 
@@ -232,8 +245,7 @@ sub fakultaet2 {
     return  reduce {$^a * $^b}, 1 .. @_[0];
 }
 
-# Argumente können jetzt schreibbar gemacht werden:
-
+# Parameter können auch beschreibbare Aliase sein:
 sub swap($a is rw, $b is rw){
     $a, $b = $b, $a;
 }

@@ -36,12 +36,13 @@
             [[[item umsteiger <li><a href="/tutorials/umsteiger/"
             class="nav{{ active}}">Für Umsteiger</a></li>]]]
             [[[item p5 <li><a href="/tutorials/p5/" class="nav{{ active}}">Für Perl 5-
-            Programmierer</a></li>
+            Programmierer</a>
             {{<ul>
                 [[[item regex <li><a class="nav sub{{ active}}"
                     href="/tutorials/p5/regex">Regexes</a>
                     </li>]]]
-                </ul>}}]]]
+                </ul>}}</li>]]]
+
         </ul>
         <h2>Spezielle Themen</h2>
         <ul>
@@ -54,3 +55,7 @@
         </ul>
     </div>
 }}]]]
+
+[[[comment 
+    vim: sw=4 ts=4 expandtab
+]]]
