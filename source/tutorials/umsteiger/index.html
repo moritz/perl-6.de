@@ -628,8 +628,8 @@ sub foo($x is copy) {
 
     <h4>Multi subs</h4>
 
-    <p>Multi Subs sind ähnlich wie überladene Funktionen in
-    anderen Programmiersprachen. Mehrere Multi Subs haben den gleichen
+    <p>Multi subs funktionieren ähnlich wie überladene Funktionen in
+    anderen Programmiersprachen. Mehrere Multi subs haben den gleichen
     Namen, aber unterschiedliche Signaturen:</p>
 
 <pre>[[[syntax perl6]]]
@@ -837,8 +837,11 @@ bla
 
 	<p>Und falsches HTML wäre</p>
 
-	<pre>Bla bla bla &lt;strong&gt;fetter Text&lt;/em&gt; bla
-	bla</pre>
+<pre>[[[syntax html]]]
+Bla bla bla <strong>fetter Text</em> bla
+bla
+[[[endsyntax]]]</pre>
+[[[comment damit das Syntax-hilighting nicht verrückt spielt: </strong>]]]
 
 	<p>weil ein <code>&lt;strong&gt;</code>-Tag durch ein <code>&lt;em&gt;</code>-Tag
 	geschlossen wird.</p>
@@ -865,6 +868,9 @@ if $text ~~ m/ \<(\w+)\> (.*) \<\/$0> / {
 
 	<p>Gerade mit den Regexes von Perl 6 hat man noch sehr, sehr viel mehr
 	Möglichkeiten, als bisher beschrieben.</p>
+
+    <p>Mehr dazu gibt es in dem <a
+    href="/tutorials/regex">Regex-Tutorial</a>.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
       <h3>Benannte Rules</h3>
