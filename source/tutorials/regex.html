@@ -71,6 +71,7 @@ if $zeit ~~ m/\d H \d\d/ {
         <th>Beispiel</th>
         <th>Herkunft</th>
         <th>Negation</th>
+    </tr>
     <tr>
         <td>.</td>
         <td>beliebiges Zeichen</td>
@@ -236,7 +237,7 @@ my @worte = $text.split(m/\s+/);
 # Ergebnis: @worte = "20", "mal", "2", "ist", "40";
 [[[endsyntax]]]</pre>
 
-    <p>Wenn man in einer Regex einen Schrägstrich <code>/<code>
+    <p>Wenn man in einer Regex einen Schrägstrich <code>/</code>
     benutzt, muss man ihn mit einem Rückstrich escapen: <code>\/</code>.
     Eine andere Möglichkeit ist, ein anderes Zeichen als Begrenzung der
     Regex zu verwenden:</p>
@@ -527,7 +528,7 @@ name2 = wert2
     (\N+)\n$$</code> - und man weiss genau, dass wenn das <code>=</code> nicht
     matcht, muss die Engine gar nicht erst versuchen, den vorherigen String zu
     kürzen (der vorher gematchte String waren null oder mehr Leerzeichen, das
-    kann niemals ein <code>=/<code> sein).</p>
+    kann niemals ein <code>=</code> sein).</p>
 
     <p>Also sagt man der Engine, dass sie es gar nicht erst versuchen
     soll:</p>
