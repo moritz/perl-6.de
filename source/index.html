@@ -72,14 +72,14 @@ my %braces = ( '('  => ')',
         );
 my @stack;
 
-for =$file -> my $line {
-    for $line.comb(m/<[()\[\]\{\}]>/) -> my $match {
+for =$file -> $line {
+    for $line.comb(m/<[()\[\]\{\}]>/) -> $match {
         if %braces{$match} {
             # öffnende Klammer gefunden
             push @stack, ~$match;
         } else {
             # schliessende Klammer gefunden
-            my $expected = %braces{pop @stack};
+            my $expected = %braces{@stack.pop};
             if $expected ne $match {
                 die "File '$fn' is not balanced: expected '" ~ 
                     $expected ~ "', found '$match'\n";
