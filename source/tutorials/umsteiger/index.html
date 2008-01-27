@@ -83,7 +83,7 @@ say "Die Zahl ist ", $number;
 	aus.</p>
 
 	<p>Die letzte Zeile 
-	<code>say "Die Zahl ist ", $number;</code> schlie&szlig;lich gibt den
+	<code>say "Die Zahl ist ", $number;</code> schließlich gibt den
 	String <code>"Die Zahl ist</code> " und danach die Variable
 	<code>$number</code> aus.</p>
 
@@ -744,7 +744,10 @@ m/^Genau diese Zeile$/
 	überprüfen.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
-	<h3>Quantifier</h3>
+	<h3>Quantoren</h3>
+
+    <p>Quantoren sind Sonderzeichen, die angeben, wie häufig das vorhergehende
+    Zeichen wiederholt werden kann.</p>
 
 	<p>Wenn hinter einem Buchstaben (oder einer Klammer) ein Fragezeichen
 	<code>?</code> kommt, so ist dieser Buchstaben optional.</p>
@@ -765,11 +768,11 @@ m/^Genau diese Zeile$/
 	einem c.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
-	<h3>Charakterklassen</h3>
+	<h3>Zeichenklassen</h3>
 
-	<p>Bisher waren die regexes relativ langweilig. Durch Charakterklassen
-	werden sie sehr viel mächtiger. Eine Charakterklasse ist quasi
-	eine (meistens recht lange) Auflistung von durch <code>|</code>
+	<p>Bisher waren die regexes relativ langweilig. Durch Zeichenklassen
+	werden sie sehr viel mächtiger. Eine Zeichenklassen entspricht 
+	einer (meistens recht lange) Auflistung von durch <code>|</code>
 	getrennten Zeichen, und matched immer genau ein Zeichen</p>
 
 	<table summary="Charakterklassen von Perl 6-regexes">
@@ -788,6 +791,10 @@ m/^Genau diese Zeile$/
 	<tr><td>&lt;alpha&gt;</td><td>Buchstabe (alternative Schreibweise)</td></tr>
 	<tr><td>&lt;digit&gt;</td><td>Ziffer (alternative Schreibweise)</td></tr>
 	</table>
+
+    <p>Man beachte dabei, dass "Buchtstabe" nicht nur A bis Z meint, sondern
+    auch Buchstaben in anderen Sprachen. (Entspricht der Unicode-Eigenschaft
+    <code>Letter</code>).</p>
 
 	<p>Wenn man eine ganze Zahl, gefolgt von einem oder mehr Leerzeichen
 	und einem Wort finden will, kann man das mit folgender Regex
@@ -814,7 +821,7 @@ if $text ~~ m/\d+\s+\w+/ {
 
 	<p>Später innerhalb der regex kann man dann mit der Variable
 	<code>$0</code> auf den Inhalt der ersten Klammer zugreifen, mit
-	<code>$1</code> auf den Inhalt der zweiten usw. Au&szlig;erdem kann
+	<code>$1</code> auf den Inhalt der zweiten usw. Außerdem kann
 	man <code>$/</code> als Array verwenden, und auf das
 	<code>$n</code>-te Element zugreifen: <code>$/[0]</code>,
 	<code>$/[1]</code> usw.</p>
@@ -846,11 +853,12 @@ if $text ~~ m/ \<(\w+)\> (.*) \<\/$0> / {
 }
 #Ausgabe: Matched tag strong with content 'fetter Text'
 [[[endsyntax]]]</pre>
+
 	<p>Wenn man den Inhalt einer Klammer nicht braucht, d.h. wenn man die
 	Klammer nur braucht, um zu gruppieren, kann man eckige Klammern
 	<code>[...]</code> anstatt runder Klammern verwenden.</p>
 
-	<p>&Uuml;ber Regexes kann man ganze Bücher schreiben, und in der
+	<p>Über Regexes kann man ganze Bücher schreiben, und in der
 	Tat <a
 	href="http://www.amazon.de/gp/product/0596528124?ie=UTF8&tag=moritzlenz-21&linkCode=as2&camp=1638&creative=6742&creativeASIN=0596528124">gibt
 	es auch gute Bücher darüber</a>.</p>
