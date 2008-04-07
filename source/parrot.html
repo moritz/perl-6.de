@@ -42,6 +42,13 @@
     Garbage Collector mit, der sich darum kümmert, ungenutzen Arbeitsspeicher 
     zu befreien und dem Betriebssystem zurück zu geben.</p>
 
+    <p>Parrot benutzt keinen Stack für Funktionsaufrufe, sondern sogenannte
+    "Continuations". Sie speichern den aktuellen Status des Interpreters
+    (insbesors die Register) ab, und erlauben es, beliebig weit in der Call
+    Chain zurückzuspringen, ohne den Stack für jeden Funktionsaufruf
+    dazwischen aufräumen zu müssen. Damit sind z.B. Exceptions sehr effizient
+    implementierbar.</p>
+
     <h2>Parrot Assembler</h2>
 
     <p>Parrot unterstützt vier verschiedene Code-Formate:</p>
@@ -61,7 +68,9 @@
         umgewandelt bevor sie ausgeführt werden.</li>
         <li><strong>PAST</strong>, "Parrot Abstract Syntax Tree" ist eine
         Darstellung als AST, die nur dafür gedacht ist, von Compilern generiert zu
-        werden, nicht von Menschen per Hand erzeugt zu werden.</li>
+        werden, nicht von Menschen per Hand erzeugt zu werden. Damit muss
+        nicht jeder Compiler den AST "zu Fuß" nach PIR oder PASM übersetzen,
+        sondern kann das von den "Parrot Compiler Tools" machen lassen.</li>
     </ol>
 
     <h2>Parrot Compiler Tools</h2>
@@ -70,11 +79,16 @@
     einigen Tools, die das schreiben neuer Compiler besonders einfach machen
     soll.</p>
 
-    <p>Dazu gehört die <a href="/parrot-grammar-engine">Parrot Grammar
-    Engine (PGE)</a>, eine Implementierung von Perl 6 Rules, die das 
-    parsen einer Programmiersprache so einfach wie möglichen machen soll, 
-    und die Tree Grammar Engine (TGE), die es sehr einfach macht,
-    AST-Transformationen durchzuführen.</p> 
+    <p>Das wichtigste Toll ist die <a href="/parrot-grammar-engine">Parrot 
+    Grammar Engine (PGE)</a>, eine Implementierung von Perl 6 Rules, die das 
+    parsen einer Programmiersprache so einfach wie möglichen machen soll. 
+    </p>
+
+    <p>Für jede Grammatikregel kann man in NQP ("Not Quite Perl 6") eine
+    Funktion schreiben, die das aktuelle Match-Objekt nach PAST konvertiert,
+    oder in ein anderes Format, das man dann weiterverarbeiten kann.</p>
+
+    <p>Der PCT-Compiler übersetzt PAST (indirekt) nach PBC.</p>
 
     <h2>Links</h2>
     <ul>
@@ -85,5 +99,5 @@
     </ul>
 
 <!--
-    vim: sw=4 ts=4 expandtab
+    vim: sw=4 ts=4 expandtab tw=78
 -->
