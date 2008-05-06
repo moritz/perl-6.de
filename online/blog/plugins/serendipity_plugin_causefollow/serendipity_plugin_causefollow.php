@@ -1,5 +1,5 @@
 <?php
-// @version 1.4
+// @version 1.5
 // @title:  Serendipity Sidebar-Plugin - Linklift
 // @author: Andreas Rayo Kniep, Benjamin Mateev
 // @date:   2006-12-20, 2007-01-30, 2008-01-02
@@ -22,9 +22,9 @@ if (file_exists($probelang))
 
 /* ****************************************************************
  * adspace:        http://perl-6.de/blog/                         *
- * creation date:  2008-01-29                                     *
+ * creation date:  2008-05-06                                     *
  * contact:        support@linklift.de                            *
- * script-version: 1.4    (2008-01-02)                            *
+ * script-version: 1.5    (2008-02-20)                            *
  * ****************************************************************/
 // this PHP-script runs on PHP-engines >= v4.0.6
 // tab-size of this document:  4 spaces
@@ -32,13 +32,20 @@ if (file_exists($probelang))
 
 
 /**	Disabling all error- (, warning-, and notice-) messages...
- *	You may want to change this when testing or debugging your own page.
+ *	You may want to un-comment the following lines when testing or debugging this plugin.
+ *  At the end of the plugin you may restore the original reporting-level using the following call:
+ *  error_reporting( $linklift_saved_reporting_level );
+ *  
+ *  Note: there is another call of error_reporting() in this plugin's method execute()!
+ * 
+ * default:			E_ERROR | E_WARNING | E_PARSE
+ * all messages:	E_ALL
+ * only errors:		E_ERROR
+ * no messages:		0
+ * 
  */
-error_reporting( 0 );			/*	default:		E_ERROR | E_WARNING | E_PARSE
-								 *	all messages:	E_ALL
-								 *	only errors:	E_ERROR
-								 *	no messages:	0
-								 */
+$linklift_saved_reporting_level = error_reporting();
+// error_reporting( E_ALL );
 
 
 
@@ -47,7 +54,7 @@ error_reporting( 0 );			/*	default:		E_ERROR | E_WARNING | E_PARSE
 /**	
  *	The LinkLift-website-key identifies your website on the LinkLift-marketplace.
  */
-@define( "LL_WEBSITE_KEY"		, "4eb798e7aI0" );
+@define( "LL_WEBSITE_KEY"						, "4eb798e7aI0" );
 
 
 
@@ -56,16 +63,29 @@ error_reporting( 0 );			/*	default:		E_ERROR | E_WARNING | E_PARSE
  *	if a newer version of your plug-in is available on the LinkLift-server.
  *  Note: the plug-in will not update itself, at this time.
  */
-@define( "LL_PLUGIN_LANGUAGE"	, 'serendipity' );
-@define( "LL_PLUGIN_VERSION"	, '1.4' );
-@define( "LL_PLUGIN_DATE"		, '2008-01-02' );
-@define( "LL_PLUGIN_SECRET"		, '9r1LqhqJ69' );
+@define( "LL_PLUGIN_LANGUAGE"					, "serendipity" );
+@define( "LL_PLUGIN_VERSION"					, "1.5" );
+@define( "LL_PLUGIN_DATE"						, "2008-02-20" );
+@define( "LL_PLUGIN_CREATION_DATE"				, "20080506133900" );
+
+@define( "LL_UPDATE_CHECK_TIMEFRAME"			, "-1 week" );
+
+@define( "LL_PLUGIN_SECRET"						, "9r1LqhqJ69" );
 
 
 /**	In order to not block the page-load-progrss
  *	a time-limit (in seconds) is set when receiving new data from the LinkLift-server.
  */
-@define( "LL_DATA_TIMEOUT"		, 7 );
+@define( "LL_DATA_TIMEOUT"						, 7 );
+
+
+/**	
+ *	The server-host to connect to in order to download data from LinkLift-server.
+ */
+@define( "LL_SERVER_HOST"						, "external.linklift.net" );
+@define( "LL_SERVER_URL"						, "http://" . LL_SERVER_HOST . "/" );
+
+
 
 
 // if the plugin's individual "secret" is delivered the plugin's so-called SECRET-MODE is entered. Necessary for entering the plugin's DEBUG_MODE.
@@ -77,9 +97,9 @@ if (   (   (! empty($_REQUEST["ls"]))
 		)
 	)
 {
-	@define( "LL_SECRET_MODE"	, true );
+	@define( "LL_SECRET_MODE"					, true );
 } else {
-	@define( "LL_SECRET_MODE"	, false );
+	@define( "LL_SECRET_MODE"					, false );
 } //if-else
 
 
@@ -105,12 +125,12 @@ if (   (LL_SECRET_MODE)
 	)
 {
 	if (isset($debug_mode_matches[1]))
-		@define( "LL_DEBUG_MODE"	, $debug_mode_matches[1] );
+		@define( "LL_DEBUG_MODE"				, $debug_mode_matches[1] );
 	else
-		@define( "LL_DEBUG_MODE"	, $_REQUEST["ld"] );
+		@define( "LL_DEBUG_MODE"				, $_REQUEST["ld"] );
 	
 } else {
-	@define( "LL_DEBUG_MODE"	, false );
+	@define( "LL_DEBUG_MODE"					, false );
 } //if-else
 	
 
@@ -148,10 +168,12 @@ var $xml_cache;
 var $xml_cache_time;
 
 // other variables, mainly copying linklift-constants
-var $data_timeout    = LL_DATA_TIMEOUT;
-var $plugin_language = LL_PLUGIN_LANGUAGE;
-var $plugin_version  = LL_PLUGIN_VERSION;
-var $plugin_date     = LL_PLUGIN_DATE;
+var $data_timeout			= LL_DATA_TIMEOUT;
+var $plugin_language		= LL_PLUGIN_LANGUAGE;
+var $plugin_version			= LL_PLUGIN_VERSION;
+var $plugin_date			= LL_PLUGIN_DATE;
+var $plugin_creation_date	= LL_PLUGIN_CREATION_DATE;
+
 
 
 
@@ -241,8 +263,20 @@ function serendipity_plugin_causefollow( $linklift_website_key = "", $xml_filena
  */
 function execute( $return = false )
 {
-	$linklift_plugin_instance =& serendipity_plugin_causefollow::getInstance();
-	return $linklift_plugin_instance->ll_textlink_code( $return );
+	// not displaying error-messages while executing the LinkLift-plugin
+	$linklift_saved_reporting_level = error_reporting();
+	error_reporting( 0 );
+	
+	
+	$linklift_plugin_instance	=& serendipity_plugin_causefollow::getInstance();
+	$textlink_code				=& $linklift_plugin_instance->ll_textlink_code( $return );
+	
+	
+	// restoring original error-reporting-level
+	error_reporting( $linklift_saved_reporting_level );
+	
+	
+	return $textlink_code;
 } //execute()
 
 
@@ -323,17 +357,18 @@ function ll_call_str_function_encoding_dependent( $string_function, $param_arr )
  * @return $request string the HTTP-request to be written to the server-socket-connection that is tried to be established with the given $server_host.
  * @return string the data received from the $server_host after writing the given $request to the opened server-socket-connection, or false if an error occurred.
  */
-function get_page_content( $server_host, $request )
+function get_page_content( $server_host, $request, $data_timeout = LL_DATA_TIMEOUT )
 {
-	if ($server = fsockopen($server_host, 80, $errno, $errstr, LL_DATA_TIMEOUT))
+	if (   ($server = fsockopen($server_host, 80, $errno, $errstr, $data_timeout))
+		&& (is_resource( $server ))   )
 	{
 		if (function_exists("stream_set_blocking"))
 			stream_set_blocking($server, false);
 		
 		if (function_exists("stream_set_timeout"))
-			stream_set_timeout( $server, LL_DATA_TIMEOUT );
+			stream_set_timeout( $server, $data_timeout );
 		else
-			socket_set_timeout( $server, LL_DATA_TIMEOUT );
+			socket_set_timeout( $server, $data_timeout );
 		
 		
 		$connection_start_time = time();
@@ -359,7 +394,7 @@ function get_page_content( $server_host, $request )
 			{
 				// if no data was received and the the data-timout was reached
 					// the download-process will be stopped.
-				if (LL_DATA_TIMEOUT < time() - $connection_start_time)
+				if ($data_timeout < time() - $connection_start_time)
 				{
 					$data = "";
 					break;
@@ -386,6 +421,109 @@ function get_page_content( $server_host, $request )
 		return false;
 	} //if-else
 } //get_page_content()
+
+/**
+ * Downloads the current-plugin-info for the installed plugin from the LinkLift-server.
+ * The method will return an associative array of plugin_data containing (at least) the following fields:
+ * - plugin-version:	the current plugin-version of the delivered plugin-language on the LinkLift-server
+ * - plugin-date:		the rlease-date of the current plugin-version
+ * - plugin-language:	the plugin-language of the plugin-version
+ * 
+ * class-method ("static")
+ * 
+ * @author akniep (Andreas Rayo Kniep)
+ * @since 2008-02-16
+ * @return $cms_info string additional CMS-info to be sent to the LinkLift-server; usually this contains the version of the CMS this plugin is used in; default: "".
+ * @return array, associative array of plugin-data, see above for more information  <OR>  false if an error occurred.
+ */
+function ll_get_current_plugin_info( $cms_info = "" )
+{
+	$server_host = LL_SERVER_HOST;
+	
+	
+	$linklift_website_key	= urlencode(LL_WEBSITE_KEY);
+	$linklift_secret		= urlencode(LL_PLUGIN_SECRET);
+	$linklift_method		= urlencode("current_plugin_version");
+	$cms_info_encoded		= urlencode($cms_info);
+	
+	$request =   "GET /external/external_info.php5"
+				. "?website_key"				. "=" . $linklift_website_key
+				. "&linklift_secret"			. "=" . $linklift_secret
+				. "&method"					. "=" . $linklift_method
+				. "&plugin_language"			. "=" . urlencode(LL_PLUGIN_LANGUAGE)
+				. "&plugin_version"			. "=" . urlencode(LL_PLUGIN_VERSION)
+				. "&plugin_date"				. "=" . urlencode(LL_PLUGIN_DATE)
+				. "&cms_info"					. "=" . $cms_info_encoded
+				. " "
+				
+				. "HTTP/1.0\n"
+				. "Host: " . $server_host . "\n"
+				. "Connection: Close\n"
+				. "\n"
+				
+				. "";
+	
+	
+	$plugin_info_raw = serendipity_plugin_causefollow::get_page_content( $server_host, $request );
+	
+	
+	if (empty($plugin_info_raw))
+		return false;
+	
+	
+	
+	
+	// splits the received page in header and content
+	$file_parts			= preg_split( $pattern = '@\r?\n\r?\n@', $subject = $plugin_info_raw, $limit = 2 );
+	
+	$body				=& $file_parts[1];
+	
+	// every line of the page's body is expected to contain one information
+	$plugin_info_lines	= preg_split( $pattern = '@\r?\n@', $subject = $body );
+	
+	// every valid information is put into an associative array $plugin_info
+	$plug_info 			= array();
+	foreach ($plugin_info_lines as $line)
+	{
+		$line_parts		= explode( ":", $line, $limit = 2 );
+		
+		if (2 === count($line_parts))
+			$plug_info[ $line_parts[0] ] = $line_parts[1];
+	} //foreach($line)
+	
+	
+	
+	return $plug_info;
+} //ll_get_current_plugin_info()
+
+/**
+ * Returns a URL that this plugin can be updated with.
+ * 
+ * class-method ("static")
+ * 
+ * @author akniep (Andreas Rayo Kniep)
+ * @since 2008-02-16
+ * @return string the URL to call in order to update this plugin
+ */
+function ll_get_update_plugin_url()
+{
+	$linklift_website_key	= urlencode(LL_WEBSITE_KEY);
+	$linklift_secret		= urlencode(LL_PLUGIN_SECRET);
+	$linklift_method		= urlencode("current_plugin_download");
+	
+	$request =    LL_SERVER_URL
+				. "/external/external_info.php5"
+				. "?website_key"				. "=" . $linklift_website_key
+				. "&linklift_secret"			. "=" . $linklift_secret
+				. "&method"					. "=" . $linklift_method
+				. "&plugin_language"			. "=" . urlencode(LL_PLUGIN_LANGUAGE)
+				. "&plugin_version"			. "=" . urlencode(LL_PLUGIN_VERSION)
+				
+				. "";
+	
+	
+	return $request;
+} //ll_get_update_plugin_url()
 
 /**
  * The method returns the server's very own 404-page including the page's headers as string!
@@ -734,7 +872,7 @@ function getXmlCache()
  * @since 2007-12-17
  * @return string, the object's current state as string
  */
-function toString()
+function __toString()
 {
 	$seperator		= " / ";
 	
@@ -753,7 +891,7 @@ function toString()
 	$return_str		= implode($seperator, $return_array);
 	
 	return $return_str;
-} //toString()
+} //__toString()
 
 
 /**
@@ -768,18 +906,22 @@ function toString()
  */
 function ll_retrieve_xml_from_ll_server()
 {
-	$server_host = "www.linklift.de";
+	$server_host = LL_SERVER_HOST;
 	
 	
-	$linklift_website_key = $this->getWebsiteKey();
+	$linklift_website_key	= urlencode($this->getWebsiteKey());
+	$linklift_secret		= urlencode(LL_PLUGIN_SECRET);
 	
 	$request =   "GET /external/textlink_data.php5"
 				. "?website_key"				. "=" . $linklift_website_key
-				. "&plugin_language"			. "=" . $this->plugin_language
-				. "&plugin_version"			. "=" . $this->plugin_version
+				. "&linklift_secret"			. "=" . $linklift_secret
+				. "&plugin_language"			. "=" . urlencode($this->plugin_language)
+				. "&plugin_version"			. "=" . urlencode($this->plugin_version)
+				. "&plugin_date"				. "=" . urlencode($this->plugin_date)
+				. "&plugin_creation_date"		. "=" . urlencode($this->plugin_creation_date)
 				. "&http_request_uri"			. "=" . ( (isset($_SERVER["REQUEST_URI"])    ) ? (urlencode($_SERVER["REQUEST_URI"])    ) : ("") )
 				. "&http_user_agent"			. "=" . ( (isset($_SERVER["HTTP_USER_AGENT"])) ? (urlencode($_SERVER["HTTP_USER_AGENT"])) : ("") )
-				. "&linklift_title"			. "="
+				. "&linklift_title"			. "=" . urlencode("")
 				. "&condition_no_css"			. "=" . ( (true) ? ("1") : ("0") )
 				. "&condition_no_html_tags"	. "=" . ( (true) ? ("1") : ("0") )
 				. " "
@@ -953,7 +1095,7 @@ function ll_write_xml_to_file_system( $xml = "" )
  * The method generates a textlink-array like the one created by ll_retrieve_textlink_data_from_xml() out of LinkLift's XML-feed.
  * If no debug-mode is active the generated array will be empty, otherwise, contain a textlink depending on the current debug-mode.
  * The method is invoked by ll_textlink_code().
- *
+ * 
  * @author akniep (Andreas Rayo Kniep)
  * @since 2007-12-17
  * @return array associative array containing textlinks that can be displayed within the generated HTML-code
@@ -982,19 +1124,23 @@ function get_debug_links()
 				$debug_links[] = array("text" => "30 Chars TextLink text - &#228;&#223;&#263;&#322;&#261;", "url" => "http://www.linklift.com/", "prefix" => "", "postfix" => "");
 				break;
 			
+			
 			case (2):
-				$debug_links[] = array("text" => "<!--" . $this->toString() . "-->", "url" => "http://www.linklift.com/somefolder/someSecondFolder/some-third-folder/someFile.php?somequery=1&someQuery=value&some-query=true&", "prefix" => "", "postfix" => "");
+				$debug_links[] = array("text" => "<!--" . $this->__toString() . "-->", "url" => "http://www.linklift.com/somefolder/someSecondFolder/some-third-folder/someFile.php?somequery=1&someQuery=value&some-query=true&", "prefix" => "", "postfix" => "");
 				break;
+			
 			
 			case (3):
 				$debug_links[] = array("text" => "<!--" . $this->getXmlCache() . "-->", "url" => "http://www.linklift.com/", "prefix" => "", "postfix" => "");
 				break;
+			
 			
 			case (4):
 				$external_array = array(  "LL_WEBSITE_KEY"
 										, "LL_PLUGIN_LANGUAGE"
 										, "LL_PLUGIN_VERSION"
 										, "LL_PLUGIN_DATE"
+										, "LL_PLUGIN_CREATION_DATE"
 										, "LL_PLUGIN_SECRET"
 										, "LL_DATA_TIMEOUT"
 										);
@@ -1006,9 +1152,12 @@ function get_debug_links()
 				$debug_links[] = array("text" => "<!--" . $external_data . "-->", "url" => "http://www.linklift.com/", "prefix" => "", "postfix" => "");
 				break;
 			
+			
 			case (10):
 				$debug_links[] = array("text" => "<!--" . __FILE__ . "-->", "url" => "http://www.linklift.com/", "prefix" => "", "postfix" => "");
 				break;
+			
+			
 			
 			
 			
@@ -1151,26 +1300,14 @@ function ll_textlink_code( $return = false )
 	
 	$styles_li[] = 'width:' . floor(100 / $number_of_links_per_row -1) . '%;';
 	
-	$styles_ul[] = "margin-right:0px;";
-	$styles_ul[] = "overflow:hidden;";
-	$styles_ul[] = "padding:0px;";
-	$styles_ul[] = "margin-top:0px;";
-	$styles_ul[] = "border:0px none #FFFFFF;";
-	$styles_ul[] = "width:100%;";
-	$styles_ul[] = "margin-bottom:0px;";
-	$styles_ul[] = "list-style:none;";
-	$styles_ul[] = "border-spacing:0px;";
 	$styles_ul[] = "background-color:;";
+	$styles_ul[] = "border:0px none #FFFFFF;";
 	
 	
-	$styles_li[] = "float:left;";
-	$styles_li[] = "clear:none;";
-	$styles_li[] = "display:inline;";
 	
 	
-	$styles_a[] = "color:;";
-	$styles_a[] = "line-height:140%;";
 	$styles_a[] = "font-size:12px;";
+	$styles_a[] = "color:;";
 	
 	
 	
@@ -1223,7 +1360,7 @@ function ll_textlink_code( $return = false )
 	
 	// --- HTML --------------------------------------------------
 	$line_break		= "\n";
-	$indentation	= "";
+	$indentation	= "\t";
 	
 	$output 		= $line_break
 					. $indentation
@@ -1257,7 +1394,7 @@ function ll_textlink_code( $return = false )
 	
 	
 	// usually, the generated HTML-content is written to standard-out
-		// but, you may choose that the method returns the code
+		// however, you may choose that the method returns the code
 	if ($return)
 		return $output;
 	else
@@ -1280,7 +1417,7 @@ function introspect( &$propbag )
 	global $serendipity;
 	
 	$propbag->add("name",			"LinkLift" );
-	$propbag->add("version",		1.4 );
+	$propbag->add("version",		1.5 );
 	$propbag->add("description",	LINKLIFT_PLUGIN_DESCRIPTION );
 	$propbag->add("author",			"Andreas Rayo Kniep; Benjamin Mateev" );
 	$propbag->add("stackable",		TRUE );
