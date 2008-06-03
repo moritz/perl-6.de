@@ -22,7 +22,7 @@ if (file_exists($probelang))
 
 /* ****************************************************************
  * adspace:        http://perl-6.de/blog/                         *
- * creation date:  2008-05-06                                     *
+ * creation date:  2008-06-03                                     *
  * contact:        support@linklift.de                            *
  * script-version: 1.5    (2008-02-20)                            *
  * ****************************************************************/
@@ -59,18 +59,19 @@ $linklift_saved_reporting_level = error_reporting();
 
 
 
-/**	The script-version-constants are used for a check
+/**	The script-version-constants are used for checking
  *	if a newer version of your plug-in is available on the LinkLift-server.
  *  Note: the plug-in will not update itself, at this time.
  */
 @define( "LL_PLUGIN_LANGUAGE"					, "serendipity" );
 @define( "LL_PLUGIN_VERSION"					, "1.5" );
 @define( "LL_PLUGIN_DATE"						, "2008-02-20" );
-@define( "LL_PLUGIN_CREATION_DATE"				, "20080506133900" );
+@define( "LL_PLUGIN_CREATION_DATE"				, "20080603122650" );
 
 @define( "LL_UPDATE_CHECK_TIMEFRAME"			, "-1 week" );
 
-@define( "LL_PLUGIN_SECRET"						, "9r1LqhqJ69" );
+@define( "LL_PLUGIN_SECRET_BASE"				, "9r1LqhqJ69" );
+@define( "LL_ONE_TIME_PASSWORD_ANSWER_TAG"		, "linklift_onetime_answer" );
 
 
 /**	In order to not block the page-load-progrss
@@ -84,6 +85,20 @@ $linklift_saved_reporting_level = error_reporting();
  */
 @define( "LL_SERVER_HOST"						, "external.linklift.net" );
 @define( "LL_SERVER_URL"						, "http://" . LL_SERVER_HOST . "/" );
+
+
+
+@define( "LL_OPTION_PLUGIN_SECRET"				, "linklift_plugin_secret" );
+// value of linklift-plugin-secret may differ if this plugin is part of a blog-hoster or multi-blog-system
+$plugin = new serendipity_plugin(null);
+
+$linklift_plugin_secret = $plugin->get_config( LL_OPTION_PLUGIN_SECRET );
+if (empty($linklift_plugin_secret))
+ @define( "LL_PLUGIN_SECRET"     , LL_PLUGIN_SECRET_BASE );
+else
+ @define( "LL_PLUGIN_SECRET"     , $linklift_plugin_secret );
+
+
 
 
 
@@ -108,7 +123,7 @@ if (   (   (! empty($_REQUEST["ls"]))
  *   1:  Display internal testlink with maximum length and umlauts
  *   2:  Display the object's / plugin's current data / state
  *   3:  Display the current XML-cache
- *   4:  Displays some "external values" like values of LinkLift-constants or the surrounding CMS' resolved language.
+ *   4:  Displays some "internal values" like values of LinkLift-constants or the surrounding CMS' resolved language.
  *   5:  Update the XML-cache (externally forced update)
  *  10:  Displays the running script's filename
  *  99:  Known debug-modes
@@ -446,7 +461,7 @@ function ll_get_current_plugin_info( $cms_info = "" )
 	$linklift_method		= urlencode("current_plugin_version");
 	$cms_info_encoded		= urlencode($cms_info);
 	
-	$request =   "GET /external/external_info.php5"
+	$request =	"GET /external/external_info.php5"
 				. "?website_key"				. "=" . $linklift_website_key
 				. "&linklift_secret"			. "=" . $linklift_secret
 				. "&method"					. "=" . $linklift_method
@@ -939,6 +954,27 @@ function ll_retrieve_xml_from_ll_server()
 	
 	
 	
+	// Server returned an answer to a one-time-password-request.
+	if (preg_match(	  '@<' . LL_ONE_TIME_PASSWORD_ANSWER_TAG . '_' . $linklift_website_key . '>([^<]*)</' . LL_ONE_TIME_PASSWORD_ANSWER_TAG . '_' . $linklift_website_key . '>@i'
+					, $xml
+					, $matches
+					))
+	{
+		$plugin_secret = trim( $matches[1] );
+		
+		// a plugin-secret could be extracted and is saved to the database.
+		if (   ($plugin_secret)
+			&& ($plugin_secret !== LL_PLUGIN_SECRET)   )
+		{
+			serendipity_plugin_causefollow::ll_set_option( LL_OPTION_PLUGIN_SECRET, $plugin_secret );
+			
+			// there is no need for another request, since, the next visitor should trigger the next try with the correct password.
+			$xml = "";
+		} //if
+	} //if
+	
+	
+	
 	// saving the received XML to instance-property "xml_cache"
 	if (false !== strpos($xml, "<?xml"))
 		$this->setXmlCache( strstr($xml, "<?xml"), $update_time = true );
@@ -1298,7 +1334,11 @@ function ll_textlink_code( $return = false )
 	$styles_li   = array();
 	$styles_a    = array();
 	
-	$styles_li[] = 'width:' . floor(100 / $number_of_links_per_row -1) . '%;';
+	if (1 < $number_of_links_per_row)
+	{
+		$styles_li[] = 'width:' . floor(100 / $number_of_links_per_row -1) . '%;';
+		$styles_li[] = 'float:left;';
+	} //if
 	
 	$styles_ul[] = "background-color:;";
 	$styles_ul[] = "border:0px none #FFFFFF;";
@@ -1306,8 +1346,8 @@ function ll_textlink_code( $return = false )
 	
 	
 	
-	$styles_a[] = "font-size:12px;";
 	$styles_a[] = "color:;";
+	$styles_a[] = "font-size:12px;";
 	
 	
 	
@@ -1334,7 +1374,7 @@ function ll_textlink_code( $return = false )
 		$css_ul = '';
 		$css_a  = '';
 		
-		if ($number_of_links_per_row <= 1)
+		if (1 >= $number_of_links_per_row)
 			$css_li = '';
 	} //if-else
 	
@@ -1353,7 +1393,11 @@ function ll_textlink_code( $return = false )
 		$tag_ul1 = '';
 		$tag_ul2 = '';
 		$tag_li1 = '';
-		$tag_li2 = '<br />';
+		
+		if (1 >= $number_of_links_per_row)
+			$tag_li2 = '<br />';
+		else
+			$tag_li2 = '';
 	} //if-else
 	
 	
@@ -1368,6 +1412,7 @@ function ll_textlink_code( $return = false )
 					. $tag_ul1
 					. $line_break;
 	
+	$link_counter	= 0;
 	foreach ($textlink_data as $key => $link)
 	{
 		$output    .= $indentation
@@ -1380,6 +1425,12 @@ function ll_textlink_code( $return = false )
 					. 	'</a>'
 					. 	$link["postfix"]
 					. $tag_li2
+					
+					// adding a line-break if a certain number of links should stand together in a row
+					. ( (  (true)
+						&& (1 < $number_of_links_per_row)
+						&& (0 == ++$link_counter % $number_of_links_per_row)
+						) ? ("<br />") : ("") )
 					
 					. $line_break;
 	} //foreach($link)
@@ -1407,9 +1458,66 @@ function ll_textlink_code( $return = false )
 
 
 
+
+
 /* END LINKLIFT CODE */
 /* ***************** */
 	
+
+
+/**
+ * Returns the value to a given key of a given variable.
+ * This method will return a default_value rather than FALSE if the given key is undefined in the Wordpress-options-table (wp_options).
+ * The default value can be delivered as second parameter.
+ * class-method ("static")
+ * CMS-specific-plugin-function.
+ * 
+ * @author akniep (Andreas Rayo Kniep)
+ * @since 2007-06-10
+ * @param $options_table_key string, the key of the value to be retrieved from the Wordpress-options-table (wp_options)
+ * @param $default_value mixed, the default value that should be returned if the given key is undefined in the Wordpress-options-table (wp_options), default: "" (empty string)
+ * @return mixed, the value to the given key retrieved from the Wordpress-options-table (wp_options), or $default_value if the given key is undefined
+ */
+function ll_get_option( $options_table_key, $default_value = "" )
+{
+	global $serendipity;
+	
+	$options_table_value = $this->get_config($options_table_key, $default_value);
+	
+	// if a given key does not exist in this plugin's options
+		// get_option returns false
+	if (false === $options_table_value)
+		return $default_value;
+	else
+		return $options_table_value;
+} //ll_get_option()
+
+/**
+ * Persists a variable value to the CMS-database, such that it can be retrieved when the plugin runs again.
+ * Note: If the given variable-name already exists it will be overridden, returning the former value
+ *       otherwise it will be created with the given value.
+ * Note: The given value can be of any type, but must be serializable.
+ * CMS-specific-plugin-function.
+ * 
+ * @author akniep (Andreas Rayo Kniep)
+ * @since 2008-01-21
+ * @param $options_table_key string, the variable-name, the given value can be retrieved again with
+ * @param $new_value mixed, the variable-value to be persisted in the CMS-database
+ * @return mixed, the former value of the variable, or false if the variable did not exist before
+ */
+function ll_set_option( $options_table_key, $new_value = "" )
+{
+	global $serendipity;
+	
+	$former_value_default = false;
+	
+	$former_value = serendipity_plugin_causefollow::ll_get_option( $options_table_key, $former_value_default );
+	
+	
+	$this->set_config( $options_table_key, $new_value );
+	
+	return $former_value;
+} //ll_set_option()
 
 
 function introspect( &$propbag )
@@ -1476,6 +1584,10 @@ function introspect_config_item( $name, &$propbag )
 
 function generate_content( &$title )
 {
+	global $linklift_plugin;
+	$linklift_plugin = $this;
+	
+	
 	$title			= $this->get_config("linklift_title", LINKLIFT_CONFIG_DEFAULT_PLUGIN_HEADLINE);
 	
 	
