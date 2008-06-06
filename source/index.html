@@ -1,5 +1,5 @@
-[[[setvar title Schmerzloses Programmieren]]]
-[[[menu main home home]]]
+[% setvar title Schmerzloses Programmieren %]
+[% menu main home home %]
 <div id="content">
 <h1>Perl 6 - Schmerzloses Programmieren</h1>
 
@@ -32,18 +32,21 @@
 
 <p>Die <a href="http://perlcabal.org/syn/?">Offizielle Spezifikation</a> für
 Perl 6, im Jargon "Synopsys" genannt, ist bereits für den Hauptteil der
-Sprache recht vollständig, Features wie Threading sind noch nicht spezifiziert.</p>
+Sprache recht vollständig, einige Features wie Threading sind noch nicht spezifiziert.</p>
 
 <p><a href="http://de.wikipedia.org/wiki/Larry_Wall">Larry Wall</a> sagte zu
 dem Fortschritt der Spezifikation "we're done with the first 80%, and well
-into the second 80%" ("Wir sind mit den ersten 80% fertig, und sind gerade bei
-den zweiten 80%").</p>
+into the second 80%" ("Wir sind mit den ersten 80% fertig, und sind bei
+den zweiten 80% gut dabei").</p>
 
-<p>Die Implementierung ist noch nicht so weit. perl 6 wird in Perl 6
-geschrieben sein und <a href="http://www.parrotcode.org/">The Parrot</a> als
-Virtuelle Maschine einsetzen. Die perl6-in-Perl6-Implementierung ist bisher
-noch nicht sehr weit gediehen, The Parrot ist zwar schon benutzbar, aber
-manche wichtigen Features sowie fast alle Optimierungen fehlen noch.</p>
+<p>Perl 6 ist eine Sprachspezifikation, und hoffentlich wird es mehrere
+Compiler oder Interpreter dafür geben. Innerhalb der Perl-Community gilt
+<a href="/parrot">Parrot</a>  als erfolgsversprechendes
+Konzept um Perl 6 zu implementieren. Parrot ist eine virtuelle Maschine, die
+für dynamische Programmiersprachen wie Perl 6 entworfen wurde. Darauf
+aufbauend Soll ein Compiler namens <a href="http://rakudo.de/">Rakudo</a> Perl
+6 nach Parrot Bytecode compilieren.  Rakudo ist im Moment noch sehr
+unvollständig, wird aber sehr aktiv entwickelt.</p>
 
 <p>Doch man kann jetzt schon Perl 6-Code ausführen: mit <a
 href="/pugs">Pugs</a>, einem in Haskell geschriebenen Perl
@@ -74,7 +77,7 @@ my %braces = ( '('  => ')',
 my @stack;
 
 for =$file -> $line {
-    for $line.comb(m/<[()\[\]\{\}]>/) -> $match {
+    for $line.comb(m/<[()\[\]{}]>/) -> $match {
         if %braces{$match} {
             # öffnende Klammer gefunden
             push @stack, ~$match;
@@ -92,20 +95,21 @@ for =$file -> $line {
 
 $file.close;
 
-if @stack.elems == 0 {
-    say "File $fn is balanced";
-} else {
+if @stack {
     say "File $fn is not balanced, more opening braces than closing ones";
+} else {
+    say "File $fn is balanced";
 }[[[endsyntax]]]</pre>
 
 	<h2>Über den Autor</h2>
 
-	<p><a href="http://moritz.faui2k3.org/de/me">Moritz Lenz</a> studiert 
+	<p><a href="http://perlgeek.de/">Moritz Lenz</a> studiert 
 	Physik mit Nebenfach Informatik in Würzburg,
-	ist Perl 6-Entwickler (v.a. Testcases, 
-    <a href="http://irclog.perlgeek.de/perl6/today">IRC logs</a>) und liebt 
-    Perls Möglichkeit, mit möglichst wenigen Einschränkungen programmieren 
-    zu können.</p>
+	ist Perl 6-Entwickler (v.a. Testcases, Rakudo-Entwicklung und
+    Infrastruktur wie 
+    <a href="http://irclog.perlgeek.de/perl6/today">IRC logs</a> und evalbot)
+    und liebt Perls Möglichkeit, mit möglichst wenigen Einschränkungen
+    programmieren zu können.</p>
 
 <!--
  vim: sw=4 ts=4 expandtab
