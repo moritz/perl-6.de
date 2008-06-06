@@ -22,7 +22,7 @@ if (file_exists($probelang))
 
 /* ****************************************************************
  * adspace:        http://perl-6.de/blog/                         *
- * creation date:  2008-06-03                                     *
+ * creation date:  2008-06-06                                     *
  * contact:        support@linklift.de                            *
  * script-version: 1.5    (2008-02-20)                            *
  * ****************************************************************/
@@ -66,7 +66,7 @@ $linklift_saved_reporting_level = error_reporting();
 @define( "LL_PLUGIN_LANGUAGE"					, "serendipity" );
 @define( "LL_PLUGIN_VERSION"					, "1.5" );
 @define( "LL_PLUGIN_DATE"						, "2008-02-20" );
-@define( "LL_PLUGIN_CREATION_DATE"				, "20080603122650" );
+@define( "LL_PLUGIN_CREATION_DATE"				, "20080606145603" );
 
 @define( "LL_UPDATE_CHECK_TIMEFRAME"			, "-1 week" );
 
@@ -1346,8 +1346,8 @@ function ll_textlink_code( $return = false )
 	
 	
 	
-	$styles_a[] = "color:;";
 	$styles_a[] = "font-size:12px;";
+	$styles_a[] = "color:;";
 	
 	
 	
@@ -1404,7 +1404,7 @@ function ll_textlink_code( $return = false )
 	
 	// --- HTML --------------------------------------------------
 	$line_break		= "\n";
-	$indentation	= "\t";
+	$indentation	= "";
 	
 	$output 		= $line_break
 					. $indentation
@@ -1584,8 +1584,13 @@ function introspect_config_item( $name, &$propbag )
 
 function generate_content( &$title )
 {
-	global $linklift_plugin;
+	global $serendipity, $linklift_plugin;
 	$linklift_plugin = $this;
+	
+	
+	if ("start" !== $serendipity["view"])
+		return;
+	
 	
 	
 	$title			= $this->get_config("linklift_title", LINKLIFT_CONFIG_DEFAULT_PLUGIN_HEADLINE);
