@@ -33,17 +33,25 @@ class Foo {
 
 <pre>[[[syntax perl6]]]
 class Rechteck {
-	has $breite;
-	has $hoehe;
+	has $.breite;
+	has $.hoehe;
 
 	method flaeche {
-		return $breite * $hoehe;
+		return $.breite * $.hoehe;
 	}
-}[[[endsyntax]]]</pre>
+}
 
-	<p>Wenn Objektvariablen von außen lesbar sein sollen, kann man sie mit
-	der Schreibweise <code>has $.foo</code> lesbar machen, wenn man sie
-	von außen auch setzen können soll hilft ein <code>is rw</code>:</p>
+my $r = Rechteck.new(:hoehe(5), :breite(3));
+
+say $r.hoehe;
+say $r.flaeche;
+
+[[[endsyntax]]]</pre>
+
+<p>Der Punkt hinter dem Dollarzeichen bedeutet dabei, dass die Objektvariablen
+(auch Attribute genannt) von aussen sichtbar sind. Sie können allerdings von
+ausserhalb der Klasse nicht verändert werden. Wenn man das gerne erlauben
+möchte, hilft das <code>is rw</code> trait:</p>
 
 <pre>[[[syntax perl6]]]
 class Rechteck {
@@ -59,39 +67,32 @@ $r.breite = 2;
 $r.hoehe = 5;
 say $r.flaeche();
 [[[endsyntax]]]</pre>
-	<p>Das ist natürlich noch nicht besonders schön. Angenommen, man
-	möchte <code>$.breite</code> und <code>$.hoehe</code> beim erstellen
-	eines Objekts initialisieren, und danach nicht mehr ändern können.
-	Dann verwendet man den Konstruktur <code>BUILD</code>:</p>
-
-<pre>[[[syntax perl6]]]
-class Rechteck {
-	has $.breite;
-	has $.hoehe;
-
-	submethod BUILD ($.breite, $.hoehe) {}
-
-	method flaeche {
-		return $.breite * $.hoehe;
-	}
-}
-my Rechteck $r = Rechteck.new(breite => 2, hoehe => 5);
-say $r.flaeche();
-[[[endsyntax]]]</pre>
-
-	<p><code>BUILD</code> bringt einen automatischen Konstruktor mit, der
-	die beiden Variablen <code>$.breite</code> und <code>$.hoehe</code> im
-	erstellen Objekt initialisiert. Die Verwendung von
-	<code>submethod</code> anstelle von <code>method</code> verhindert,
-	dass der Konstruktor automatisch vererbt wird.</p>
-
-	<p>Wenn <code>BUILD</code> nichts außer der impliziten Zuweisung von
-	Objektvariablen macht, kann man die Methode auch weglassen.</p>
 
 	<p>Man kann Variablen auch als explizit privat deklarieren indem man
 	ihenen ein Ausrufezeichen als Twigl mitgibt, also <code>has
 	$!foo;</code>. Methoden kann man privat machen, indem man sie als
 	<code>my method private_methode { ... }</code> deklariert.</p>
+
+    <p>Bei beidem braucht man auch eigene eigene Syntax um auf auf darauf
+    zuzugreifen:</p>
+
+<pre>[% syntax perl6 %]
+class Auto {
+    has $!motor;
+    has $!gang;
+
+    my method gang_wechseln ($differenz) {
+        $!gang += $differenz;
+    }
+    ...
+
+
+    method beschleunigen {
+        self!gang_wechseln(-1);
+        # hier gas geben
+        self!gang_wechseln(+1);
+    }
+}[% endsyntax %]</pre>
 
 
 	<h2>Vererbung</h2>
