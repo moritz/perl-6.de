@@ -1,0 +1,207 @@
+[% menu main tut erweiterung %]
+[% setvar title Spracherweiterungen %]
+
+<div id="content">
+<h1>[% readvar title %]</h1>
+
+<p>Die Erfahrung zeigt, dass sich viele konkrete Design-Entscheidungen bei
+der Entwicklung einer Programmiersprache irgendwann in irgend einer Form
+als falsch herausstellen.</p>
+
+<p>Deshalb wurde Perl 6 so entwickelt, dass möglichst vieles möglichst leicht
+änderbar ist und auch erweiterbar ist.</p>
+
+<p>Hier werden einige Möglichkeiten vorgestellt, wie man Perl 6 
+verändern und erweiterns kann.</p>
+
+<h2 id="neue-operatoren">Neue Operatoren</h2>
+
+<p>Operatoren sind in Perl 6 nur Funtkionen mit komischen Namen. In dem
+Ausdruck <code>1 + 2</code> steht das <code>+</code> für
+<code>infix:&lt;+&gt;</code>.</p>
+
+<p>Im Allgemeinen hat ein Operator einen Typ (im obigen Beispiel 
+<code>infix</code>), ein Symbol (<code>+</code>), einen Vorrang (Englisch
+precedence), eine Assoziativität und eine Signatur.</p>
+
+<h3>Operatortypen</h3>
+
+<p>Perl 6 kennt folgende Operatortypen:</p>
+
+<pre>[%syntax escape %]
+Name            Beispiel    Beschreibung
+
+infix           1 + 2       steht zwischen zwei Ausdrücken
+postfix         $a++        steht hinter einem Ausdruck
+prefix          +3          steht vor einem Ausdruck
+circumfix       <a b c>     umschliesst einen Ausdruck
+postcircumfix   uc($str)    steht hinter einem Ausdruck und um-
+                            schliesst einen weiteren Ausdruck
+[% endsyntax %]</pre>
+
+<p>Zwischen einem Ausdruck und dem entpsrechenden postfix- prefix- oder
+postcircumfix-Operator darf kein Leerzeichen stehen.</p>
+
+<p>Die ersten vier Operatoren sind immer subs, postcircumfix-Operatoren sind
+Methoden (d.h. gehören zu einer Klasse).</p>
+
+<h3>Symbole</h3>
+
+<p>Symbole für Operatoren sind nicht auf Sonderzeichen beschränkt, und auch
+die Länge ist nicht beschränkt. So könnte man sich einen Operator mit Namen
+<code>kaffee</code> definieren (was aber nicht besonders sinnvoll wäre).</p>
+
+<p>Beim Parsen gilt das sogenannte "Longest Token Matching", d.h. wenn an
+einer Stelle mehrere Operatoren passen, wird der längste gewählt. Deshalb wird
+<code>++$a</code> als <code>prefix:'++'($a)</code> geparst und nicht als
+<code>prefix:'+'(prefix:'+'($a))</code>.</p>
+
+<h3>Operatorvorrang</h3>
+
+<p>Operatorvorrang entscheidet, wie "gierig" ein Operator ist, und in welcher
+Reihenfolge Operatoren ausgeführt werden.</p>
+
+<p>In dem Ausdruck <code>1 + 2 * 3</code> wird erst das <code>2 * 3</code>
+ausgeführt, danach wird 1 addiert, weil <code>infix:'*'</code> einen höheren
+Vorrang als <code>infix:'+'</code> hat.</p>
+
+<p>Wenn man neue Operatoren definiert, kann man ihnen eine bestimmten Vorrang
+mitgeben. Dieser wird relativ zu bisherigen Operatoren angegeben.</p>
+
+<pre>[% syntax perl6 %]
+multi sub postfix:<!> is equiv(&postfix:<++>) (Int $a) {
+    return [*] 1..$a;
+}
+[% endsyntax %]</pre>
+
+<p>Mit <code>is equiv</code> gibt man an, dass der neue Operator den gleichen
+Vorrang (und die gleiche Assoziativität) wie der danach genannte Operator
+haben soll. Alternativen sind <code>is tighter</code> und <code>is
+looser</code>, die jeweils neue Vorrangebenen einführen.</p>
+
+<h3>Assoziativität</h3>
+
+<p>Die Assoziatitvität eines Infixoperators bestimmt, wie ein Konstrukt aus
+mehreren Operatoren mit der gleichen Vorrangebene gehandhabt wird.</p>
+
+<p>Wenn man z.B. <code>1 op 2 op 3</code> hat, und <code>op</code>
+links-assoziativ ist, wird das ganze genauso wie <code>(1 op 2) op 3</code>
+gehandhabt. Wenn die Assoziativität allerdings Rechts ist, wird das Beispiel
+als <code>1 op (2 op 3)</code> verstanden. Ein Beispiel, wo das einen
+Unterschied macht, ist die Division. <code>1 / (2 / 2) == 1</code>, während
+<code>(1 / 2) / 2 == 1/4</code> ist.</p>
+
+<p>Neben den gerade vorgstellten Assozitivitäten <code>left</code> (links) und
+<code>right</code> (rechts) gibt es auch noch <code>non</code> (keine
+Assoziativität; damit wäre das Beispiel <code>1 op 2 op 3</code> ein
+Syntaxfehler), <code>chain</code> (was "chained comparisons" wie in
+<code>[% syntax perl6 %]if 0 <= $angle < 2 * pi { ... }[%endsyntax%]</code> erlaubt)
+und <code>list</code> (wie es z.B. der Komma-Operator zum konstruieren von
+Listen hat).</p>
+
+<p>Ist die Assoziativität eines Operators nicht angegeben, wird
+Linksassoziativität angenommen, ausser wenn der Vorrang mit <code>is
+equiv</code> spezifiert wurde; dann wird die Assoziativität des als äquivalent
+angegeben Operators übernommen.</p>
+
+<h3>Signatur</h3>
+
+<p>Die Signatur einer Funktion, einer Methode oder eines Operators gibt an,
+wie viele Argumente sie oder er bekommt, und optional zu welchen Typs sie
+sind.</p>
+
+<p>Dabei gilt, dass Pre- und und Postfixoperatoren immer ein Argument
+bekommen, Infixoperatoren der Assoziativitäten <code>left, right, non,
+chain</code> zwei Argument und Infix-Operatoren der Assozitivität
+<code>list</code> sowei Circumfix- und Postcircumfixoperatoren Listen 
+erhalten.  Postfixoperatoren bekommen ausserdem noch den Ausdruck auf der
+linken Seite als <code>self</code> übergeben.</p>
+
+<p>Mit den Typangaben kann man, in Verbindung mit Multi Dispatch,
+Verfeinerungen bestehender Operatoren definieren. Wenn man zum Beispiel eine
+eigene Subklasse von <code>Str</code> schreibt, kann man sich die
+String-Konkatenation für Objekte dieser Klasse überschreiben:</p>
+
+<pre>[% syntax perl6 %]
+class MyStr is Str {
+    multi sub *infix:<~>(MyStr $a, Str $b) { ... }
+    multi sub *infix:<~>(Str $a, MyStr $b) { ... }
+
+    # oder als eine Subroutine mit zwei möglichen 
+    # Signaturen geschrieben:
+    multi sub *infix:<~>(MyStr $a, Str $b)|(Str $a, MyStr $b) { ... }
+
+}
+[% endsyntax %]</pre>
+
+<h3>Scoping</h3>
+
+<p>Per Default sind neue Operatoren nur in dem lexikalischen Scope gültig, in
+dem sie definiert wurden. Um sie global zu Verfügung zu stellen, kann man
+ihrem Namen vorne ein Stern <code>*</code> anhängen.</p>
+
+<h3>Zusammenfassung</h3>
+
+<p>Mit den hier vorgestellten Techniken hat man volle Kontrolle über neue
+Operatoren, und kann alte verändern. Tatsächlich benutzen alle in Perl 6
+eingebaute Operatoren auch diese Techniken, um ihr Verhalten zu
+definieren.</p>
+
+<p>Für viele neue Operatoren sollte es jedoch reichen, die Vorrangebene
+anzugeben.</p>
+
+<p>Ein Wort der Warnung ist noch angebracht: neue Operatoren sollten spärlich
+verwendet werden, und sollten wohl durchdacht sein. Auch muss man vorher den
+bisherigen Sprachumfang von Perl 6 gut kennen, um keine schwer lesbaren oder
+unerwarteten Effekte durch das versehentliche Recyclen bestehender Operatoren
+oder syntaktischer Elemente zu erzeugen.</p>
+
+
+<h2 id="macros">Macros</h2>
+
+<p>Während neue Operatoren die Syntax nur ein Stückchen verändern, kann mit
+Macros deutlich stärker eingreifen (und, wenn man es falsch macht, auch mehr
+kaputt machen).</p>
+
+<p>Im einfachsten Fall sind Macros Textersetzungen, die während der
+syntaktischen Analyse des Quellcodes durchgeführt werden.</p>
+
+<p>Wer zum Beispiel die interpolierende Form von <code>qx/.../</code>
+(Ausführen eines externen Kommandos und zurückgeben der Ausgabe) von Perl 5
+vermisst, und zu faul ist <code>qq:x/.../</code> anstattdessen zu schreiben,
+kann sich zwei Buchstaben sparen, indem er ein Macro dafür definiert:</p>
+
+<pre>[%verbatim macro %]
+macro qx { 'qq:x ' }
+my $result = qx/ls $dir|grep pl\$/;
+[% endverbatim macro %]</pre>
+
+<p>Das führt erst eine Textersetzung durch, und parst dann das Ergebnis dieser
+Textersetzung als ganz normalen Perl 6 Quellcode.</p>
+
+<h3>is parsed</h3>
+
+<p>Macros können die <code>is parsed</code>-Eigenschaft haben, die angibt,
+welche Regex oder Funktion den Text erkennt, der von einem Macro gematcht
+wird.</p>
+
+<p>Auf diese Art kann man zum Beispiel HTML-Kommentare in Perl 6 verfügbar
+machen:</p>
+
+<pre>[%syntax escape %]
+macro circumfix:« <!-- --> » is parsed rx/ .*? / { '' }
+
+say 2 + 3; <!-- Ergebnis: 5 -->
+[% endsyntax %]</pre>
+
+<p>Hier wird ein Circumfix-Operator definiert, der mit <code>&lt;!--</code>
+beginnt und mit <code>--&gt;</code> endet. Alles dazwischen wird von der regex
+<code>.*?</code> geparst, d.h. dort wird kein Perl 6-Code erwartet, sondern
+nur noch das, was diese Regex matcht.</p>
+
+<p>Das Ergebnis ist in diesem Fall der leere String, da Kommentare keine
+Funktion im Programmcode übernehmen.</p>
+
+[% comment
+    vim: expandtab sw=4 ts=4 ft=html
+%]

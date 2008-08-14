@@ -1,0 +1,68 @@
+[% menu main home weitere %]
+[% setvar title Weitere Perl 6-Projekte %]
+<div id="content">
+
+<h1>[% readvar title %]</h1>
+
+
+<p>Es gibt eine ganze Menge von Projekten, die entweder Perl 6 implementieren
+wollen, einen Teil der Infrastruktur stellen, dokumentieren wollen oder auf
+andere Art mit Perl 6 zu tun haben.</p>
+
+<h2>Parser und Compiler</h2>
+
+<h3>STD.pm - Parser für Perl 6 in Perl 6</h3>
+
+<p>Larry Wall hat mit <a
+href="http://svn.pugscode.org/pugs/src/perl6/STD.pm">STD.pm</a> eine Grammatik
+für Perl 6 in Perl 6 geschrieben. Um diese Grammatik ausführen zu können hat
+er ausserdem einige Perl 5-Programme geschrieben, die daraus ein Perl
+5-Programm erstellen und ausführen.</p>
+
+<p>Das ist der erste so gut wie vollständige Parser für Perl 6, der alle
+bisher geschriebenen Testdateien parsen kann. Das Einzige, was STD.pm bisher
+nicht verarbeiten kann sind Perl 6-Programme, die ihre eigenen Operatoren
+definieren. Larry areitet aber auch daran.</p>
+
+<h3>Elf und Pixie</h3>
+
+<p>Mitchell Charity hat "elf" gestarrtet, einen in Perl 6 geschriebenen
+Compiler, der STD.pm verwendet. Allerdings benutzt es STD.pm nicht direkt,
+sondern eine per Hand nach Ruby übersetzte Variante von STD.pm (da zu der
+Zeit, als elf geschrieben wurde, STD.pm noch von nichts geparsed werden
+konnte).</p>
+
+<p>Paweł Murias hat eine Variante von elf geschrieben, die STD.pm direkt über
+dessen Perl 5-Übersetzung benutzt, un ddiesen Compiler "pixie" genannt. Pixie
+wird zur Zeit nicht mehr aktiv weiterentwickelt.</p>
+
+<h3>Smop</h3>
+
+<p>Daniel Ruoso hat <a
+href="http://www.perlfoundation.org/perl6/index.cgi?smop">smop</a> gestartet.
+Der Name steht für "Simple Meta Object Programming". Das ist eine in
+C geschriebene Runtime-Bibliothek, die das Objektsystem von Perl 6
+implementiert. Da das vorsieht, dass Objekte verschiedene
+Low-Level-Representation haben kann, und dass das standard-Objektsystem durch
+andere ersetzt werden kann, ist das gar nicht so einfach.</p>
+
+<p>Der nächste Schritt wird, sein, das ganze als Backend für einen bestehenden
+Compiler zu verwenden.</p>
+
+<h2>Dokumentation</h2>
+
+<p>Conrad Schneiker betreibt das <a
+href="http://www.perlfoundation.org/perl6/index.cgi?">offizielle Perl
+6-Wiki</a>, das vor allen für Anwender gedacht ist. Er hat außerdem demjenigen
+eintausend US-Dollar versprochen, der ein gut funktionierendes Wiki-System in
+Perl 6 schreibt.</p>
+
+<p>Moritz Lenz hat "perlhints" begonnen, ein Projekt, das für jedes
+syntaktische Feature von Perl 6 ein kleines Stückchen Dokumentation und ein
+Beispiel sammelt. Ziel ist es, ein Programm zu haben, in das man ein Stückchen
+eines Perl 6-Programms hineinschiebt, und das jedes einzelne Element dieses
+Programms erklärt. Da es ziemlich viele Sprachfeatures und Operatoren gibt,
+ist die Dokumentation noch ziemlich unvollständig. Auch die Integration in
+einen Parser fehlt noch.</p>
+
+
