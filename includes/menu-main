@@ -1,30 +1,30 @@
 <div id="mainmenu">
     <ul>
-        [% item home <li><a {{class="current"}} href="/">Perl 6</a></li> %]
-        [% item blog <li><a {{class="current"}} href="/blog/">Blog</a></li> %]
-        [% item tut <li><a{{ class="current"}} href="/tutorials/">Tutorials</a></li> %]
-        [% item links <li><a {{class="current"}} href="/links/">Links</a></li> %]
+        [% item home  <li><a{{ class="current"}} href="/">Perl 6</a></li>              %]
+        [% item blog  <li><a{{ class="current"}} href="/blog/">Blog</a></li>           %]
+        [% item tut   <li><a{{ class="current"}} href="/tutorials/">Tutorials</a></li> %]
+        [% item links <li><a{{ class="current"}} href="/links/">Links</a></li>         %]
     </ul>
 </div>
 <div id="wrap">
 
-[[[item home {{
+[% item home {{
     <div id="leftside">
     <ul>
-    [[[item home <li><a href="/" class="nav{{ active}}">Home</a></li>]]]
-    [[[item prinzipien <li><a href="/prinzipien" class="nav{{ active}}">Prinzipien</a></li>]]]
+    [% item home       <li><a href="/"           class="nav{{ active}}">Home</a></li>       %]
+    [% item prinzipien <li><a href="/prinzipien" class="nav{{ active}}">Prinzipien</a></li> %]
     </ul>
     <h1 style="margin-top:2ex">Perl 6 Projekte</h1>
     <ul>
-        [[[item pugs <li><a href="/pugs" class="nav{{ active}}">Pugs</a></li>]]]
-        [[[item parrot <li><a href="/parrot" class="nav{{ active}}">Parrot</a></li>]]]
-        [[[item pge <li><a href="/parrot-grammar-engine" class="nav{{ active}}">Parrot Grammar Engine</a></li>]]]
-        [[[item kp6 <li><a href="/kp6" class="nav{{ active}}">KindaPerl6</a></li>]]]
-        [% item weitere <li><a href="/weitere-projekte" class="nav{{ active}}">Weitere Projekte</a></li> %]
+        [% item pugs    <li><a href="/pugs"                  class="nav{{ active}}">Pugs</a></li>                  %]
+        [% item parrot  <li><a href="/parrot"                class="nav{{ active}}">Parrot</a></li>                %]
+        [% item pge     <li><a href="/parrot-grammar-engine" class="nav{{ active}}">Parrot Grammar Engine</a></li> %]
+        [% item kp6     <li><a href="/kp6"                   class="nav{{ active}}">KindaPerl6</a></li>            %]
+        [% item weitere <li><a href="/weitere-projekte"      class="nav{{ active}}">Weitere Projekte</a></li>      %]
     </ul>
     </div>
 
-}}]]]
+}} %]
 
 [[[item tut {{
     <div id="leftside">
@@ -47,16 +47,14 @@
         </ul>
         <h2>Spezielle Themen</h2>
         <ul>
-            [[[item objekt <li><a class="nav{{ active}}"
-            href="/tutorials/objektmodell">Objektmodell</a></li>]]]
-            [[[item kontext <li><a class="nav{{ active}}"
-            href="/tutorials/kontext">Kontext</a></li>]]]
-            [[[item regex <li><a class="nav{{ active}}"
-            href="/tutorials/regex">Regex</a></li>]]]
+            [% item objekt      <li><a class="nav{{ active}}" href="/tutorials/objektmodell">Objektmodell</a></li> %]
+            [% item kontext     <li><a class="nav{{ active}}" href="/tutorials/kontext">Kontext</a></li>           %]
+            [% item regex       <li><a class="nav{{ active}}" href="/tutorials/regex">Regexes und Rules</a></li>   %]
+            [% item erweiterung <li><a class="nav{{ active}}" href="/toturials/spracherweiterungen">Spracherweiterungen</a></li> %]
         </ul>
     </div>
 }}]]]
 
-[[[comment 
-    vim: sw=4 ts=4 expandtab
-]]]
+[% comment 
+    vim: sw=4 ts=4 expandtab tw=0
+%]

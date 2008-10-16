@@ -89,7 +89,9 @@ links-assoziativ ist, wird das ganze genauso wie <code>(1 op 2) op 3</code>
 gehandhabt. Wenn die Assoziativität allerdings Rechts ist, wird das Beispiel
 als <code>1 op (2 op 3)</code> verstanden. Ein Beispiel, wo das einen
 Unterschied macht, ist die Division. <code>1 / (2 / 2) == 1</code>, während
-<code>(1 / 2) / 2 == 1/4</code> ist.</p>
+<code>(1 / 2) / 2 == 1/4</code> ist. Daher ist der Ausdruck <code>1 / 2 /
+2</code> nur dann eindeutig definiert, wenn man die Assozitivität von
+<code>infix:'/'</code> kennt.</p>
 
 <p>Neben den gerade vorgstellten Assozitivitäten <code>left</code> (links) und
 <code>right</code> (rechts) gibt es auch noch <code>non</code> (keine
@@ -110,7 +112,7 @@ angegeben Operators übernommen.</p>
 wie viele Argumente sie oder er bekommt, und optional zu welchen Typs sie
 sind.</p>
 
-<p>Dabei gilt, dass Pre- und und Postfixoperatoren immer ein Argument
+<p>Dabei gilt, dass Pre- und Postfixoperatoren immer ein Argument
 bekommen, Infixoperatoren der Assoziativitäten <code>left, right, non,
 chain</code> zwei Argument und Infix-Operatoren der Assozitivität
 <code>list</code> sowei Circumfix- und Postcircumfixoperatoren Listen 
