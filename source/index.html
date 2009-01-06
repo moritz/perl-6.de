@@ -11,15 +11,16 @@
 
 <p>Perl 6 hat viele tolle Features (oder wird sie haben, wenn es fertig ist):</p>
 <ul>
-    <li><a href="/tutorials/p5/regex">Rules</a>, die Nachfolger von
-    Regular Expressions, erlauben das automatische Parsen ganzer
-    Grammatiken</li>
+    <li><a href="/tutorials/p5/regex">Regexes</a> und Grammatiken, die
+    mächtigen Nachfolger von Regular Expressions, erlauben das automatische
+    Parsen mit kontextfreien Sprachen.</li>
     <li>Ein <a href="/tutorials/objektmodell">ausgefeiltes
-    Objektmodell</a> mit Mehrfachvererbung, Roles und vielem mehr</li>
+    Objektmodell</a> mit Mehrfachvererbung, Rollen, Darstellungspolymorphie
+    und vielem mehr</li>
     <li>Einfache Interaktion mit anderen Programmiersprachen</li>
-    <li>Einfache Handhabung von Unicode-Strings</li>
+    <li>Einfache Handhabung von Unicode-Strings auf Grapheme-Ebene.</li>
     <li>Junctions, also Überlagerung verschiedener Werte in einer
-    Variablen</li>
+    Variablen.</li>
     <li>Einfach zu lernen, da man auch mit einer Teilmenge der Sprache
     schon sehr weit kommt.</li>
     <li>Viele Möglichkeiten, Code gleichzeitig auszuführen: <a 
@@ -45,27 +46,29 @@ Compiler oder Interpreter dafür geben. Innerhalb der Perl-Community gilt
 Konzept um Perl 6 zu implementieren. Parrot ist eine virtuelle Maschine, die
 für dynamische Programmiersprachen wie Perl 6 entworfen wurde. Darauf
 aufbauend Soll ein Compiler namens <a href="http://rakudo.de/">Rakudo</a> Perl
-6 nach Parrot Bytecode compilieren.  Rakudo ist im Moment noch sehr
-unvollständig, wird aber sehr aktiv entwickelt.</p>
+6 nach Parrot Bytecode compilieren. Rakudo ist im Moment noch recht
+unvollständig, aber durchaus benutzbar, und wird sehr aktiv entwickelt.</p>
 
-<p>Doch man kann jetzt schon Perl 6-Code ausführen: mit <a
-href="/pugs">Pugs</a>, einem in Haskell geschriebenen Perl
-6-Interpreter.</p>
+<p><a href="/pugs">Pugs</a>ist ein in Haskell geschriebenen Perl
+6-Compiler, der die am weitesten fortgeschrittene Perl 6-Implementierung ist,
+jedoch liegt die Entwicklung im Moment brach.</p>
 
 <p>Es gibt noch keinen Release-Termin für Perl 6, nur einen Running Gag unter
 den Entwicklern: Perl 6 kommt an Weihnachten heraus, denn wenn es erstmal
 fertig ist ist jeder Tag Weihnachten.</p>
 
 <p>Wenn man doch einmal eine ernst gemeinte Auskunft bekommt, lautet die
-meistens "vermutlich irgendwann nächstes Jahr ... oder später", also 2009 oder
-2010.</p>
+meistens "vermutlich irgendwann nächstes Jahr ... oder später", also 2010 oder
+2011. Von Rakudo wird es dieses Jahr (2009) vermutlich ein "Early Adopter's
+Release" geben, das noch lange nicht feature-complete ist.</p>
 
 
 <h2>Beispiel</h2>
 <p>Das folgende kleine Programm liest eine Datei (hier: sich selbst) ein und
 überprüft, ob die Klammern in diesem Programm balanciert sind, also ob sie
 korrekt verschachtelt sind.</p>
-<pre>[[[syntax perl6]]]use v6;
+<pre>[% syntax perl6 %]
+use v6;
 
 my $fn = $*PROGRAM_NAME;
 
@@ -77,7 +80,7 @@ my %braces = ( '('  => ')',
 my @stack;
 
 for =$file -> $line {
-    for $line.comb(m/<[()\[\]{}]>/) -> $match {
+    for $line.comb(/ <[()\[\]{}]> /) -> $match {
         if %braces{$match} {
             # öffnende Klammer gefunden
             push @stack, ~$match;
@@ -85,8 +88,8 @@ for =$file -> $line {
             # schliessende Klammer gefunden
             my $expected = %braces{@stack.pop};
             if $expected ne $match {
-                die "File '$fn' is not balanced: expected '" ~ 
-                    $expected ~ "', found '$match'\n";
+                die qq{File "$fn" is not balanced: expected "$expected"}, 
+                    qq{got "$match"};
             }
         }
     }
@@ -99,7 +102,7 @@ if @stack {
     say "File $fn is not balanced, more opening braces than closing ones";
 } else {
     say "File $fn is balanced";
-}[[[endsyntax]]]</pre>
+}[% endsyntax %]</pre>
 
 	<h2>Über den Autor</h2>
 

@@ -48,6 +48,10 @@
     eine andere Bedeutung haben können. Das soll größtmögliche Intuitivität
     erlauben.</p>
 
+    <p>Als dynamisch typisierte Programmiersprache mit implizitem
+    Speichermanagement ähnelt Perl eher den klassischen dynamischen
+    Programmiersprachen wie Javascript, Ruby, Python und Lua.</p>
+
     <p>Perls Variablen beginnen mit einem Sonderzeichen, <em>Sigil</em>
     genannt. Diese geben Auskunft über den (groben) Typ der Variable, und
     ermöglichen es, sie in Zeichenketten zu interpolieren.</p>
@@ -77,7 +81,7 @@ say "Die Zahl ist ", $number;
 
     <p>Wie bereits besprochen beginnen alle Veriablen beginnen mit einem 
     <em>Sigil</em>. Ein Dollar <code>$</code> steht dabei
-    für einen sogeannten Skalar, also ein einzelner Wert.</p>
+    für einen sogenannten Skalar, also ein einzelner Wert.</p>
 
     <p>So ein Wert kann eine Zahl sein, ein String, eine Referenz oder ein
     Objekt. Es ist zwar möglich, genauere Typen anzugeben, aber es ist
@@ -90,20 +94,21 @@ say "Die Zahl ist ", $number;
 
     <p>Die letzte Zeile 
     <code>say "Die Zahl ist ", $number;</code> schließlich gibt den
-    String <code>"Die Zahl ist</code> " und danach die Variable
+    String <code>"Die Zahl ist "</code>  und danach die Variable
     <code>$number</code> aus.</p>
 
     <p>Man beachte, dass alle Befehle mit einem Strichpunkt
     <code>;</code> aufhören.</p>
 
     <p>Man kann beliebig viele Leerzeichen in Perl-Programme
-    ausführen, und auch die Befehle über mehrere Zeilen
-    verteilen - nicht das Zeilenende, sondern der Strichpunkt definiert
-    das Ende eines Befehls. Ausnahme davon ist die Regel, dass ein Strichpunkt
-    optional ist, wenn nach einer schliessenden geschweiften Klammer eine neue
-    Zeile anfängt.</p>
+    einfügen, und auch die Befehle über mehrere Zeilen verteilen - nicht
+    das Zeilenende, sondern der Strichpunkt definiert
+    das Ende eines Befehls. Als Ausnahme davon gibt es die Regel, dass ein
+    Strichpunkt optional ist, wenn nach einer schliessenden geschweiften
+    Klammer eine neue Zeile anfängt.</p>
 
-    <p>Kommentare beginnen mit einem Hash <code>#</code>.</p>
+    <p>Kommentare beginnen mit einem Hash <code>#</code> und erstrecken sich
+    bis zum Ende der Zeile.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
     <h2>Variablen</h2>
@@ -113,7 +118,7 @@ say "Die Zahl ist ", $number;
     paar seltener gebrauchte Variablentypen wie z.B. Package-Namen.</p>
 
     <p>Dabei darf es durchaus zwei Variablen mit gleichem Namen aber aber
-    unterschiedlichem sigil geben, ohne dass sie kollidieren.</p>
+    unterschiedlichem Sigil geben, ohne dass sie kollidieren.</p>
 
 <pre>[% syntax perl6 %]
 my @namen = <Helmut Konrad Gerhard Angela>;
@@ -137,6 +142,9 @@ my %namen =
     <p>Viele verschiedene Arten von Werten können in einem Skalar
     gespeichert werden: <code>undef</code>, Zahlen, Strings, und
     Referenzen auf Listen, Hashes und andere Objekete.</p>
+
+    <p><code>undef</code> ist der default-Wert, und steht für "nicht
+    zugewiesen".</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
     <h4>Zahlen</h4>
@@ -164,7 +172,7 @@ my $complex = 3 + 4i;
     <p>Perl 6 kann auch mit komplexen Zahlen rechnen (wer nicht weiß,
     was das ist: diesen Abschnitt einfach ignorieren). Allerdings ist zu
     beachten, dass Perl 6 kein Computer-Algebra-System ist, d.h. es
-    entstehen kleine Fehler beim Rechne.</p>
+    entstehen kleine Fehler beim Rechnen.</p>
 
 <pre>[[[syntax perl6]]]
 say exp(-1i * pi) + 1;
@@ -183,8 +191,8 @@ say exp(-1i * pi) + 1;
     <code>"bla"</code> angeben.</p>
 
     <p>Der Unterschied ist, dass Strings in doppelten
-    Anführungszeichen "interpoliert" werden, d.h. andere Variablen
-    werden durch ihren Wert ersetzt:</p>
+    Anführungszeichen "interpoliert" werden, d.h. Variablennamen, die in dem
+    String auftauchen, werden durch ihren Wert ersetzt:</p>
 
 <pre>[[[syntax perl6]]]
 my $age = 18;
@@ -223,6 +231,7 @@ say $alphabet.substr(2, *-2);  # Alles ausser den ersten beiden und den letzten
 # beiden Zeichen, also `cdefghijklmnopqrstuvwx'
 [[[endsyntax]]]
 </pre>
+
     <p>Das erste Zeichen eines Strings hat den Index 0.</p>
 
     <p>Man kann mit <code>substr</code> auch Text ersetzen:</p>
@@ -238,10 +247,10 @@ say $alphabet;
 
 <pre>[[[syntax perl6]]]
 my $s = "Der weite Weg";
-$s.split; # Ohne Argument spaltet split an Leerzeichen:
+$s.split(' ');
 # ("Der", "weite", "Weg")
 
-$s.split("e"); # mit Argument wird nach dem Argument gespalten:
+$s.split("e");
 # ("D", "r w", "it", " W", "g")
 [[[endsyntax]]]</pre>
 
@@ -294,7 +303,7 @@ my @letters = "a" .. "z", "A" .. "Z"  # ebenso ;-)
 my @a = 'A' .. 'Z';
 say @a[0 .. 4];
 # `ABCDE'
-say @a[0, -1];
+say @a[0, *-1];
 # `AZ'
 
 # In Array Slices kann man auch schreiben:
@@ -335,23 +344,17 @@ say @b.elems;
 # `4'
 [[[endsyntax]]]</pre>
 
-    <p>Um verschachtelte Listen zu bekommen, darf man keine Arrays
-    einfügen, sondern <strong>Captures</strong> (Referenzen) zu Arrays.</p>
-
-    <p>Das erreicht man in Perl durch einen Rückstrich
-    <code>\</code>.</p>
+    <p>Um verschachtelte Listen zu bekommen, kann man mit eckigen Klammern ein
+    nicht-interpolierendes Array-Objekt erzeugen:</p>
 <pre>[[[syntax perl6]]]
 my @a = 1, 2;
-my @b = 0, \@a, 3;
+my @b = 0, [@a], 3;
 say @b.elems;
 # `3'
 
 # oder kürzer:
 @b = 0, [1, 2], 3;
 [[[endsyntax]]]</pre>
-
-    <p>Die Kurzschreibweise für Arrayreferenzen sind eckige
-    Klammern: <code>[1 .. 4]</code>.</p>
 
     <p>Auf verschachtelte Arrays kann man mit mehrfachen eckigen Klammern
     hintereinander zugreifen:</p>
@@ -366,7 +369,7 @@ say @a[0][2];
     <h3>Hashes</h3>
     <p>Hashes oder "Assoziative Listen" funktionieren ähnlich wie
     Arrays, aber man greift mit Strings anstatt mit ganzen Zahlen auf die
-    ELemente zu. Ihr Sigil ist ein Prozent-Zeichen <code>%</code>. In anderen
+    Elemente zu. Ihr Sigil ist ein Prozent-Zeichen <code>%</code>. In anderen
     Programmiersprachen heißen sie "dictionaries" oder "maps".</p>
 
 <pre>[[[syntax perl6]]]
@@ -400,7 +403,7 @@ my $regisseur = "Alfred Hitchcok";
 say $regisseur, " hat folgende Filme gedreht: ", %regie{$regisseur}.join(", ");
 [[[endsyntax]]]</pre>
 
-    <p>Auf alle Schlüssel eines Hashs <code>%h</code> kann man mit
+    <p>Auf alle Schlüssel eines Hashes <code>%h</code> kann man mit
     <code>%h.keys</code> zugreifen, <code>%h.values</code> gibt alle Werte
     zurück. Wie man elegant alle Elemente eines Hashes durchlaufen
     kann, steht im Abschnitt <a href="#for">über for-Schleifen</a>.</p>

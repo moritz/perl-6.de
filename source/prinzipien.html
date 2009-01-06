@@ -1,5 +1,5 @@
-[[[menu main home prinzipien]]]
-[[[setvar title Designprinzipien]]]
+[% menu main home prinzipien %]
+[% setvar title Designprinzipien %]
 
 <div id="content">
     <h1>Perl 6 Design</h1>
@@ -7,31 +7,110 @@
     <p>Perl 6 wurde nicht "einfach so" entworfen, sondern mit einigen
     Zielen im Hinterkopf</p>
 
-    <h2>"Simple Things Should be Easy, Hard Things Should be
-    Possible"</h2>
+    <h2>Einfachheit</h2>
 
-    <p>Einfache Dinge sollen leicht zu erledigen sein, komplizierte Dinge
-    sollen möglich sein.</p>
+    <p>Eine einfache Lösung ist immer einer komplizierten Lösung vorzuziehen.
+    Dabei bezieht sich "einfach" immer auf die Position des Benutzers, nicht
+    darauf, dass die Sprache einfach zu implementieren sein soll.</p>
 
-    <p>Dazu kommt manchmal noch Larry Walls Regel "Weird things should
-    look weird", also "Komische Dinge sollen komisch aussehen".</p>
+    <p>Über Perl 5 kennt man schon den verwandten Spruch <em>"Simple Things Should be Easy, Hard Things Should be
+    Possible"</em>, der auch weiterhin für Perl 6 gilt.</p>
 
-    <p>Recht ähnlich ist in dem Zusammenhang die "Huffman"-Regel, die besagt, 
-    dass häufig benutzte Konstrukte kürzer sein sollen als selten benutzte.</p>
 
-    <h2>Timtowtdi</h2>
+    <h2>Huffman-Kodierung</h2>
 
-    <p>"Timtowtdi", gesprochen "Timtaudi", steht für "There is more than
-    one way to do it", oder auf Deutsch "Viele Wege führen zum Ziel".</p>
+    <p>Der Huffman-Code wird in der Informationübertragung benutzt, um Daten
+    zu komprimieren. Dabei bekommen häufig benutzte Zahlen eine kurze
+    Code-Nummer, selten benutzte eine lange.</p>
 
-    <p>Damit ist gemeint, dass dem Programmier fast immer verschiedene
-    Möglichkeiten geboten werden, ein bestimmtes Problem zu lösen.</p>
+    <p>Analog dazu soll in Perl 6 jedes häufig benutzte Paradigma möglichst
+    kurz sein, während selten benutzte (oder solche, von deren Benutzung man
+    abrät) längere Namen bekommen. So ist zum Beispiel der Aufruf einer
+    Methode mit dem Punkt <code>.</code> nur noch ein Zeichen lang (zwei in
+    Perl 5), der nicht allzu häufig benutzte Name des aktuell ausgeführten
+    Scripts, der in Perl 5 noch <code>$0</code> heisst, ist jetzt in der
+    längeren Variable <code>$*PROGRAM_NAME</code> verfügbar.</p>
+
+    <h2>Erweiterbarkeit</h2>
+
+    <p>Die Erfahrung hat gezeigt, dass noch keine bisherige Programmiersprache
+    optimal war - weder von der Syntax noch von der Semantik her.</p>
+
+    <p>Daher ist Perl 6 so entworfen, dass die Sprache leicht änder- und
+    erweiterbar ist, in allen Aspekten (Syntax, Objektmodell,
+    Typensystem etc.).</p>
+
+    <p>Desweiteren wird darauf geachtet, dass der Programmier sagen muss, mit
+    welcher Version von Perl er arbeitet, damit das Programm auch dann noch
+    funktionieren wird, wenn inkompatible Änderungen an der Sprache
+    vorgenommen werden (die dann natürlich eine andere Version
+    darstellen).</p>
+
+
+    <h2>Prominenz und Timtowtdi</h2>
+
+    <p>In natürlichen Sprachen kann man häufig die Satzstellung verändern,
+    um einen bestimmten Aspekt eines Satzes zu betonen. Die gleiche
+    Ausdrucksstärke bietet auch Perl 6 - durch die Wahl einer von mehreren
+    möglichen Lösungen werden dem Programmierer stilistische
+    Gestaltungsmöglichkeiten gegeben.</p>
+
+    <p>in Perl heisst dieses Prinzip "Timtowtdi", gesprochen "Timtaudi",
+    und steht für "There is more than one way to do it", oder auf Deutsch
+    "Viele Wege führen zum Ziel".</p>
 
     <p>Als Beispiel kann man in Perl 6 zu weiten teilen Objektorientiert
-    programmieren, aber auch prozudural oder sogar funktional - je nach
+    programmieren, aber auch prozedural oder sogar funktional - je nach
     dem, was einem lieber ist.</p>
 
-    <h2>Perl get's your Job done</h2>
+    <p>Anders als in Perl 5 wurde aber stärker darauf geachtet, dem
+    Programmierer einen Standardweg als Lösung anzubieten.</p>
+
+    <h2>Kontextsensitivität</h2>
+
+    <p>In natürlichen Sprachen haben viele Worte mehrere Bedeutungen, und
+    ihr Kontext entscheidet darüber, welche Bedeutung wir als die "richtige"
+    ansehen.</p>
+
+    <p>Perl hat dieses Konzept auch: Die Operatoren, oder allgemeiner die
+    Verben, setzen ihre Objekte in einen bestimmten Kontext, und die
+    Objekte haben in den verschiedenen Kontexten verschiedene definierte
+    Verhaltensweisen. Ein Beispiel ist das Array, das im numerischen Kontext
+    die Anzahl der Elemente zurückgibt.</p>
+
+    <h2>"Do What I Mean", DWIM</h2>
+
+    <p>Wer Deutsch als Muttersprache hat, kann intuitiv beurteilen, ob ein
+    deutscher Satz korrekt geformt ist, selbst wenn er keine grammatikalischen
+    Regeln zitieren kann, die dieser Satz eventuell verletzt.</p>
+
+    <p>Diesem Vorbild entsprechend ist auch Perl 6 so entwickelt worden, dass
+    das Verhalten eines Konstrukts so häufig wie möglich dem entspricht, was
+    der Leser intuitiv erwartet.</p>
+
+    <h2>Ähnliches und Unterschiedliches</h2>
+
+    <p>Dinge, die ähnlich sind, sollten auch ähnliche Strukturen haben. So
+    sieht die Vererbung von Grammatiken genauso aus, wie die Vererbung von
+    Klassen.</p>
+
+    <p>Dinge, die unterschiedlich sind, sollten auch unterschiedlich aussehen.
+    In Perl 5 wurde z.B. <code>eval</code> für zwei Zwecke verwendet: zum einen
+    um Strings als Programmcode zu interpretieren und auszuführen, und zum
+    anderen um Exceptions abzufangen. Da dies völlig unterschiedliche Zwecke
+    sind, sehen sie in Perl 6 auch anders aus (die zweite Bedeutung wird in
+    Perl 6 mit <code>try { ... }</code> erreicht).</p>
+
+    <h2>Features ausleihen</h2>
+
+    <p>So wie natürliche Sprachen Wörter aus anderen Sprachen leihen, und
+    manchmal auch grammatikalische Konstrukte und Redewendungen (wie z.B.
+    "Sinn machen", das dem Englischen "to make sense" entliehen ist), so
+    sind sich auch die Designer von Perl nicht zu schade, sich Features von
+    anderen Programmiersprachen abzuschauen, und sie in Perl zu
+    integrieren.</p>
+
+    <h2>Perl gets your Job done</h2>
 
     <p>Ungeachtet aller Prinzipien ist Perl immer noch vor allem dazu da,
     Probleme zu lösen - und wird es auch immer bleiben.</p>
@@ -40,20 +119,6 @@
     Programmierer möglichst viele Sorgen abnimmt, und dass sich der
     Programmierer möglichst wenig Gedanken um Trivialitäten machen
     muss.</p>
-
-    <h2>Erweiterbarkeit</h2>
-
-    <p>Die Erfahrung hat gezeigt, dass noch keine bisherige Programmiersprache
-    optimal war - weder von der Syntax noch von der Semantik her.</p>
-
-    <p>Daher ist Perl 6 so designed, dass die Sprache leicht änder- und
-    erweiterbar ist.</p>
-
-    <p>Desweiteren wird darauf geachtet, dass der Programmier sagen muss, mit
-    welcher Version von Perl er arbeitet, damit das Programm auch dann noch
-    funktionieren wird, wenn inkompatible Änderungen an der Sprache
-    vorgenommen werden (die dann natürlich eine andere Version
-    darstellen).</p>
 
     <!-- 
     vim: ts=4 sw=4 expandtab

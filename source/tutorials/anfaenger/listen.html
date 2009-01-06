@@ -246,7 +246,7 @@ loop(my $i = 0; $i < @wochentag.end; $i++){
 
 <pre>[[[syntax perl6]]]
 my @wochentag = <Montag Dienstag Mittwoch Donnerstag Freitag>;
-my @wochentag -> my $tag {
+for @wochentag -> my $tag {
     say $tag;
 }
 [[[endsyntax]]]</pre>
@@ -259,6 +259,31 @@ my @wochentag -> my $tag {
     <p>Bei jedem Durchlauf der Schleife der wird die Variable
     <code>$tag</code> auf ein anderes Element der Liste gesetzt, in der
     Reihenfolge, wie sie in der Liste auftauchen.</p>
+
+<h2>Von der Kommandozeile lesen</h2>
+
+    <p>Wenn es Sie in den vorherigen Beispielen genervt hat, dass Sie immer
+    wieder aufs Neue Zahlen auf der Tastatur eingeben müssen, wenn Sie ein
+    Programm haben laufen lassen, dann gibt es gute Neuigkeiten - es geht auch
+    einfacher.</p>
+
+    <p>Beim starten eines Programms kann man auf der Kommandozeile noch
+    weitere Werte mit angeben, die dem Programm in der speziellen Variablen
+    <code>@*ARGS</code> zur Verfügung stehen.</p>
+	
+<pre>[% syntax perl6 %]
+for @*ARGS -> $a {
+say "Argument $a"
+}
+[% endsyntax %]</pre>
+
+    <p>Wenn Sie das Programm so starten: <code>./perl6 kommando.pl 2 3</code>,
+    dann sieht die Ausgabe so aus:</p>
+
+<pre>
+Argument 2
+Argument 3
+</pre>
 
 <!-- 
  vim: sw=4 ts=4 expandtab

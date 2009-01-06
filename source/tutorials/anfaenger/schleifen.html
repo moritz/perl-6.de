@@ -12,7 +12,7 @@
 <pre>[[[syntax perl6]]]
 use v6;
 
-my $zahl = =<>;
+my $zahl = =*IN;
 
 if $zahl > 100 {
 	say $zahl;
@@ -30,6 +30,7 @@ if $zahl > 100 {
 	}
 }
 [[[endsyntax]]]</pre>
+
 	<p>Diese Lösung ist einfach nur hässlich: es ist viel Schreibaufwand,
 	Fehleranfällig und, noch schlimmer: sie ist falsch. Denn egal wie
 	häufig man diese Konstruktion verschachtelt, man kann sich nie sicher
@@ -41,7 +42,7 @@ if $zahl > 100 {
 
 <pre>[[[syntax perl6]]]
 use v6;
-my $zahl = =<>;
+my $zahl = =*IN;
 
 while $zahl <= 100 {
 	$zahl = $zahl * 2;
@@ -64,10 +65,10 @@ say $zahl;
 	<p>Dann wird wieder überprüft, ob <code>$zahl &lt;= 100</code> ist.
 	<code>$zahl</code> hat den Wert 10, die Bedingung ist immer noch
 	erfüllt.</p>
-	<p>Deshalb wird <code>$zahl = $zahl * 2</code> ausgführt, dieses Mal
+	<p>Deshalb wird <code>$zahl = $zahl * 2</code> ausgeführt, dieses Mal
 	mit dem Ergebnis 20.</p>
 
-	<p>Nach dem nächsten Durchauf hat <code>$zahl</code> den Wert 40, dann
+	<p>Nach dem nächsten Durchlauf hat <code>$zahl</code> den Wert 40, dann
 	80, und dann 160.</p>
 
 	<p>Und wenn <code>$zahl</code> den Wert 160 hat, wird ist die
@@ -93,7 +94,7 @@ say $zahl;
 
 <pre>[[[syntax perl6]]]
 use v6;
-my $zahl = =<>;
+my $zahl = =*IN;
 
 if $zahl > 0 {
 
@@ -112,10 +113,10 @@ if $zahl > 0 {
 
 <pre>[[[syntax perl6]]]
 use v6;
-my $zahl = =<>;
+my $zahl = =*IN;
 while $zahl <= 0 {
 	say "bitte POSITIVE Zahl eingeben:";
-	$zahl = =<>
+	$zahl = =*IN
 }
 
 # hier ist $zahl auf jeden Fall > 0
@@ -174,7 +175,7 @@ my $result = $zahl * 2**(ceil(log($limit/$zahl)/log(2));
 
 	<p>Dadurch wird der Quellcode aber auch wesentlich schwerer lesbar.
 	Wenn man so eine Zeile in seinen Programmen verwendet, sollte man
-	ausfürlich kommentieren, was der Code macht.</p>
+	ausführlich kommentieren, was der Code macht.</p>
 
 	<h2 id="loop">Andere Schleifen</h2>
 

@@ -97,11 +97,9 @@ $b<a>       # das gleiche
 $b<c>[0]    # früher: $b->{c}[0] oder $b->{c}->[0]
 [[[endsyntax]]]</pre>
 
-    <p>Auch beim Zugriff auf Objektmethoden ist der Pfeil dem Punkt 
-	gewichen.</p>
-
     <p>Die Anzahl der Elemente eines Arrays bekommt man nun mit
 	<code>elems</code>:</p>
+
 <pre>[[[syntax perl6]]]
 # man beachte, dass hier keine Klammern mehr nötig sind:
 my @list = 1, 2, 4, 5;
@@ -130,6 +128,7 @@ my @l2 = <<foo $str bar>>;  # liefert ['foo', 'bla', 'blubb', 'bar']
     <h2>Twigils</h2>
     <p>Globale Variablen (und ein paar andere) haben ein sekundäres Sigil,
     Twigil genannt:</p>
+
 <pre>[[[syntax perl6]]]
 %*ENV               # früher %ENV
 @*ARGS              # früher @ARGV
@@ -155,6 +154,10 @@ if $a < 0 {         # if ($a < 0) {
     say "Negativ";  #   print "Negativ\n";
 }                   # }
 [[[endsyntax]]]</pre>
+
+    <p>Sollte man trotzdem Klammern verwenden, muss nach dem <code>if</code>
+    ein Leerzeichen stehen, sonst wird die Funktion namens <code>if</code>
+    aufgerufen (sofern vorhanden).</p>
 
     <p><code>foreach</code> und <code>for</code> wird zu <code>for</code>, 
 	die C-artige <code>for</code>-Schleife zu <code>loop</code>:</p>
@@ -189,7 +192,7 @@ loop (my $i = 0; $i < 10; $i++){
     runden Klammern mehr um die Bedingung braucht), <code>eval { ...
     }</code> ist jetzt <code>try { ... }</code>.</p>
 
-    <h2>Die Standardvarible <code>$_</code></h2>
+    <h2>Die Standardvariable <code>$_</code></h2>
 
     <p><code>for</code>-Schleifen ohne eine explizite Variable benutzen
     auch weiterhin <code>$_</code> als Standard, allerdings wird sie niemals
@@ -237,7 +240,7 @@ for 1 .. 4 {
 <pre>[[[syntax perl6]]]
 sub fakultaet(Int $n){
     return  reduce {$^a * $^b}, 1 .. $n;
-    # reduce reduziert listen mit der angegbenen Funktion
+    # reduce reduziert Listen mit der angegbenen Funktion
 }
 
 # immer noch möglich:
@@ -257,12 +260,12 @@ sub swap($a is rw, $b is rw){
     weiterhin optional. Das funktioniert auch mit selbstdeklarierten
     Typen, also <a href="/tutorials/objektmodell">Klassen</a>.</p>
 
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 my Int $ganzzahl;
 my Num $zahl;
 my Complex $complexe_zahl;
 my Str $string;
-my Str @a; 		# Array mit Strings
+my Str @a; 		    # Array mit Strings
 my Array of Str @b 	# Array von Arrays mit Strings
 
 class Foo {
@@ -270,7 +273,7 @@ class Foo {
 }
 
 my Foo $foo;
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>
     
     <p>Die Funktion <code>ref</code> gibt es nicht mehr, dafür gibt es als
     Ersatz zwei Möglichkeiten:</p>
@@ -287,13 +290,13 @@ say "Das ist ein String" if $str ~~ Str
     Operator</em> <code>~~</code>, das auf für Regular Expressions
     verwendet wird. Diese Form sollte man verwenden, wenn man überprüft,
     ob etwas einen bestimmten Typ hat, da das auch Vererbung
-    berücksichtigt, d.h. sowohl <code>4 ~~ Int</code> als auch <code>4 ~~
-    Num</code> liefern True zurück.</p>
+    berücksichtigt, d.h. sowohl <code>[1, 2] ~~ Array</code> als auch
+    <code>[1, 2] ~~ List</code> liefern True zurück.</p>
 
     <h2>Regexes</h2>
 
     <p>Perl 5 Regexes können in Perl 6 immer noch verwendet werden, aber
-    es gibt auch viele Erweiterungen in den neuen <em>Rules</em>. Darüber
+    es gibt auch viele Erweiterungen. Darüber
     gibt es eine eigene Seite: <a href="regex">Regexes und Rules</a>.</p>
 
     <h2>Strings</h2>
@@ -307,15 +310,13 @@ say "Das ist ein String" if $str ~~ Str
     <code>bytes</code> die Anzahl der Bytes abfragen, mit
     <code>chars</code> die Anzal der Zeichen , mit
     <code>codes</code> die Anzahl der Codepoints, mit
-    <code>glyphs</code> die Anzahl der Glyphen
-    und mit
     <code>graphs</code> die Anzahl der Grapheme.</p>
 
     <p>So haben z.B. die deutschen Umlaute in UTF-8 zwei Bytes, aber je
-    nur ein char, glyph, code und graph.</p>
+    nur ein char, code und graph.</p>
 
     <p>Dagegen können z.B. Ligaturen, also aus zwei Buchstaben zusammen
-    gesetzte Zeichen, nur ein Glyph aber mehrere Zeichen haben.</p>
+    gesetzte Zeichen, nur ein grapheme aber zweide codepoints haben.</p>
 
     <p>Wenn man mit <code>split</code> Strings aufspalten will, muss man die
     Regex als <code>rx/.../</code> übergeben:</p>
@@ -358,7 +359,7 @@ my $str = ~@a;      # "foo bar"
     ist <code>=$fh</code> geworden, und das Zeilenende wird jetzt
     per default automatisch entfernt ("autochomp").</p>
 
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 my $fn = "foo.txt";
 my $file = $fn.open err die "Can't read '$fn': $!";
 
@@ -370,7 +371,7 @@ for =$file -> $line {
 my $ganze_datei = $file.slurp;
 
 $file.close;
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>
 
     <p>Man kann nicht nur aus Filehandles lesen, sondern auch aus
     Dateinamen, die automatisch geöffnet werden:</p>
@@ -384,7 +385,7 @@ for =</etc/passwd> {
 # oder: my $file = "/etc/passwd"; for =$file { ... }
 [[[endsyntax]]]</pre>
 
-    <p>Die empfohlene Art, eine Datei zeileweise zu lesen ist jetzt eine
+    <p>Die empfohlene Art, eine Datei zeilenweise zu lesen ist jetzt eine
     <code>for</code>-Schleife. Und das bedeutet nicht wie in Perl 5, dass
     erst die gesamte Datei gelesen wird und dann darüber iteriert wird,
     sondern die Werte werden dann aus der Datei gelesen, wenn sie
@@ -418,7 +419,7 @@ $file.close;
     Smart Match-Operator durchgeführt, und können sowohl auf Strings (als
     Dateinamen) als auch auf Filehandles angewandt werden:</p>
 
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 my $fn = "/etc/passwd";
 
 if $fn ~~ :e {
@@ -426,7 +427,7 @@ if $fn ~~ :e {
 } else {
     say "Wohl kein Unix...";
 }
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>
 
     <p>Der <code>:s</code>-Filetest liefert True zurück, wenn die Datei
     nicht leer ist, und im numerischen Kontext gibt er die Länge der Datei
@@ -541,10 +542,10 @@ eval("/* Java-Code hier, der einen Wert liefert */", :lang(Java));
     Sprache und dem Interface ab, aber zumindest Perl 5 sollte beliebig
     komplexe Datenstrukturen (inklusive Objekte) zurückliefern können.</p>
         
-    <h3>Pointy Subs</h3>
+    <h3>Pointy Blocks</h3>
 
-    <p><em>Pointy Subs</em> sind eine neue Möglichkeit, anonyme
-    Subroutinen zu schreiben:</p>
+    <p><em>Pointy Blocks</em> sind eine neue Möglichkeit, anonyme
+    Codeblöcke zu schreiben:</p>
 
 <pre>[[[syntax perl6]]]
 my $square = -> $a { $a * $a };
@@ -556,7 +557,7 @@ say $square.WHAT
 [[[endsyntax]]]</pre>
 
     <p>Man beachte, dass die <code>for</code>-Schleife, wie sie vorher
-    vorgestellt wurde, ein <em>pointy sub</em> erwartet:</p>
+    vorgestellt wurde, eine <em>pointy block</em> benutzt:</p>
 
 <pre>[[[syntax perl6]]]
 for 1 .. 5 -> $a {
@@ -567,8 +568,8 @@ for 1 .. 5 -> $a {
     <p>Alternativ können auch <em>self declaring formal parameters</em>
     verwendet werden, also Variablen mit dem <code>$^</code>-Sigil:</p>
 
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 for 1 .. 5  {
     say $^number;
 }
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>

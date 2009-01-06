@@ -90,12 +90,28 @@
 
     <p>Der PCT-Compiler übersetzt PAST (indirekt) nach PBC.</p>
 
-    <h2>Links</h2>
+    <h1>Rakudo - Perl 6 auf Parrot</h1>
+
+    <p>Rakudo wird vor allem von Patrick Michaud und Jonathan Worthington
+    entwickelt, es hat jedoch eine breite Basis weiterer Entwickler.</p>
+
+    <p>Rakudo ist in einer Mischung von Programmiersprachen geschrieben, und
+    übersetzt Perl 6-Code wahlweise nach PIR, oder führt ihn direkt aus.</p>
+
+    <p>Der Parser ist in Perl 6 Regexes geschrieben, die von <a
+    href="parrot-grammar-engine">PGE</a> compiliert werden. Jede dieser
+    Regexes kann eine Aktion auslösen, die daraus einen AST baut. Diese
+    Aktionen sind in "Not Quite Perl 6" (NQP) geschrieben, einer Untermenge
+    von Perl 6. Die eingebauten Funktionen sind größtenteils in PIR
+    geschrieben, und zeitkritische Algorithmen wie etwa der Multi-Dispatcher
+    sind in C geschrieben.</p>
+
+    <h1>Links</h1>
     <ul>
-        <li><a href="http://www.parrotcode.org/">Ofizielle Parrot-
-        Homepage</a></li>
-        <li><a href="http://rakudo.org/">Rakudo, der Perl 6-Compiler auf
-        Parrot</a></li>
+        <li><a href="http://www.parrot.org/">Ofizielle Parrot-Homepage</a></li>
+        <li><a href="http://rakudo.org/">Offizieller Rakudo-Blog</a></li>
+        <li><a href="http://rakudo.de/">Fortschrittsanzeige von Rakudo in der
+        Testsuite</a></li>
     </ul>
 
 <!--

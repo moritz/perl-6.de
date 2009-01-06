@@ -17,7 +17,7 @@
 <pre>[[[syntax perl6]]]
 use v6;
 
-my $zahl = =<>;
+my $zahl = =$*IN;
 say sqrt $zahl;
 [[[endsyntax]]]</pre>
     
@@ -37,7 +37,7 @@ say sqrt $zahl;
 <pre>[[[syntax perl6]]]
 use v6;
 
-my $zahl = =<>;
+my $zahl = =$*IN;
 if $zahl < 0 {
     say "Kann keine Wurzel aus negativen Zahlen ziehen";
 } else {
@@ -84,7 +84,7 @@ my $pin = 1234;
 my $guthaben = 655.36;
 
 say "Geben Sie ihre PIN ein:";
-my $pin_eingabe = =<>;
+my $pin_eingabe = =$*IN;
 
 if $pin == $pin_eingabe {
     say "Geben Sie den Betrag ein, den Sie abheben wollen:";
@@ -116,7 +116,7 @@ if $pin == $pin_eingabe {
     <p>Dann wird folgender Code ausgeführt:</p>
 <pre>[[[syntax perl6]]]
     say "Geben Sie den Betrag ein, den Sie abheben wollen:";
-    my $auszahlung = =<>;
+    my $auszahlung = =$*IN;
     if ($auszahlung <= $guthaben) {
         say "Nehmen Sie die $auszahlung Euro mit...";
         $guthaben = $guthaben - $auszahlung;
@@ -159,7 +159,7 @@ if $passwort == $eingabe {
 
     <p>Was geht hier vor?</p>
 
-    <p>Die Antwort ist, dsas wir zwei Variablen mit dem Operator
+    <p>Die Antwort ist, dass wir zwei Variablen mit dem Operator
     <code>==</code> vergleichen. Und <code>==</code> erwartet Zahlen, um
     sie miteinander zu vergleichen.</p>
 
@@ -181,17 +181,17 @@ if $passwort == $eingabe {
 use v6;
 # so ist es richtig
 my $passwort = "Geheim123";
-my $eingabe = =<>;
+my $eingabe = =$*IN;
 
 if $passwort eq $eingabe {
-    say "Passwort Korrekt, wilkommen Chef";
+    say "Passwort Korrekt, willkommen Chef";
 }
 [[[endsyntax]]]</pre>
 
     <p>Anstelle von <code>==</code> steht jetzt ein <code>eq</code>, kurz
     für "equal", Englisch für "gleich".</p>
 
-    <p>Es gibt für jeden numerischen Vergleich einen enstrsprechenden
+    <p>Es gibt für jeden numerischen Vergleich einen entsprechenden
     Vergleich für Strings:</p>
 
     <table summary="Gegenüberstellung der numerischen- und
@@ -224,7 +224,7 @@ if $passwort eq $eingabe {
     <p>Niemand erwartet von einem Anfänger, diese Operatoren alle
     auswendig zu können, man sollte sich nur merken dass es für den
     Vergleich von Strings andere gibt als für den Vergleich von Zahlen,
-    und viellicht noch dass sie aus zwei Buchstaben bestehen.</p>
+    und vielleicht noch dass sie aus zwei Buchstaben bestehen.</p>
 
 <!-- 
  vim: sw=4 ts=4 expandtab

@@ -5,10 +5,10 @@
 
     <p>In den Programmen der vorherigen Kapitel hat sich noch nicht so
     viel bewegt, alle vorkommenden Werte waren konstant. Das soll sich in
-    diesem Kapitel &auml;ndern.</p>
+    diesem Kapitel ändern.</p>
 
-    <p>Alle Werte, die sich in einem Programm &auml;ndern k&ouml;nnen
-    w&auml;hrend es ausgef&uuml;hrt wird, werden in <em>Variablen</em>
+    <p>Alle Werte, die sich in einem Programm ändern können
+    während es ausgefährt wird, werden in <em>Variablen</em>
     gespeichert.</p>
 
     <p>In Perl starten alle Variablen mit einem Sonderzeichen (sogenanntem
@@ -17,8 +17,8 @@
 use v6;
 
 my $a;
-$a = =<>;
-my $b = =<>;
+$a = =$*IN;
+my $b = =$*IN;
 
 my $summe = $a + $b;
 
@@ -35,7 +35,7 @@ Die Summe von 4 und -10 ist -6
 </pre>
     <h2>Das Programm im Detail</h2>
 
-    <p>Die erste Zeile sind die selben wie immer, dann wird es
+    <p>Die erste Zeile ist die selbe wie immer, dann wird es
     interessant:</p>
 <pre>[[[syntax perl6]]]
 my $a;
@@ -49,31 +49,32 @@ my $a;
     Ziffern und Unterstrichen bestehen kann, wobei er nicht mit einer
     Ziffer anfangen sollte.</p>
 
-    <p>G&uuml;ltige Variablennamen w&auml;hren zum Beispiel
+    <p>Gültige Variablennamen wären zum Beispiel
     <code>$summe</code>, <code>$anzahl_haeuser</code> oder
-    <code>$MeinAuto</code>. Zwischen Gro&szlig;- und Kleinschreibung wird
+    <code>$MeinAuto</code>. Zwischen Groß- und Kleinschreibung wird
     unterschieden, das heisst <code>$a</code> und <code>$A</code> sind
     verschiedene Variablen.</p>
 
 <pre>[[[syntax perl6]]]
-$a = =<>;
+$a = =$*IN;
 [[[endsyntax]]]</pre>
     <p>Hier wird der Variable <code>$a</code> ein Wert zugewiesen. Der
     Wert steht auf der rechten Seite des Gleichheitszeichens, hier
-    <code>=&lt;&gt;</code>. 
-    Die Konstruktion <code>=&lt;&gt;</code>weist perl an, eine Zeile von
+    <code>=$*IN</code>. Die besondere Variable <code>$*IN</code> steht für
+    alle Eingaben, die auf der Tastatur gemacht werden.
+    Die Konstruktion <code>=$*IN</code> weist Perl an, eine Zeile von
     der Tastatur zu lesen, d.h. das Programm pausiert so lange, bis der
-    Benutzer etwas eingegeben hat und dann auf Enter gedrück hat.</p>
+    Benutzer etwas eingegeben hat und dann auf Enter gedrückt hat.</p>
 
 <pre>[[[syntax perl6]]]
-my $b = =<>;
+my $b = =$*IN;
 [[[endsyntax]]]</pre>
     <p>Diese beiden Zeilen machen das gleiche wie die drei Zeilen davor,
     nur dass die Eingabe dieses mal in der Variablen <code>$b</code>
     gespeichert wird.</p>
 
-    <p>Die Deklaration <code>my $b;</code> und die Zuweiseung <code>$b =
-    =&lt;&gt;;</code> wurden diesmal in eine Zeile zusammengezogen,
+    <p>Die Deklaration <code>my $b;</code> und die Zuweisung <code>$b =
+    =$*IN;</code> wurden diesmal in eine Zeile zusammengezogen,
     die das gleiche macht wie die beiden einzelnen Zeilen.</p>
 
 <pre>[[[syntax perl6]]]
@@ -95,7 +96,7 @@ say "Die Summe von ", $a, " und ", $b, " ist: ", $summe;
     <h2>Fließkommazahlen</h2>
 
     <p>Die Variablen können natürlich nicht nur ganze Zahlen speichern,
-    sondern auch sogenannte "Fließkommzahlen":</p>
+    sondern auch sogenannte "Fließkommazahlen":</p>
 <pre>[[[syntax perl6]]]
 my $radius = 0.2;
 my $flaeche = $radius * $radius * pi;
@@ -110,7 +111,7 @@ say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
 
     <h2>Zeichenketten</h2>
 
-    <p>Natürlich können Variablen nicht nur Zahlen enthalten, sondern auch
+    <p>Variablen können nicht nur Zahlen enthalten, sondern auch
     Zeichenketten, also Text, auf Englisch "Strings".</p>
 
     <p>Tatsächlich ist die Verarbeitung von Text traditionell eine der
@@ -126,26 +127,26 @@ say $name, " ist der Erfinder von Perl";
 
     <p>Dem aufmerksamen Leser fällt an dieser Stelle vielleicht auf, dass
     wir schon vorher Strings verwendet haben, z. B. in der Zeile</p>
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 say "Ein Kreis mit Radius ", $radius, " hat die Fläche ", $flaeche;
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>
 
     <p>Der Text zwischen den Anführungszeichen ist jeweils ein String,
     hier ein konstanter.</p>
 
     <p>Obige Zeile hätte man auch anders schreiben können:</p>
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 say "Ein Kreis mit Radius $radius hat die Fläche $flaeche";
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>
     <p>Was passiert hier? In einem String, der von doppelten
-    Anführungszeichen <code>"</code> begrenzt ist, werden Variablen, die
-    mit einem Dollarzeichen <code>$</code> anfangen, durch ihren Wert
+    Anführungszeichen <code>"</code> begrenzt ist, werden Variablennamen,
+    die mit einem Dollarzeichen <code>$</code> anfangen, durch ihren Wert
     ersetzt. Man sagt der String werde <em>interpoliert</em>.</p>
 
     <p>Wenn man das verhindern möchte, z.B. weil man Dollarzeichen
     ausgeben möchte, kann man den String stattdessen in einfache
     Anführungszeichen setzen:</p>
-<pre>[[[syntax perl6]]]
+<pre>[% syntax perl6 %]
 my $zahl = 12;
 
 my $s1 = "Interpolierter String: $zahl";
@@ -153,12 +154,13 @@ my $s2 = 'Nicht-interpolierter String: $zahl';
 
 say $s1;
 say $s2;
-[[[endsyntax]]]</pre>
+[% endsyntax %]</pre>
     <p>ergibt folgende Ausgabe:</p>
 <pre>
 Interpolierter String: 12
 Nicht-interpolierter String: $zahl
 </pre>
+
     <p>Perl hat viele eingebaute Funktionen, die Strings verarbeiten. Hier
     werden ein paar vorgestellt, die die Groß- und Kleinschreibung
     (Englisch: Lower Case und Upper Case) beeinflussen. Die meisten
@@ -192,7 +194,7 @@ say capitalize $str;
 
 <pre>[[[syntax perl6]]]
 my Num $zahl;       # $zahl kann nur Zahlen enthalten
-my Int $ganze_zahl; # $ganze_zahl kann nur ganze Zahlen enthalen
+my Int $ganze_zahl; # $ganze_zahl kann nur ganze Zahlen enthalten
 my Str $string;     # $string kann Zeichenketten enthalten
 [[[endsyntax]]]</pre>
     
