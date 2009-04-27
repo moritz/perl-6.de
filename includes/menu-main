@@ -50,7 +50,7 @@
             [% item objekt      <li><a class="nav{{ active}}" href="/tutorials/objektmodell">Objektmodell</a></li> %]
             [% item kontext     <li><a class="nav{{ active}}" href="/tutorials/kontext">Kontext</a></li>           %]
             [% item regex       <li><a class="nav{{ active}}" href="/tutorials/regex">Regexes und Rules</a></li>   %]
-            [% item erweiterung <li><a class="nav{{ active}}" href="/toturials/spracherweiterungen">Spracherweiterungen</a></li> %]
+            [% item erweiterung <li><a class="nav{{ active}}" href="/tutorials/spracherweiterungen">Spracherweiterungen</a></li> %]
         </ul>
     </div>
 }}]]]
