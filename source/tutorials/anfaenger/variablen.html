@@ -8,7 +8,7 @@
     diesem Kapitel ändern.</p>
 
     <p>Alle Werte, die sich in einem Programm ändern können
-    während es ausgefährt wird, werden in <em>Variablen</em>
+    während es ausgeführt wird, werden in <em>Variablen</em>
     gespeichert.</p>
 
     <p>In Perl starten alle Variablen mit einem Sonderzeichen (sogenanntem
@@ -17,8 +17,8 @@
 use v6;
 
 my $a;
-$a = =$*IN;
-my $b = =$*IN;
+$a = $*IN.get;
+my $b = $*IN.get;
 
 my $summe = $a + $b;
 
@@ -56,25 +56,25 @@ my $a;
     verschiedene Variablen.</p>
 
 <pre>[[[syntax perl6]]]
-$a = =$*IN;
+$a = $*IN.get;
 [[[endsyntax]]]</pre>
     <p>Hier wird der Variable <code>$a</code> ein Wert zugewiesen. Der
     Wert steht auf der rechten Seite des Gleichheitszeichens, hier
-    <code>=$*IN</code>. Die besondere Variable <code>$*IN</code> steht für
+    <code>$*IN.get</code>. Die besondere Variable <code>$*IN</code> steht für
     alle Eingaben, die auf der Tastatur gemacht werden.
-    Die Konstruktion <code>=$*IN</code> weist Perl an, eine Zeile von
+    Die Konstruktion <code>$*IN.get</code> weist Perl an, eine Zeile von
     der Tastatur zu lesen, d.h. das Programm pausiert so lange, bis der
     Benutzer etwas eingegeben hat und dann auf Enter gedrückt hat.</p>
 
 <pre>[[[syntax perl6]]]
-my $b = =$*IN;
+my $b = $*IN.get;
 [[[endsyntax]]]</pre>
     <p>Diese beiden Zeilen machen das gleiche wie die drei Zeilen davor,
     nur dass die Eingabe dieses mal in der Variablen <code>$b</code>
     gespeichert wird.</p>
 
     <p>Die Deklaration <code>my $b;</code> und die Zuweisung <code>$b =
-    =$*IN;</code> wurden diesmal in eine Zeile zusammengezogen,
+    $*IN.get;</code> wurden diesmal in eine Zeile zusammengezogen,
     die das gleiche macht wie die beiden einzelnen Zeilen.</p>
 
 <pre>[[[syntax perl6]]]

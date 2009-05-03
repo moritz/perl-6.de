@@ -17,7 +17,7 @@
 <pre>[[[syntax perl6]]]
 use v6;
 
-my $zahl = =$*IN;
+my $zahl = $*IN.get;
 say sqrt $zahl;
 [[[endsyntax]]]</pre>
     
@@ -37,7 +37,7 @@ say sqrt $zahl;
 <pre>[[[syntax perl6]]]
 use v6;
 
-my $zahl = =$*IN;
+my $zahl = $*IN.get;
 if $zahl < 0 {
     say "Kann keine Wurzel aus negativen Zahlen ziehen";
 } else {
@@ -84,7 +84,7 @@ my $pin = 1234;
 my $guthaben = 655.36;
 
 say "Geben Sie ihre PIN ein:";
-my $pin_eingabe = =$*IN;
+my $pin_eingabe = $*IN.get;
 
 if $pin == $pin_eingabe {
     say "Geben Sie den Betrag ein, den Sie abheben wollen:";
@@ -116,7 +116,7 @@ if $pin == $pin_eingabe {
     <p>Dann wird folgender Code ausgeführt:</p>
 <pre>[[[syntax perl6]]]
     say "Geben Sie den Betrag ein, den Sie abheben wollen:";
-    my $auszahlung = =$*IN;
+    my $auszahlung = $*IN.get;
     if ($auszahlung <= $guthaben) {
         say "Nehmen Sie die $auszahlung Euro mit...";
         $guthaben = $guthaben - $auszahlung;
@@ -181,7 +181,7 @@ if $passwort == $eingabe {
 use v6;
 # so ist es richtig
 my $passwort = "Geheim123";
-my $eingabe = =$*IN;
+my $eingabe = $*IN.get;
 
 if $passwort eq $eingabe {
     say "Passwort Korrekt, willkommen Chef";
