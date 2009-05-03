@@ -12,11 +12,11 @@ als falsch herausstellen.</p>
 änderbar ist und auch erweiterbar ist.</p>
 
 <p>Hier werden einige Möglichkeiten vorgestellt, wie man Perl 6 
-verändern und erweiterns kann.</p>
+verändern und erweitern kann.</p>
 
 <h2 id="neue-operatoren">Neue Operatoren</h2>
 
-<p>Operatoren sind in Perl 6 nur Funtkionen mit komischen Namen. In dem
+<p>Operatoren sind in Perl 6 nur Funktionen mit komischen Namen. In dem
 Ausdruck <code>1 + 2</code> steht das <code>+</code> für
 <code>infix:&lt;+&gt;</code>.</p>
 
@@ -53,7 +53,7 @@ die Länge ist nicht beschränkt. So könnte man sich einen Operator mit Namen
 
 <p>Beim Parsen gilt das sogenannte "Longest Token Matching", d.h. wenn an
 einer Stelle mehrere Operatoren passen, wird der längste gewählt. Deshalb wird
-<code>++$a</code> als <code>prefix:'++'($a)</code> geparst und nicht als
+<code>++$a</code> als <code>prefix:'++'($a)</code> geparsed und nicht als
 <code>prefix:'+'(prefix:'+'($a))</code>.</p>
 
 <h3>Operatorvorrang</h3>
@@ -93,7 +93,7 @@ Unterschied macht, ist die Division. <code>1 / (2 / 2) == 1</code>, während
 2</code> nur dann eindeutig definiert, wenn man die Assozitivität von
 <code>infix:'/'</code> kennt.</p>
 
-<p>Neben den gerade vorgstellten Assozitivitäten <code>left</code> (links) und
+<p>Neben den gerade vorgestellten Assozitivitäten <code>left</code> (links) und
 <code>right</code> (rechts) gibt es auch noch <code>non</code> (keine
 Assoziativität; damit wäre das Beispiel <code>1 op 2 op 3</code> ein
 Syntaxfehler), <code>chain</code> (was "chained comparisons" wie in
@@ -170,7 +170,7 @@ syntaktischen Analyse des Quellcodes durchgeführt werden.</p>
 
 <p>Wer zum Beispiel die interpolierende Form von <code>qx/.../</code>
 (Ausführen eines externen Kommandos und zurückgeben der Ausgabe) von Perl 5
-vermisst, und zu faul ist <code>qq:x/.../</code> anstattdessen zu schreiben,
+vermisst, und zu faul ist <code>qq:x/.../</code> stattdessen zu schreiben,
 kann sich zwei Buchstaben sparen, indem er ein Macro dafür definiert:</p>
 
 <pre>[%verbatim macro %]
@@ -184,7 +184,7 @@ Textersetzung als ganz normalen Perl 6 Quellcode.</p>
 <h3>is parsed</h3>
 
 <p>Macros können die <code>is parsed</code>-Eigenschaft haben, die angibt,
-welche Regex oder Funktion den Text erkennt, der von einem Macro gematcht
+welche Regex oder Funktion den Text erkennt, der von einem Macro gematched
 wird.</p>
 
 <p>Auf diese Art kann man zum Beispiel HTML-Kommentare in Perl 6 verfügbar

@@ -23,14 +23,14 @@
 my $a;
 my $b;
 
-$a = =<>;
+$a = $*IN.get;
 while $a <= 0 {
-	$a = =<>;
+	$a = $*IN.get;
 }
 
-$b = =<>;
+$b = $*IN.get;
 while $b <= 0 {
-	$b = =<>;
+	$b = $*IN.get;
 }
 
 say "Zwei positive Zahlen: $a und $b";
@@ -43,10 +43,10 @@ say "Zwei positive Zahlen: $a und $b";
 
 <pre>[[[syntax perl6]]]
 sub positive_zahl {
-	my $zahl = =<>;
+	my $zahl = $*IN.get;
 
 	while $zahl <= 0 {
-		$zahl = =<>;
+		$zahl = $*IN.get;
 	}
 	return $zahl;
 }

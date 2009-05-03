@@ -23,18 +23,6 @@
     <em>scriptname</em></code> auf, und dann führt perl6 das Skript
     aus.</p>
 
-    <p>Die Implementierung von perl6 ist aber noch nicht sehr weit
-    fortgeschritten. Am benutzbarsten ist zur Zeit eine andere
-    Implementirung, <a href="http://www.pugscode.org/">Pugs</a>, 
-    das "Perl User's Golfing System", ein in Haskell 
-    geschriebener Perl 6-Interpreter.</p>
-
-    <p>Zusammen mit Pugs werden umfangreiche Testcases entwickelt, die
-    sicherstellen, dass Pugs und die entgültige Version von perl6
-    kompatibel bleiben.</p>
-
-    <p>Im Moment ist es sicher am einfachsten, sich pugs herunterzuladen und
-    damit die Perl 6-Programme auszuführen.</p>
     <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
     <h2>Was ist anders als in anderen Sprachen?</h2>
@@ -79,7 +67,7 @@ say "Die Zahl ist ", $number;
     Schlüsselwort <code>my</code> eine Variable namens
     <code>$number</code>, und weist ihr den Wert 11 zu.</p>
 
-    <p>Wie bereits besprochen beginnen alle Veriablen beginnen mit einem 
+    <p>Wie bereits besprochen beginnen alle Variablen beginnen mit einem 
     <em>Sigil</em>. Ein Dollar <code>$</code> steht dabei
     für einen sogenannten Skalar, also ein einzelner Wert.</p>
 
@@ -141,7 +129,7 @@ my %namen =
 
     <p>Viele verschiedene Arten von Werten können in einem Skalar
     gespeichert werden: <code>undef</code>, Zahlen, Strings, und
-    Referenzen auf Listen, Hashes und andere Objekete.</p>
+    Referenzen auf Listen, Hashes und andere Objekte.</p>
 
     <p><code>undef</code> ist der default-Wert, und steht für "nicht
     zugewiesen".</p>
@@ -287,7 +275,7 @@ say @weekdays.elems
 # 5
 [[[endsyntax]]]</pre>
 
-    <p>Es gibt auch eine Kurzschreibweisen, um Arrays zu initialiseren:</p>
+    <p>Es gibt auch eine Kurzschreibweisen, um Arrays zu initialisieren:</p>
 
 <pre>[[[syntax perl6]]]
 my @weekdays = <Montag Dienstag Mittwoch Donnerstag Freitag> 
@@ -517,9 +505,9 @@ loop (my $i = 2; $i < 300; $i **= 2){
     d.h. bei jedem Ausführen wird $i quadriert.)</p>
 
     <p><code>loop</code> ist wie folgt aufgebaut: <code>loop(init;
-    bedingung; increment){ code }</code>. Ganz am Anfang wird einmal die
+    Bedingung; increment){ code }</code>. Ganz am Anfang wird einmal die
     Anweisung in <code>init</code> ausgeführt. Dann wird die
-    <code>bedingung</code> geprüft. Wenn sie wahr ist, wird
+    <code>Bedingung</code> geprüft. Wenn sie wahr ist, wird
     <code>code</code> ausgeführt, und dann <code>increment</code>.
     Dann wird wieder die Bedingung geprüft, und so weiter.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
@@ -542,13 +530,13 @@ while abs($w*$w-$val) > $eps {
 say $w;
 #Ausgabe: 10.00000000013989
 [[[endsyntax]]]</pre>
-    <p>Die <code>while</code>-Schleife wird augeführt, solange die
+    <p>Die <code>while</code>-Schleife wird ausgeführt, solange die
     Bedingung direkt hinter dem <code>while</code> wahr ist.</p>
 
     <p>Wenn die Bedingung von Anfang an nicht erfüllt ist, wir die
     Schleife kein einziges mal ausgeführt.</p>
 
-    <p>Diese Schleife rechnet Nährungsweise die Wurzel von
+    <p>Diese Schleife rechnet Näherungsweise die Wurzel von
     <code>$val</code> aus (es gibt natürlich auch eine eingebaute
     Funtkion die das macht, <code>sqrt()</code>.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
@@ -590,7 +578,7 @@ sub factorial(Int $x --> Int){
 }
 [[[endsyntax]]]</pre>
 
-    <p>Wie in Perl 5 kann man die Argumenteliste bei der Definition der
+    <p>Wie in Perl 5 kann man die Argumentliste bei der Definition der
     Funktion auch weglassen, übergebene Argumente landen in der
     speziellen Variable <code>@_</code>:</p>
 
@@ -671,7 +659,7 @@ multi foo(Int $x){
     <h4>Traits</h4>
 
     <p>Mit Traits, zu Deutsch "Eigenschaften" oder "Merkmale", 
-    kann man das Verhalten von Funktionen modifzieren. Ein 
+    kann man das Verhalten von Funktionen modifizieren. Ein 
     Beispiel sind Vorbedingungen für die
     Ausführung einer Funktion, und Zusicherungen, die nach dem
     Ausführen einer Funktion gelten sollen:</p>
@@ -702,7 +690,7 @@ sub wurzel(Num $x){
     1*10<sup>-8</sup> berechnet wurde.</p>
 
     <p>Mehr zu Traits gibt es in der <a
-    href="http://perlcabal.org/syn/S06.html">offziellen
+    href="http://perlcabal.org/syn/S06.html">offiziellen
     Perl 6-Dokumentation (Englisch)</a>.</p>
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
@@ -718,10 +706,10 @@ sub wurzel(Num $x){
     <em>Rules</em>. Hier wird eine wilde Mischung dieser Begriffe gebraucht.</p>
 
     <p>Reguläre Ausdrücke definieren Muster. Man kann den
-    Interpreter anweisen, zu übeprüfen, ob ein Muster zu einer
+    Interpreter anweisen, zu überprüfen, ob ein Muster zu einer
     Zeichenkette passt.</p>
 
-    <p>Ein paar Beispiele erleutern das:</p>
+    <p>Ein paar Beispiele erläutern das:</p>
 <pre>[[[syntax perl6]]]
 my $test_string = "Larry Wall hat Perl erfunden";
 
@@ -816,7 +804,7 @@ m/^GenaudieseZeile$/
     <tr><td>&lt;digit&gt;</td><td>Ziffer (alternative Schreibweise)</td></tr>
     </table>
 
-    <p>Man beachte dabei, dass "Buchtstabe" nicht nur A bis Z meint, sondern
+    <p>Man beachte dabei, dass "Buchstabe" nicht nur A bis Z meint, sondern
     auch Buchstaben in anderen Sprachen. (Entspricht der Unicode-Eigenschaft
     <code>Letter</code>).</p>
 
@@ -973,7 +961,7 @@ say $text;
     <h2>Input/Output</h2>
 
     <p>Die Ausgabe auf den Bildschirm, d.h. auf die Standardausgabe des
-    Programms, erfolt mit <code>say</code> oder <code>print</code>. Der
+    Programms, erfolgt mit <code>say</code> oder <code>print</code>. Der
     Unterschied besteht darin, dass <code>say</code> am Ende einen
     zusätzlichen Zeilenumbruch ausgibt, <code>print</code> nicht.</p>
 
@@ -998,7 +986,7 @@ $f.close();
 
     <p>Mit <code>open</code> wird eine Datei geöffnet, das zweite
     Argument <code>:w</code> gibt an, dass die Datei zum schreiben
-    geöffent wird. Dabei wird sie, falls sie existiert,
+    geöffnet wird. Dabei wird sie, falls sie existiert,
     überschrieben. Wenn man das nicht will, kann man sie mit
     <code>:a</code> öffnen, dann wird alles, was hineingeschrieben
     wird, ans Ende angehängt.</p>
@@ -1026,14 +1014,15 @@ $f.close();
     <h3>Aus Dateien / von der Standardausgabe lesen</h3>
 
     <p>Wenn man ein Filehandle hat, kann man daraus mittels
-    <code>readline()</code> zeilenweise lesen, oder mit
-    <code>getc()</code> zeichenweise. Mit <code>slurp</code> kann man den
+    <code>get()</code> zeilenweise lesen, oder mit
+    <code>getc()</code> zeichenweise; <code>lines</code> gibt alle Zeilen
+    zurück. Mit <code>slurp</code> kann man den
     gesamten Inhalt auslesen.</p>
 
 <pre>[[[syntax perl6]]]
 # lese durch beliebige Zeichen getrennte ganze Zahlen von der 
 # Standardeingabe ein  und gebe die Summe aus:
-for =<> -> my $line {
+for $*IN.lines -> my $line {
     # comb liefert alle Matches der Regular Expression zurück:
     my @numbers = $line.comb(/\d+/);
     # [+] (liste) gibt die Summe aller Elemente der Liste
@@ -1042,10 +1031,10 @@ for =<> -> my $line {
 [[[endsyntax]]]</pre>
 
     <p>Um aus einer Datei zu lesen, öffnet man sie vorher mit
-    <code>open</code>, und list mit der Konstruktion <code>=$fh</code>:</p>
+    <code>open</code>, und list mit der Konstruktion <code>$fh.lines</code>:</p>
 <pre>[[[syntax perl6]]]
 my $f = open("summe.dat") err die "Kann summe.dat nicht lesen: $!";
-for =$f -> $line {
+for $f.lines -> $line {
     my @numbers = $line.comb(/\d+/);
     say [+] @numbers;
     # [+] (liste) gibt die Summe aller Elemente der Liste
@@ -1122,7 +1111,7 @@ my @b = @s.splice(1, 2);
 [[[endsyntax]]]</pre>
 
     <p><code>grep</code> liefert die Elemente einer Liste, die einer
-    bestimmten Bedinung genügen:</p>
+    bestimmten Bedingung genügen:</p>
     
 <pre>[[[syntax perl6]]]
 my @l = grep { $_ % 3 == 0}, 1 .. 10;
@@ -1162,7 +1151,7 @@ my @l = grep { $^a % 3 == 0}, 1 .. 10;
 (1 .. 20).pick(5).sort
 # (5, 6, 15, 16, 19)
 
-# mit einem Vergleichsblock, der explit nach String-Reihenfolge 
+# mit einem Vergleichsblock, der explizit nach String-Reihenfolge 
 # sortiert, d.h. "1" < "10" < "2":
 (1 .. 20).sort( {~$^a cmp ~$^b }
 # (1, 10, 11, 12 .. 19, 2, 20, 3, 4 .. 9)
@@ -1183,7 +1172,7 @@ my @l = grep { $^a % 3 == 0}, 1 .. 10;
     möglichst  viele Freiheiten zu lassen, und ihn damit so
     programmieren lassen, wie ihm oder ihr das am besten gefällt.</p>
 
-    <p>Hier seien ein paar Beispiele aufgefürht, wie man ein paar
+    <p>Hier seien ein paar Beispiele aufgeführt, wie man ein paar
     einfache Aufgaben auf verschiedene Arten lösen kann.</p>
 
     <h3>Alle Werte einer Liste um <code>$n</code> erhöhen</h3>

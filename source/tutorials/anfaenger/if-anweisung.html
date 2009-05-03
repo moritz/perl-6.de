@@ -12,7 +12,7 @@
     für "ob" oder "wenn")</p>
 
     <p>Hier ist ein kleines Programm, das eine Zahl von der Tastatur
-    einliest, und die Wurzel berechnet und ausgbit:</p>
+    einliest, und die Wurzel berechnet und ausgibt:</p>
 
 <pre>[[[syntax perl6]]]
 use v6;
@@ -88,7 +88,7 @@ my $pin_eingabe = $*IN.get;
 
 if $pin == $pin_eingabe {
     say "Geben Sie den Betrag ein, den Sie abheben wollen:";
-    my $auszahlung = =<>;
+    my $auszahlung = $*IN.get;
     if ($auszahlung <= $guthaben) {
         say "Nehmen Sie die $auszahlung Euro mit...";
         $guthaben = $guthaben - $auszahlung;
@@ -129,7 +129,7 @@ if $pin == $pin_eingabe {
     gewünschten Betrag abzuheben. Wenn das der Fall ist, wird er
     aufgefordert, das Geld herauszunehmen (Perl-Programme können leider
     kein Geld ausspucken, sonst wären wir schon alle reich...), und der
-    Kontotstand wird auf um den Betrag der Auszahlung verringert.</p>
+    Kontostand wird auf um den Betrag der Auszahlung verringert.</p>
 
     <p>Falls er nicht genug Geld auf dem Konto hat, kommt die Nachricht
     <code>So viel haben Sie nicht auf dem Konto</code>.</p>
@@ -145,15 +145,15 @@ if $pin == $pin_eingabe {
 use v6;
 # Vorsicht, mit Vorbehalt zu genießen!
 my $passwort = "Geheim123";
-my $eingabe = =<>;
+my $eingabe = $*IN.get;
 
 if $passwort == $eingabe {
-    say "Passwort Korrekt, wilkommen Chef";
+    say "Passwort Korrekt, willkommen Chef";
 }
 [[[endsyntax]]]</pre>
 
     <p>Wenn man das Programm startet, und das richtige Passwort eingibt,
-    wird man enstprechend begrüßt - so weit, so gut.</p>
+    wird man entsprechend begrüßt - so weit, so gut.</p>
 
     <p>Aber wenn man ein falsches Passwort eingibt - dann leider auch.</p>
 

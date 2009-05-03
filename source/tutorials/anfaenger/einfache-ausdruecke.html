@@ -2,12 +2,12 @@
 [[[setvar title Einfache Ausdr&uuml;cke]]]
 <div id="content">
 
-	<h1>Einfache Ausdr&uuml;cke</h1>
+	<h1>Einfache Ausdrücke</h1>
 
 	<p>Bisher hat unser erstes Programm nur stupide Text ausgegeben ohne
 	etwas zu berechnen, damit ist es nicht besonders sinnvoll.</p>
 
-	<p>Nat&uuml;rlich k&ouml;nnen moderne Programmiersprachen viel mehr,
+	<p>Natürlich können moderne Programmiersprachen viel mehr,
 	als einfaches Beispiel kann man sie mit Zahlen rechnen lassen:</p> 
 <pre>[[[syntax perl6]]]
 use v6;
@@ -17,7 +17,7 @@ say 2 + 2*3 - 1;
 say 2**4;
 [[[endsyntax]]]</pre>
 
-	<p>Wenn man es ausf&uuml;hrt, kommt folgende Ausgabe heraus:</p>
+	<p>Wenn man es ausführt, kommt folgende Ausgabe heraus:</p>
 
 <pre >
 6
@@ -25,22 +25,22 @@ say 2**4;
 16
 </pre>
 	<p>Die drei Zeilen mit <code>say</code> folgen alle dem selben
-	Schema: erst das Schl&uuml;sselwort <code>say</code>, dann ein
-	mathemtischer Ausdruck, und dann das obligatorische Semikolon, dass
+	Schema: erst das Schlüsselwort <code>say</code>, dann ein
+	mathematischer Ausdruck, und dann das obligatorische Semikolon, dass
 	die Zeile beendet.</p>
 
 	<p>Dass <code>say</code> etwas auf dem Bildschirm ausgeben kann,
 	ist ja schon aus dem vorherigen Kapitel bekannt.</p>
 
 	<p>Wenn in dem Programm <code>2+4</code> steht, wird zwei und vier
-	addiert, und das Ergebnis weiterverarbeit, die Weiterverarbeitung
+	addiert, und das Ergebnis weiterverarbeitet, die Weiterverarbeitung
 	macht in diesem Fall <code>say</code>, indem es das Ergebnis auf dem
 	Bildschirm ausgibt.</p>
 
-	<p>Die mathematischen Ausdr&uuml;cke wie <code>2+4</code> bestehen
+	<p>Die mathematischen Ausdrücke wie <code>2+4</code> bestehen
 	jeweils aus Zahlen, die durch sogenannte Operatoren wie
-	<code>+</code>, <code>-</code> und <code>*</code> verkn&uuml;pft sind.
-	Die Operatoren geben an, wie die Zahlen verkn&uuml;ft werden
+	<code>+</code>, <code>-</code> und <code>*</code> verknüpft sind.
+	Die Operatoren geben an, wie die Zahlen verknüpft werden
 	sollen.</p>
 
 	<p>Einige wichtige Operatoren und ihre Bedeutung sind in folgender
@@ -76,15 +76,15 @@ say 2**4;
 	<p>Bei der Auswertung eines Ausdrucks wie <code>2*3**4+5</code> gibt
 	es Regeln, in welcher Reihenfolge die einzelnen Teile ausgewertet
 	werden, und zwar wird in diesem Fall zuerst die Exponentierung
-	ausgef&uuml;hrt, dann die Multiplikation und am Ende die Addition.</p>
+	ausgeführt, dann die Multiplikation und am Ende die Addition.</p>
 
-	<p>Tats&auml;chlich ist obige Tabelle in der Reihenfolge des Vorrangs
-	erstellt, wobei <code>**</code> die h&ouml;chste hat, <code>*</code>,
-	<code>/</code> und <code>%</code> zusammen die zweith&ouml;chste und
+	<p>Tatsächlich ist obige Tabelle in der Reihenfolge des Vorrangs
+	erstellt, wobei <code>**</code> die höchste hat, <code>*</code>,
+	<code>/</code> und <code>%</code> zusammen die zweithöchste und
 	<code>+</code> und <code>-</code> zusammen die niedrigste
-	Priorit&auml;t haben.</p>
+	Priorität haben.</p>
 
-	<p>Mit runden Klammern kann man die Priorit&auml;t ver&auml;ndern,
+	<p>Mit runden Klammern kann man die Priorität verändern,
 	<code>2*(3+1)</code> liefert also <code>2*4</code> oder 8,
-	w&auml;hrend <code>2*3+1</code> das gleiche wie <code>6+1</code> oder
+	während <code>2*3+1</code> das gleiche wie <code>6+1</code> oder
 	7 ist.</p>

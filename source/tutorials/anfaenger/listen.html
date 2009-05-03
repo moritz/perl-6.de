@@ -16,14 +16,14 @@ my $name3;
 my $naechster = 1;
 
 say "Geben Sie einen Namen zum Speichern ein:";
-$name1 = =<>;
+$name1 = $*IN.get;
 say "Geben Sie den zweiten Namen zum Speichern ein:";
-$name2 = =<>;
+$name2 = $*IN.get;
 say "Geben Sie den dritten Namen zum Speichern ein:";
-$name3 = =<>;
+$name3 = $*IN.get;
 
 say "Welchen Namen wollen Sie sich anzeigen lassen?"
-my $auswahl = =<>;
+my $auswahl = $*IN.get;
 if $auswahl == 1 {
     say $name1;
 } elsif $auswahl == 2 {
@@ -60,11 +60,11 @@ my @namen;
 
 loop (my $i = 0; $i < 3; $i++){
     say "Geben Sie Namen Nr.", $i + 1, " ein:";
-    @namen[$i] = =<>;
+    @namen[$i] = $*IN.get;
 }
 
 say "Welchen Namen wollen Sie sich anzeigen lassen?"
-my $auswahl = =<>;
+my $auswahl = $*IN.get;
 say @namen[$auswahl - 1];
 [[[endsyntax]]]</pre>
     
@@ -96,7 +96,7 @@ loop (my $i = 0; $i < 3; $i++){
 
 <pre>[[[syntax perl6]]]
     say "Geben Sie Namen Nr.", $i + 1, " ein:";
-    @namen[$i] = =<>;
+    @namen[$i] = $*IN.get;
 [[[endsyntax]]]</pre>
     <p>Hier wird erst der Benutzer aufgefordert, einen Namen einzugeben.
     Dabei ist zu beachten, dass <code>$i</code> von 0 bis 2 läuft, aber
@@ -129,11 +129,11 @@ loop (my $i = 0; $i < 3; $i++){
     "Horst"</code>.</p>
 
     <p>Wenn der Benutzer beim dritten Durchlauf "Heinz" eingibt, hat das
-    Array die Elemete <code>"Hans", "Horst", "Heinz"</code>.</p>
+    Array die Elemente <code>"Hans", "Horst", "Heinz"</code>.</p>
 
 <pre>[[[syntax perl6]]]
 say "Welchen Namen wollen Sie sich anzeigen lassen?"
-my $auswahl = =<>;
+my $auswahl = $*IN.get;
 say @namen[$auswahl - 1];
 [[[endsyntax]]]</pre>
     <p>Hier hat der Benutzer die Möglichkeit, eine Zahl einzugeben, die
@@ -147,7 +147,7 @@ say @namen[$auswahl - 1];
     <h2>Mehr zu Listen</h2>
 
     <p>Listen können für sehr viele Aufgaben extrem praktisch sein.
-    Deswegen gibt es viele Möglichketen, Listen zu initialiseren,
+    Deswegen gibt es viele Möglichkeiten, Listen zu initialisieren,
     auszulesen und sie zu bearbeiten.</p>
 
 <pre>[[[syntax perl6]]]
@@ -164,7 +164,7 @@ my @b = 0 xx 5;
 @a[2];          # ist 3
 @a[2, 3, 5];    # ergibt die Liste 3, 4, 6
 
-@a.elems;       # Anzahl der Elemete in @a, also 10
+@a.elems;       # Anzahl der Elemente in @a, also 10
 @a.end;         # Index des letzten Elements von @a, also 9
 
 # Ein Stern steht für "irgend etwas" oder "alles":
@@ -273,7 +273,7 @@ for @wochentag -> my $tag {
 	
 <pre>[% syntax perl6 %]
 for @*ARGS -> $a {
-say "Argument $a"
+    say "Argument $a"
 }
 [% endsyntax %]</pre>
 

@@ -24,7 +24,7 @@
     buchen, 450 Euro wären mir schon zu viel"</em>.</p>
 
     <p>Darin tauchen zwei Preisangaben auf, beide in dem Format <code>Zahl
-    Leehrzeichen 'Euro'</code>.</p>
+    Lehrzeichen 'Euro'</code>.</p>
 
     <p>Also suchen wir danach:</p>
 <pre>[% syntax perl6 %]
@@ -131,22 +131,22 @@ if $text ~~ m/ (<digit>+) <space> (Euro|Dollar|Yen) / {
     </tr>
     <tr>
         <td><code>*</code></td>
-        <td>Beliebig viele Widerholungen, auch gar keine</td>
+        <td>Beliebig viele Wiederholungen, auch gar keine</td>
         <td>m/'ab'*/ passt auf "", "ab", "ababa", "ababab", ...</td>
     </tr>
     <tr>
         <td><code>+</code></td>
-        <td>Beliebig viele Widerholungen, mindestens eine</td>
+        <td>Beliebig viele Wiederholungen, mindestens eine</td>
         <td>m/'ab'+/ passt auf "ab", "ababa", "ababab", ...</td>
     </tr>
     <tr>
         <td><code>?</code></td>
-        <td>Null oder eine Widerholung</td>
+        <td>Null oder eine Wiederholungen</td>
         <td>m/'ab'?/ passt auf "" oder "ab"</td>
     </tr>
     <tr>
         <td><code>**{1..3}</code></td>
-        <td>Ein bis drei Widerholung</td>
+        <td>Ein bis drei Wiederholungen</td>
         <td><code>m/'ab'**{1..3}/</code> passt auf "ab", "abab" oder "ababab"</td>
     </tr>
     </table>
@@ -166,7 +166,7 @@ rule preis {
     <zahl> <waehrung>
 }
 if $text ~~ m/ <preis> / {
-    say "Preis $/<zahl> mit Wähung $/<waehrung> gefunden";
+    say "Preis $/<zahl> mit Währung $/<waehrung> gefunden";
 }
 [% endsyntax %]</pre>
 

@@ -201,10 +201,10 @@ loop (my $i = 0; $i < 10; $i++){
     <code>uc</code> und <code>lc</code>:</p>
 
 <pre>[[[syntax perl6]]]
-                # früher:
-for =<> {       # while (<STDIN>){
-    .uc.say;    #     print uc;
-}               # }
+                 # früher:
+for $*IN.lines { # while (<STDIN>){
+    .uc.say;     #     print uc;
+}                # }
 [[[endsyntax]]]</pre>
 
     <p>Allerdings gibt es auch noch eine andere Möglichkeit: mit dem
@@ -374,18 +374,6 @@ $file.close;
 [% endsyntax %]</pre>
 
     <p>Einzelne Zeilen liefert <code>$handle.get</code>.</p>
-
-    <p>Man kann nicht nur aus Filehandles lesen, sondern auch aus
-    Dateinamen, die automatisch geöffnet werden:</p>
-
-<pre>[[[syntax perl6]]]
-for =</etc/passwd> {
-    # '.split' splittet die Standardvariable
-    my @entries = .split(":");
-    say "Login: ", @entries[0];
-}
-# oder: my $file = "/etc/passwd"; for =$file { ... }
-[[[endsyntax]]]</pre>
 
     <p>Die empfohlene Art, eine Datei zeilenweise zu lesen ist jetzt eine
     <code>for</code>-Schleife. Und das bedeutet nicht wie in Perl 5, dass
