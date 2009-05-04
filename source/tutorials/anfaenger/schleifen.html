@@ -12,7 +12,7 @@
 <pre>[[[syntax perl6]]]
 use v6;
 
-my $zahl = =*IN;
+my $zahl = $*IN.get;
 
 if $zahl > 100 {
 	say $zahl;
@@ -42,7 +42,7 @@ if $zahl > 100 {
 
 <pre>[[[syntax perl6]]]
 use v6;
-my $zahl = =*IN;
+my $zahl = $*IN.get;
 
 while $zahl <= 100 {
 	$zahl = $zahl * 2;
@@ -94,7 +94,7 @@ say $zahl;
 
 <pre>[[[syntax perl6]]]
 use v6;
-my $zahl = =*IN;
+my $zahl = $*IN.get;
 
 if $zahl > 0 {
 
@@ -113,10 +113,10 @@ if $zahl > 0 {
 
 <pre>[[[syntax perl6]]]
 use v6;
-my $zahl = =*IN;
+my $zahl = $*IN.get;
 while $zahl <= 0 {
 	say "bitte POSITIVE Zahl eingeben:";
-	$zahl = =*IN
+	$zahl = $*IN.get;
 }
 
 # hier ist $zahl auf jeden Fall > 0
