@@ -11,8 +11,8 @@
     <p>Ein einfaches Beispiel ist das lesen aus Dateien:</p>
 
 <pre>[[[syntax perl6]]]
-my $str  = =$file;  # liest eine Zeile
-my @list = =$file;  # liest den Rest der Datei
+my $str  = $file.get;  # liest eine Zeile
+my @list = $file.lines;  # liest den Rest der Datei
 [[[endsyntax]]]</pre>
 
     <p>Man sagt, dass die Zuweisung zu einem Skalar wie <code>$str</code>

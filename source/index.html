@@ -79,7 +79,7 @@ my %braces = ( '('  => ')',
         );
 my @stack;
 
-for =$file -> $line {
+for $file.lines -> $line {
     for $line.comb(/ <[()\[\]{}]> /) -> $match {
         if %braces{$match} {
             # öffnende Klammer gefunden
