@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /sys/
 Disallow: /tmp/
+Disallow: /blog/plugin/
