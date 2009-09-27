@@ -1,12 +1,14 @@
 [[[menu main tut regex]]]
-[[[setvar title Regular Expressions und Rules]]]
+[[[setvar title Regexes %]
 
 <div id="content">
-    <h1>Regular Expressions und Rules</h1>
+    <h1>[% readvar title %]</h1>
 
-    <p>Regular Expressions, kurz Regexes, sind Muster, die Text
-    beschreiben. Wenn man sie auf einen String "anwendet", überprüft man,
-    ob der String auf zu dem Muster passt.</p>
+<p>
+    Regexes sind Muster, die Text beschreiben.
+    Wenn man sie auf einen String "anwendet", überprüft man,
+    ob der String diesem Muster folgt.
+</p>
 
 <pre>[[[syntax perl6]]]
 if "Mein Name ist Hase" ~~ m/Hase/ {
@@ -28,10 +30,10 @@ if "Mein Name ist Hase" ~~ m/Hase/ {
     Buchstabe nach dem anderen.</p>
 
     <p>Dabei sollte man beachten, dass Leerzeichen keinerlei Bedeutung
-    haben, d.h. <code>m/Hase/</code> und <code>m/Ha se/</code> haben die
-    gleiche Bedeutung.</p>
+    haben, d.h. <code>m/Hase/</code> und <code>m/Ha se/</code>
+    sind genau die gleiche Regex.</p>
 
-    <p>Zusätlich gibt es Zeichen, die eine Sonderfunktion haben, zum Beispiel 
+    <p>Zusätlich gibt es Zeichen, die eine Sonderfunktion haben, zum Beispiel
     der Punkt <code>.</code> steht für ein beliebiges Zeichen:</p>
 
 <pre>[[[syntax perl6]]]
@@ -56,6 +58,7 @@ if $zeit ~~ m/\d H \d\d/ {
     say "Damit kann ich nichts anfangen";
 }
 [[[endsyntax]]]</pre>
+
     <p>Die folgende Tabelle fasst die wichtigsten dieser
     Zeichenkombinationen zusammen. Dabei gilt, dass jeweils genau ein
     Zeichen gematched wird.</p>
@@ -132,19 +135,19 @@ if $str ~~ m/der|die|das/ {
     einschränken:</p>
 
 <pre>[[[syntax perl6]]]
-m/ [ der | die | das ] \s Artikel / 
+m/ [ der | die | das ] \s Artikel /
 # passt auf "der Artikel", "die Artikel" oder "das Artikel"
 [[[endsyntax]]]</pre>
-    
+
     <p>Nur zur Erinnerung: Leerzeichen in Regexes werden ignoriert, wenn
-    man Leerzeichen matchen will, muss man das zum Beispiel mit 
+    man Leerzeichen matchen will, muss man das zum Beispiel mit
     <code>\s</code> angeben.</p>
 
 
     <h2>Quantoren, oder: "Wie oft darf's denn sein?"</h2>
 
-    <p>Mit sogenannten Quantoren kann man angeben, wie häufig ein
-    bestimmtes Zeichen oder Teilmuster vorkommen darf.</p>
+    <p>Mit sogenannten Quantoren (Englisch <em>quantifier</em>) gibt man an,
+    wie häufig ein bestimmtes Zeichen oder Teilmuster vorkommen muss.</p>
 
     <p>Dabei steht ein Fragezeichen für "0 mal oder einmal":</p>
 
@@ -152,6 +155,7 @@ m/ [ der | die | das ] \s Artikel /
 m/abc?d/        # passt auf abcd oder abd
 m/a[bc]?d/      # passt auf abcd oder ad
 [[[endsyntax]]]</pre>
+
     <p>Ein <code>+</code> steht für "Ein mal oder beliebig oft":</p>
 
 <pre>[[[syntax perl6]]]
@@ -172,12 +176,12 @@ m/a[bc]*d/      # passt auf ab, abcd, abcbcd, abcbcbcd, ...
 [[[endsyntax]]]</pre>
 
     <p>Wenn man z.B. eine Wiederholung genau vier mal haben will, kann man
-    das mit der <code>**{4}</code>-Notation angeben:</p>
+    das mit der <code>**4</code>-Notation angeben:</p>
 
 <pre>[[[syntax perl6]]]
-m/ab**{4}c/     # passt auf abbbbc
-m/ab**{2..4}c/  # passt auf abbc oder abbbc oder abbbbc
-m/ab**{2..*}c/  # passt auf abbc, abbbc, abbbbc, abbbbbc, ...
+m/a b**4 c/     # passt auf abbbbc
+m/a b**2..4 c/  # passt auf abbc oder abbbc oder abbbbc
+m/a b**2..* c/  # passt auf abbc, abbbc, abbbbc, abbbbbc, ...
 [[[endsyntax]]]</pre>
 
     <h2>Regexes sinnvoll einsetzen</h2>
@@ -241,6 +245,7 @@ my @worte = $text.split(m/\s+/);
     benutzt, muss man ihn mit einem Rückstrich escapen: <code>\/</code>.
     Eine andere Möglichkeit ist, ein anderes Zeichen als Begrenzung der
     Regex zu verwenden:</p>
+
 <pre>[[[syntax perl6]]]
 my $cmd = "/usr/bin/perl -w";
 if $cmd ~~ m{^(/.*/)perl} {
@@ -262,7 +267,7 @@ if $cmd ~~ m{^(/.*/)perl} {
 
     <p>Der Grund dafür ist, dass die Quantoren <code>+</code>,
     <code>*</code>, <code>?</code> und <code>**{...}</code>
-    <strong>gierig</strong>, englisch <em>greedy</em> sind, d.h. sie 
+    <strong>gierig</strong>, englisch <em>greedy</em> sind, d.h. sie
     passen immer auf einen möglichst langen String.</p>
 
     <p>Wenn der Programmteil von Perl, der die Regexes verarbeitet, auf
@@ -315,14 +320,14 @@ say $m;             # Ausgabe: affb
 my $s = "He shouted\nRUN\nAnd I ran";
 
 if $s ~~ m/ ^^ \w+ \n $$ / {
-    # passt auf eine Zeile, die aus nur einem Wort  
+    # passt auf eine Zeile, die aus nur einem Wort
     # und einem newline besteht, matched also
     say $/;
     # Ausgabe: RUN
 }
 
 if $s ~~ m/ ^ \w+ $ / {
-    # passt nicht, da der String nicht nur 
+    # passt nicht, da der String nicht nur
     # aus einem Wort besteht.
 }
 [[[endsyntax]]]</pre>
@@ -374,9 +379,9 @@ for @a -> $s {
 [[[endsyntax]]]</pre>
 
     <p>Dieses Muster sucht nach einem Wort <code>\w+</code> und speichert
-    das Ergebnis in der Variablen <code>$0</code>, sucht weiter nach einem 
-    Leerzeichen <code>\s</code>, nach noch einem Wort, das in <code>$1</code> 
-    gespeichert wird, einem Komma, einem Leerzeichen, dem zuerst gefunden 
+    das Ergebnis in der Variablen <code>$0</code>, sucht weiter nach einem
+    Leerzeichen <code>\s</code>, nach noch einem Wort, das in <code>$1</code>
+    gespeichert wird, einem Komma, einem Leerzeichen, dem zuerst gefunden
     Wort, und dann noch einem Wort, das in <code>$2</code> gespeichert wird.</p>
 
     <p>Außerhalb der Regex kann auf <code>$0</code> mit <code>$/[0]</code>
@@ -401,7 +406,7 @@ m/ ('|") .*? $0 /
     <h2>Modifier</h2>
 
     <p>Mit sogenannten <em>Modifiern</em> kann man das Verhalten von Regexes
-    auf verschiedene Arten verändern.</p> 
+    auf verschiedene Arten verändern.</p>
 
     <h3>Groß- und Kleinschreibung ignorieren - <code>:ignorecase</code></h3>
 
@@ -440,7 +445,7 @@ say @zahlen.join(", ");         # 3, 4, 2, 1
 
     <h3>Überlappende Treffer finden - <code>:overlap</code></h3>
 
-    <p>Mit dem <code>:overlap</code> oder <code>:ov</code>-Modifier findet 
+    <p>Mit dem <code>:overlap</code> oder <code>:ov</code>-Modifier findet
     man auch überlappende Treffer, aber pro Anfangsposition nur eines:</p>
 <pre>[% syntax perl6 %]
 my @treffer = 'abababa' ~~ m:ov/a.+a/;
@@ -474,7 +479,7 @@ for $str ~~ m:exhaustive/ a (.*?) a / -> $match {
 
 <pre>[[[syntax perl6]]]
 m:sigspace/ \d+ [\+ | \*] \d+ /
-# matcht: '2+3', '2 + 3', ' 2 + 3 ', ... 
+# matcht: '2+3', '2 + 3', ' 2 + 3 ', ...
 [[[endsyntax]]]</pre>
 
     <h3 id="ratchet-modifier">Backtracking verhindern -
@@ -487,10 +492,10 @@ m:sigspace/ \d+ [\+ | \*] \d+ /
     Regex-Engine einen String matchen könnte.</p>
 
     <p>Ein Beispiel: Wenn die Regex <code>\w+\d+</code> in dem String
-    <code>"ab123"</code> das erste Mal auf eine Ziffer trifft, könnte das 
+    <code>"ab123"</code> das erste Mal auf eine Ziffer trifft, könnte das
     immer noch zu <code>\w+</code> gehören, oder
     aber schon zu <code>\d+</code>. Da die Engine das noch nicht entscheiden
-    kann, ohne den Rest des Strings zu kennen, merkt sie sich, dass es an 
+    kann, ohne den Rest des Strings zu kennen, merkt sie sich, dass es an
     dieser Stelle noch eine andere Möglichkeit gegeben hätte, und fährt damit
     fort, <code>\w+</code> zu matchen.</p>
 
@@ -545,7 +550,7 @@ token op { \+ };
 $str ~~ m:rw/(\d+) <op> (\+d)/;
 $<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
 [[[endsyntax]]]</pre>
-    
+
     <p>Mit dem <code>:rw</code>-Modifier kann man die Captures einer Regex
     beschreibbar machen, wie oben demonstriert.</p>
 
@@ -556,7 +561,7 @@ $<op> = '(irgendwas)';    # $str ist jetzt "12(irgendwas)3"
 my $str = "ab";
 $str ~~ m:rw/(a)(b)/;
 say $/[1].from;        # 1
-$/[0] = 'aa';    
+$/[0] = 'aa';
 say $/[1].from;        # 2
 say ~$/;        # aab
 [[[endsyntax]]]</pre>
@@ -584,7 +589,7 @@ m/ <[a..yB..J_]> /
 
 <pre>[[[syntax perl6]]]
 m/<-[a..z]>/;        # alle Zeichen ausser Kleinbuchstaben
-m/<[a..z]-[ij]>/;    # alle Kleinbuchstaben außer i und j    
+m/<[a..z]-[ij]>/;    # alle Kleinbuchstaben außer i und j
 [[[endsyntax]]]</pre>
 
 
@@ -592,7 +597,7 @@ m/<[a..z]-[ij]>/;    # alle Kleinbuchstaben außer i und j
 
 <pre>[[[syntax perl6]]]
 token meine_zeichen     { <[a..zA-U]> };
-regex identifier        { <meine_zeichen> \w* };    
+regex identifier        { <meine_zeichen> \w* };
 [[[endsyntax]]]</pre>
 
     <p>Dabei werden Regexes wie Funktionen definiert, und werden mit dem
@@ -641,7 +646,7 @@ if $match {
     say $z.from, " bis ", $z.to;
     say $z.WHAT;
 }
-# Ausgabe: 
+# Ausgabe:
 # 7 bis 8
 # Match
 [[[endsyntax]]]</pre>
@@ -748,7 +753,7 @@ if "1 + 3 * 4" ~~ m/^[<expression> & ^<-[4]>+4 ]$/ {
     <p>Mit der Konstruktion <code>&lt;{...}&gt;</code> kann man Perl-code
     ausführen, dessen Rückgabewert als Regex ausgewertet wird.</p>
 
-    <p>Zum Beispiel kann man damit eine ganze Zahl, gefolgt von ihrer 
+    <p>Zum Beispiel kann man damit eine ganze Zahl, gefolgt von ihrer
     Wurzel, abgerundet auf die nächste ganze Zahl, gematched werden:</p>
 
 <pre>[[[syntax perl6]]]
@@ -757,7 +762,7 @@ m/ (\d+) <ws> <{ return $0.sqrt.int; }> /
 
     <h3>Lookahead- und Lookbehind-Assertions</h3>
 
-    <p>Mit <code>&lt;before ...&gt;</code> und 
+    <p>Mit <code>&lt;before ...&gt;</code> und
     <code>&lt;after ...&gt;</code>
     kann man vor und hinter eine Regex schauen, der Rest in den spitzen
     Klammern wird als Regex interpretiert.</p>
@@ -775,7 +780,7 @@ m /foo \d+ bar/
     Ausrufezeichen negieren:</p>
 
 <pre>[[[syntax perl6]]]
-m/ \d+ <!after <sp> Euro>/ 
+m/ \d+ <!after <sp> Euro>/
 # passt auf "3 Dollar", aber nicht auf "3 Euro"
 [[[endsyntax]]]</pre>
 
@@ -791,12 +796,12 @@ m/ \d+ <!after <sp> Euro>/
 # Das ist ein Kommentar
 
 # Strings werden mit doppelten Anführungszeichen
-ip = "127.0.0.1";    
+ip = "127.0.0.1";
 
 timeout = 120; # Zahlen können einfach so darstehen
 
 # Variablen können ohne Anführungszeichen zugewiesen werden:
-other_timeout = timeout; 
+other_timeout = timeout;
 [% endsyntax %]</pre>
 
     <p>Das ist zwar noch leicht ohne Rules zu parsen, aber des
@@ -831,10 +836,10 @@ grammar config_file {
             | <assignment>
             | <fail: "Expected comment or assignment">
     };
-    rule assigment     { 
-        <ident> 
+    rule assigment     {
+        <ident>
         [ '=' |  <fail: "Expected '='"> ]
-        <expression> 
+        <expression>
         [ ';' | <fail: "Expected ';'"> ]
     };
 [% endsyntax %]</pre>
