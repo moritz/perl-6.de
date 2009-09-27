@@ -4,30 +4,16 @@
 <div id="content">
     <h1>Kontexte in Perl 6</h1>
 
-    <p>Perl ist kontextsensitiv, das heißt Objekte und Funktionen können
-    sich unterschiedlich verhalten in Abhängikeit dessen, was die
-    aufrufende Funktion erwartet.</p>
-
-    <p>Ein einfaches Beispiel ist das lesen aus Dateien:</p>
-
-<pre>[[[syntax perl6]]]
-my $str  = $file.get;  # liest eine Zeile
-my @list = $file.lines;  # liest den Rest der Datei
-[[[endsyntax]]]</pre>
-
-    <p>Man sagt, dass die Zuweisung zu einem Skalar wie <code>$str</code>
-    "item"-Kontext (in Perl 5 "Skalarer Kontext" genannt) erzwingt, während
-    zuweisung an eine Liste Listenkontext erzwingt.</p>
-
-    <p>Das bedeutet, dass sich Objekte und Funktionen "magisch" verhalten
-    können.</p>
+    <p>Perl ist kontextsensitiv, das heißt Objekte verhalten
+    sich unterschiedlich, je nach dem in welchem Kontext man
+    sie benutzt.</p>
 
     <h2 id="kontexte">Verschiedene Kontexte</h2>
 
-    <p>Der Listenkontext erwartet mehrere Elemente, der Itemkontext
+    <p>Der List-Kontext erwartet mehrere Elemente, der Item-Kontext
     genau eines.</p>
 
-    <p>Aber es gibt nicht nur ein Itemkontext, sonder noch die
+    <p>Aber es gibt nicht nur ein Item-Kontext, sonder noch die
     Unterteilung in numerischen, string- und logischen (oder Boolean)
     Kontext:</p>
 
@@ -70,6 +56,7 @@ my @a = "Hallo", "Welt!";
 # String-Kontext
 ~@a;    # "Hallo Welt!"
 [[[endsyntax]]]</pre>
+
     <p>Das Fragezeichen kann man sich gut merken, weil eine
     <code>if</code>-Konstruktion immer ein Wert abfragt, <code>+</code>
     und <code>-</code> tauchen sonst auch nur in numerischen Operationen
@@ -88,53 +75,45 @@ if $match {
 }
 
 # String Kontext:
-say "Folgendender Text hat gepasst: $match";    
+say "Folgendender Text hat gepasst: $match";
 # Ausgabe: Folgender Text hat gepasst: Perl 6
 
 
-# Listenkontext
+# Benutzung als Liste
 # erste passende Gruppe in Klammern:
 say $match[0];      # "Perl"
 
-# Hash Kontext: Named Captures, 
+# Benutzung als Hash: Named Captures,
 # d.h. benannte sub-regexes in spitzen klammern:
 say $match<digit>;  # 6
 [[[endsyntax]]]</pre>
 
-    <h2 id="selbst">Selbst kontextsensitiv werden</h2>
 
-    <p>Perl bietet einem auch die Möglichkeit, selbst Funktionen zu
-    schreiben, die Kontextsensitiv sind. Dazu gibt es das Funktion
-    <code>want</code>-Objekt:</p>
+<h2 id="selbst">Selbst kontextsensitiv werden</h2>
 
-<pre>[[[syntax perl6]]]
-sub my_magic {
-    if want.list {
-        # Alternative Abfrage wäre 'want ~~ List'
-        return 1, 2, 3;
-    } else {
-        return 42;
-    }
+<p>Um selbst ein kontext-sensitives Objekt zu erstellen, reicht es,
+Methoden mit dem Namen der Klassen zu schreiben, deren Typ benutzt wird. Wenn
+das Objekt also im String-Kontext einen besonderen Wert zurückgeben soll,
+schreibt der Programmier eine Methode names <code>Str</code> (siehe auch
+<a href="/tutorials/objektmodell">Objektmodell</a>):</p>
+
+<pre>[% syntax perl6 %]
+use v6;
+
+class DualVar {
+    has $!str;
+    has $!num;
+
+    method Str { "DualVar " ~ $!str };
+    method Num { $!num };
 }
 
-sub fibonacci {
-    # liefere so viele Fibonacci-Zahlen, wie der Aufrufer erwartet
-    # Das ist allerdings eine Endlosschleife, wenn die Funktion im
-    # Listen-Kontex aufgerufen wird
+my $o = DualVar.new(str => 'something', num => 41);
+say $o;         # DualVar something
+say 1 + $o;     # 42
+[% endsyntax %]</pre>
 
-    my $anzahl = want.count;
-    my @fib = 1, 1;
-    if $anzahl <= 2 {
-        return @fib[0 .. $anzahl - 1];
-    } 
-    while @fib.elems < $anzahl {
-        push @fib, @fib[-1] + @fib[-2];
-    }
-    return @fib;
-}
 
-my $erster, $zweiter, $dritter = fibonacci();
-[[[endsyntax]]]</pre>
 [% comment
     vim: expandtab
 %]
