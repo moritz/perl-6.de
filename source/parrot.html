@@ -1,25 +1,25 @@
 [[[menu main home parrot]]]
 [[[setvar title Parrot - Mehr als eine Virtual Machine]]]
 <div id="content">
-    <h1>The Parrot - Mehr als eine Virtual Machine</h1>
+    <h1>Parrot - Mehr als eine Virtual Machine</h1>
 
     <p>Schon Perl 5 ist kein reiner Interpreter, sondern kompiliert den Code in
     einen Bytecode, der von einer virtuelle Maschine (VM) ausgeführt wird.</p>
 
-    <p>Schnell wurde klar, dass der perl5-Interpreter keine geeigne Plattform
+    <p>Schnell wurde klar, dass der perl5-Interpreter keine geeignete Plattform
     ist, um Perl 6-Code auszuführen. Also haben sie viele bekannte Perlhacker,
     wie z.B. Allison Randal daran gemacht, eine neue Virtual Maschine zu
     schreiben.</p>
 
     <p>Der Name kam ursprünglich von einem <a
-    href="http://www.perl.com/pub/a/2001/04/01/parrot.htm">Aprilscherz</a>, 
+    href="http://www.perl.com/pub/a/2001/04/01/parrot.htm">Aprilscherz</a>,
     in dem Larry Wall (Perl) und Guido van Rossum (Python) unterstellt wurde
     anzukündigen, dass sie Perl und Python zu einer Programmiersprache
     verschmelzen würden.</p>
 
-    <p>Tatsächlich wird es aber nicht unbedingt eine offizielle 
+    <p>Tatsächlich wird es aber nicht unbedingt eine offizielle
     Perl 6-Implementierung geben wie bei Perl 5, sondern Perl 6 ist eine
-    Sprachspezifikation, so wie Ansi C. Die auf Parrot basierte Perl
+    Sprachspezifikation, so wie ANSI C. Die auf Parrot basierte Perl
     6-Implementierung <a href="http://rakudo.de/">Rakudo</a> ist auch nicht
     offizieller oder weniger offiziell als der Rest, gilt aber innerhalb der
     Gemeinde der Perlprogrammierer als sehr erfolgsversprechend.</p>
@@ -28,23 +28,23 @@
 
     <p>Es gibt schon viele VMs, wieso also eine neue schreiben?</p>
 
-    <p>Einer der Hauptgründe für die Neuentwicklung einer VM war, dass die 
-    meisten bisherigen VMs für statisch typisierte Sprachen (Java, .NET) 
+    <p>Einer der Hauptgründe für die Neuentwicklung einer VM war, dass die
+    meisten bisherigen VMs für statisch typisierte Sprachen (Java, .NET)
     geschrieben und
     optimiert sind, während Perl und viele anderen interpretierten Sprachen
     dynamisch typisiert sind, d.h. Typ-Überprüfungen für Variablen werden zur
     Laufzeit gemacht, nicht zur Compile-Zeit.</p>
 
     <p>Um hohe Geschwindigkeiten zu erreichen, ist Parrot registerbasiert, im
-    Gegensatz zu Stackbasierten VMs wie z.B. die von Java.</p>
+    Gegensatz zu stackbasierten VMs wie z.B. die von Java.</p>
 
-    <p>Parrot kennt beliebig komplexe Datentypen und bringt seinen eigenen 
-    Garbage Collector mit, der sich darum kümmert, ungenutzen Arbeitsspeicher 
+    <p>Parrot kennt beliebig komplexe Datentypen und bringt seinen eigenen
+    Garbage Collector mit, der sich darum kümmert, ungenutzten Arbeitsspeicher
     zu befreien und dem Betriebssystem zurück zu geben.</p>
 
     <p>Parrot benutzt keinen Stack für Funktionsaufrufe, sondern sogenannte
     "Continuations". Sie speichern den aktuellen Status des Interpreters
-    (insbesors die Register) ab, und erlauben es, beliebig weit in der Call
+    (insbesondere die Register) ab, und erlauben es, beliebig weit in der Call
     Chain zurückzuspringen, ohne den Stack für jeden Funktionsaufruf
     dazwischen aufräumen zu müssen. Damit sind z.B. Exceptions sehr effizient
     implementierbar.</p>
@@ -54,10 +54,10 @@
     <p>Parrot unterstützt vier verschiedene Code-Formate:</p>
 
     <ol>
-        <li id="pir"><strong>PIR</strong>, "Parrot Intermediate 
+        <li id="pir"><strong>PIR</strong>, "Parrot Intermediate
         Representation", ist eine
-        einfach zu schreibende Assembler-Sprache, die recht viel abstrahiert, 
-        d.h.  als Programmierer muss man sich um recht wenig kümmern, es 
+        einfach zu schreibende Assembler-Sprache, die recht viel abstrahiert,
+        d.h.  als Programmierer muss man sich um recht wenig kümmern, es
         schreibt sich fast wie eine höhere Programmiersprache.</li>
         <li><strong>PASM</strong>, "Parrot Assembly", ist ein einfacherer
         Assembler, und zwingt den Programmier (oder den Compiler, der PASM
@@ -79,9 +79,9 @@
     einigen Tools, die das schreiben neuer Compiler besonders einfach machen
     soll.</p>
 
-    <p>Das wichtigste Tool ist die <a href="/parrot-grammar-engine">Parrot 
-    Grammar Engine (PGE)</a>, eine Implementierung von Perl 6 Rules, die das 
-    parsen einer Programmiersprache so einfach wie möglichen machen soll. 
+    <p>Das wichtigste Tool ist die <a href="/parrot-grammar-engine">Parrot
+    Grammar Engine (PGE)</a>, eine Implementierung von Perl 6 Rules, die das
+    parsen einer Programmiersprache so einfach wie möglichen machen soll.
     </p>
 
     <p>Für jede Grammatikregel kann man in NQP ("Not Quite Perl 6") eine
@@ -98,6 +98,10 @@
     <p>Rakudo ist in einer Mischung von Programmiersprachen geschrieben, und
     übersetzt Perl 6-Code wahlweise nach PIR, oder führt ihn direkt aus.</p>
 
+    <p>Rakudo besteht zur Zeit (September 2009) etwa 15,500 Tests der
+    offiziellen Testsuite, und ist damit eine der am weitesten
+    fortgeschrittenen Perl 6-Compiler.</p>
+
     <p>Der Parser ist in Perl 6 Regexes geschrieben, die von <a
     href="parrot-grammar-engine">PGE</a> compiliert werden. Jede dieser
     Regexes kann eine Aktion auslösen, die daraus einen AST baut. Diese
@@ -108,12 +112,12 @@
 
     <h1>Links</h1>
     <ul>
-        <li><a href="http://www.parrot.org/">Ofizielle Parrot-Homepage</a></li>
+        <li><a href="http://www.parrot.org/">Offizielle Parrot-Homepage</a></li>
         <li><a href="http://rakudo.org/">Offizieller Rakudo-Blog</a></li>
         <li><a href="http://rakudo.de/">Fortschrittsanzeige von Rakudo in der
         Testsuite</a></li>
     </ul>
 
 <!--
-    vim: sw=4 ts=4 expandtab tw=78
+    vim: sw=4 ts=4 expandtab tw=78 spell spelllang=de,en
 -->
