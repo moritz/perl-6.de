@@ -1,57 +1,81 @@
 [[[menu main tut objekt]]]
-[[[setvar title Perl 6 Objekte und Klassen]]]
+[[[setvar title Perl 6 Objekte und Klassen]]]
 
 <div id="content">
-	<h1>Das Objektmodell von Perl 6</h1>
+	<h1>Das Objektmodell von Perl 6</h1>
 
-	<p>Um von dieser Seite profitieren zu können sollten Sie  mit dem
-	Grundlagen von Perl 6 vertraut sein, und auch ein wenig von
-	Objektorientierung verstehen - Wenn Sie wissen, was eine Klasse, ein
+	<p>Um von dieser Seite profitieren zu können, sollten Sie  mit den
+	Grundlagen von Perl 6 vertraut sein, und auch ein wenig von
+	Objektorientierung verstehen - wenn Sie wissen, was eine Klasse, ein
 	Objekt und Vererbung ist, reicht das vermutlich schon.</p>
 
-	<p>Das Objektmodell von Perl 6 hat nur noch wenige Ähnlichkeiten mit
-	dem von Perl 5, und muß jetzt den vergleich mit "klassischen"
-	Objektorientierten Programmiersprachen nicht mehr scheuen.</p>
+	<p>Das Objektmodell von Perl 6 hat nur noch wenige Ähnlichkeiten mit
+	dem von Perl 5, und muß jetzt den Vergleich mit "klassischen"
+	objektorientierten Programmiersprachen nicht mehr scheuen.</p>
 
 	<h2>Klassen definieren</h2>
 
 	<p>Klassen werden mit dem <code>class</code>-Schlüsselwort definiert,
 	das man auf zwei verschiedene Arten verwenden kann. Entweder als erste
-	Anweisung in einer Datei in der Form <code>class Foo;</code>, dann
+	Anweisung in einer Datei in der Form <code>class MeineKlasse;</code>, dann
 	ist der Rest der Datei die Definition der Klasse. Die zweite
 	Möglichkeit sieht so aus:</p>
+
 <pre>[[[syntax perl6]]]
-class Foo {
+class MeineKlasse {
 	# hier kommt die Definition der Klasse
 }
 # hier ist die Definition der Klasse zu Ende
+# und anderer Code kann hier stehen.
 [[[endsyntax]]]</pre>
 
-	<p>Objektvariablen werden mit <code>has</code> anstatt <code>my</code>
-	deklariert, Funktionen mit <code>method</code> anstatt
-	<code>sub</code>:</p>
+	<p>Objektvariablen (auch <em>Attribute</em> genannt) werden mit <code>has</code>
+    anstatt <code>my</code> deklariert, und haben nach dem Sigil (also
+    <code>$</code>, <code>@</code>, <code>%</code>) noch ein weiteres
+    Sonderzeichen, ein Ausrufezeichen. Jedes Objekt einer Klasse hat seine
+    eigene Kopie jeden Attributs. Methoden werden  mit <code>method</code> anstatt
+	<code>sub</code> deklariert:</p>
 
 <pre>[[[syntax perl6]]]
+class Rechteck {
+	has $!breite;
+	has $!hoehe;
+
+	method flaeche {
+		return $!breite * $!hoehe;
+	}
+}
+
+# benutze den Standardkonstruktor
+my $r = Rechteck.new(:hoehe(5), :breite(3));
+
+say $r.flaeche;     # 15
+
+[[[endsyntax]]]</pre>
+
+<p>Attribute sind privat, das heisst Code ausserhalb der Klasse hat keinen
+Zugriff auf sie. Häufig ist das aber erwünscht, daher gibt es eine einfache
+Syntax, um sie von aussen mithilfe einer Methode verfügbar zu machen:</p>
+
+<pre>[% syntax perl6 %]
 class Rechteck {
 	has $.breite;
 	has $.hoehe;
 
 	method flaeche {
-		return $.breite * $.hoehe;
+        # Die Namen der Attribute enthalten immer noch
+        # das Ausrufezeichen
+		return $!breite * $!hoehe;
 	}
 }
+my Rechteck $r = Rechteck.new(:breite(5), :hoehe(3));
+say $r.flaeche;         # 15
+say $r.hoehe;           # 3
+say $r.breite;          # 5
+[% endsyntax perl6 %]</pre>
 
-my $r = Rechteck.new(:hoehe(5), :breite(3));
-
-say $r.hoehe;
-say $r.flaeche;
-
-[[[endsyntax]]]</pre>
-
-<p>Der Punkt hinter dem Dollarzeichen bedeutet dabei, dass die Objektvariablen
-(auch Attribute genannt) von aussen sichtbar sind. Sie können allerdings von
-ausserhalb der Klasse nicht verändert werden. Wenn man das gerne erlauben
-möchte, hilft das <code>is rw</code> trait:</p>
+<p>Manchmal sollen die Attribute auch von aussen beschreibbar sein, dann fügt
+man den Trait <code>is rw</code> an:</p>
 
 <pre>[[[syntax perl6]]]
 class Rechteck {
@@ -68,19 +92,16 @@ $r.hoehe = 5;
 say $r.flaeche();
 [[[endsyntax]]]</pre>
 
-	<p>Man kann Variablen auch als explizit privat deklarieren indem man
-	ihnen ein Ausrufezeichen als Twigil mitgibt, also <code>has
-	$!foo;</code>. Methoden kann man privat machen, indem man sie als
-	<code>my method private_methode { ... }</code> deklariert.</p>
-
-    <p>Bei beidem braucht man auch eigene Syntax um darauf zuzugreifen:</p>
+    <p>Private Methoden funktionieren mit der Syntax
+    <code>method !meine_methode</code>, und können mit
+    <code>self!meine_methode</code> aufgerufen werden.</p>
 
 <pre>[% syntax perl6 %]
 class Auto {
     has $!motor;
     has $!gang;
 
-    my method gang_wechseln ($differenz) {
+    method !gang_wechseln ($differenz) {
         $!gang += $differenz;
     }
     ...
@@ -144,7 +165,7 @@ class Amphibienfahrzeug {
 	hinzufügen will, kann man das auch ohne Vererbung erreichen:</p>
 
 <pre>[[[syntax perl6]]]
-class String is also {
+augment class String {
 	method as_ebcdic {
 		...
 	}
@@ -153,8 +174,11 @@ class String is also {
 
 	<p>Das hat den Vorteil, dass man auch fest eingebaute Datentypen wie
 	String oder Int erweitern kann, und fremder Code, den man einbindet,
-	verwendet automatisch die erweiterte Version.</p>
-	
+	verwendet automatisch die erweiterte Version. Allerdings können
+    Erweiterungen in einem Teil eines Programms mit Erweiterungen in weit
+    entfernten Programmteilen kollidieren - daher gelten sie als sehr
+    schlechter Stil.</p>
+
 	<p>Wenn man versucht, eine Klasse zu erweitern, ohne ein <code>is
 	also</code> in die Deklaration zu schreiben, bekommt man eine
 	Fehlermeldung, dass man eine Klasse redeklariert.</p>
@@ -162,9 +186,9 @@ class String is also {
 
 	<h2>Roles</h2>
 
-	<p>In Perl 6 sind Klassen vor allem dazu da, um "ist-ein"-Beziehungen
+	<p>In Perl 6 sind Klassen vor allem dazu da, um "ist-ein"-Beziehungen
 	für Typen zu deklarieren. Für die Wiederverwendbarkeit von Code sind
-	<em>Roles</em>, auf Deutsch <em>Rolle</em> zuständig. Roles sind so 
+	<em>Roles</em>, auf Deutsch <em>Rolle</em> zuständig. Roles sind so
 	etwas wie Interfaces in Java,
 	die Implementierung der Methoden beinhalten.</p>
 
@@ -185,5 +209,3 @@ class Hund is Saeugetier does Haustier {
 [[[endsyntax]]]</pre>
 	<p>Wie das Beispiel zeigt, inkorporiert eine Klasse eine Rolle mit dem
 	Schlüsselwort <code>does</code>.</p>
-
-	
