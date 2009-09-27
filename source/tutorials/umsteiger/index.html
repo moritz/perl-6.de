@@ -17,11 +17,14 @@
 
     <p>Vom Design her kann Perl 6 sowohl interpretiert als auch kompiliert
     werden. <a href="http://rakudo.de/">Rakudo</a> ist ein Perl 6-Compiler,
-    der Bytecode für die <a href="http://www.parrotcode.org/">Parrot
+    der Bytecode für die <a href="http://www.parrot.org/">Parrot
     Virtual Maschine</a> erzeugt. Das geschieht aber transparent für
     den Benutzer, d.h. er ruft einfach <code>perl6
     <em>scriptname</em></code> auf, und dann führt perl6 das Skript
     aus.</p>
+
+    <p><a href="http://rakudo.org/how-to-get-rakudo">Hier gibt es Anweisungen,
+    wie man Rakudo herunterladen und installieren kann (Englisch)</a>.</p>
 
     <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
@@ -30,7 +33,7 @@
     <p>Perl 6 ist in einiger Hinsicht anders als "normale"
     Programmiersprachen. Viele kommen sicher daher, dass Perl nicht von
     Informatikern, sondern vor allem von einem Linguisten designed wurde.</p>
-    
+
     <p>Perl 6 bietet Kontextsensitivität. Das bedeutet, dass bestimmte
     Konstrukte (sowohl grammatikalische als auch semantische) je nach Umgebung
     eine andere Bedeutung haben können. Das soll größtmögliche Intuitivität
@@ -80,7 +83,7 @@ say "Die Zahl ist ", $number;
     aus (und eventuell eine Warnung, dass <code>" Euro"</code> nicht numerisch
     ist).</p>
 
-    <p>Die letzte Zeile 
+    <p>Die letzte Zeile
     <code>say "Die Zahl ist ", $number;</code> schließlich gibt den
     String <code>"Die Zahl ist "</code>  und danach die Variable
     <code>$number</code> aus.</p>
@@ -102,7 +105,7 @@ say "Die Zahl ist ", $number;
     <h2>Variablen</h2>
 
     <p>Variablen sind <strong>Skalare</strong>,
-    <strong>Listen</strong> und <strong>Hashes</strong>. Außerdem gibt es ein
+    <strong>Arrays</strong> und <strong>Hashes</strong>. Außerdem gibt es ein
     paar seltener gebrauchte Variablentypen wie z.B. Package-Namen.</p>
 
     <p>Dabei darf es durchaus zwei Variablen mit gleichem Namen aber aber
@@ -120,6 +123,7 @@ my %namen =
 
     <p>Hier sind <code>@namen</code> und <code>%namen</code> zwei verschiedene
     Variablen, da das Sigil zum Name der Variable gehört.</p>
+
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
     <h3>Skalare</h3>
@@ -201,21 +205,21 @@ say 'In Deutschland wird man mit $age volljährig.';
 say "Hallo" ~ " " ~ "Welt";
 [[[endsyntax]]]</pre>
 
-    <p>Aus Strings kann man andere Strings mit <code>substr</code> 
-    ausschneiden:</p> 
+    <p>Aus Strings kann man andere Strings mit <code>substr</code>
+    ausschneiden:</p>
 
 <pre>[[[syntax perl6]]]
 use v6;
 my $alphabet = ("a" .. "z").join;
 say $alphabet;              # `abcdefghijklmnopqrstuvwxyz'
 say $alphabet.substr(2);    # alles ab dem 3. Zeichen, also
-                            #`cdefghijklmnopqrstuvwxyz' 
+                            #`cdefghijklmnopqrstuvwxyz'
 
 say $alphabet.substr(2, 5); # Fünf Zeichen ab dem 3. Zeichen, also `cdefg'
 
-# negative Indizes werden von hinten gezählt, mit dem letzen Element als
-# -1; sie müssen mit einem * gekennzeichnet werden:
-say $alphabet.substr(2, *-2);  # Alles ausser den ersten beiden und den letzten
+# negative Indizes werden von hinten gezählt,
+# mit dem letzen Element als -1
+say $alphabet.substr(2, -2);  # Alles ausser den ersten beiden und den letzten
 # beiden Zeichen, also `cdefghijklmnopqrstuvwx'
 [[[endsyntax]]]
 </pre>
@@ -245,8 +249,8 @@ $s.split("e");
     <p><code>split</code> liefert eine Liste zurück, dazu später
     mehr.</p>
 
-    <p>Mit <code>split</code> und einer ähnlichen Funktion namens 
-    <code>comb</code> kann man Strings auch mit Hilfe von 
+    <p>Mit <code>split</code> und einer ähnlichen Funktion namens
+    <code>comb</code> kann man Strings auch mit Hilfe von
     <a href="#rules">regulären Ausdrücken</a> zerlegen, was sehr
     viele Möglichkeiten eröffnet.</p>
 
@@ -256,7 +260,7 @@ $s.split("e");
     <h3>Arrays und Listen</h3>
 
     <p>Listen enthalten mehrere Skalare in einer festen Reihenfolge.</p>
-    
+
     <p>Die Variablen, in denen Listen gespeichert werden, heissen Arrays. Ihr
     Name beginnt mit dem Sigil <code>@</code>.</p>
 
@@ -282,7 +286,7 @@ my @weekdays = <Montag Dienstag Mittwoch Donnerstag Freitag>
 # trennt am Leerzeichen
 
 my @digits = 0 .. 9  # selbsterklärend
-my @letters = "a" .. "z", "A" .. "Z"  # ebenso ;-) 
+my @letters = "a" .. "z", "A" .. "Z"  # ebenso ;-)
 [[[endsyntax]]]</pre>
 
     <p>Aus Listen kann man sich aus Teillisten extrahieren ("Array
@@ -322,7 +326,7 @@ say @a.shift;
 # gibt `0' aus, @a ist danach (1, 2, 3)
 [[[endsyntax]]]</pre>
 
-    <p>Listen sind interpolierend, d.h. das einfügen von Listen in
+    <p>Listen sind interpolierend, d.h. das Einfügen von Listen in
     andere Listen erzeugt keine verschachtelten Listen:</p>
 
 <pre>[[[syntax perl6]]]
@@ -398,7 +402,7 @@ say $regisseur, " hat folgende Filme gedreht: ", %regie{$regisseur}.join(", ");
       <a class="topOfPage" href="#top" title="Go to top of page">top</a>
 
     <h2>Kontrollstrukturen</h2>
-        
+
     <h3>If-Else</h3>
 
     <p>Verzweigungen im Programmtext funktionieren mit der <code>if ..
@@ -514,7 +518,7 @@ loop (my $i = 2; $i < 300; $i **= 2){
 
     <h3>While-Schleife</h3>
 
-    <p>Wie fast jede Programmiersprache hat auch perl6 eine
+    <p>Wie fast jede Programmiersprache hat auch Perl 6 eine
     <code>while</code>-Schleife:</p>
 
 <pre>[[[syntax perl6]]]
@@ -530,6 +534,7 @@ while abs($w*$w-$val) > $eps {
 say $w;
 #Ausgabe: 10.00000000013989
 [[[endsyntax]]]</pre>
+
     <p>Die <code>while</code>-Schleife wird ausgeführt, solange die
     Bedingung direkt hinter dem <code>while</code> wahr ist.</p>
 
@@ -638,7 +643,9 @@ sub foo($x is copy) {
     <h4>Multi subs</h4>
 
     <p>Multi subs funktionieren ähnlich wie überladene Funktionen in
-    anderen Programmiersprachen. Mehrere Multi subs haben den gleichen
+    anderen Programmiersprachen, allerdings findet die Auswahl der
+    aufzurufenden Variante (im Gegensatz zu C++) zur Laufzeit statt.
+    Mehrere Multi subs haben den gleichen
     Namen, aber unterschiedliche Signaturen:</p>
 
 <pre>[[[syntax perl6]]]
@@ -658,8 +665,8 @@ multi foo(Int $x){
 
     <h4>Traits</h4>
 
-    <p>Mit Traits, zu Deutsch "Eigenschaften" oder "Merkmale", 
-    kann man das Verhalten von Funktionen modifizieren. Ein 
+    <p>Mit Traits, zu Deutsch "Eigenschaften" oder "Merkmale",
+    kann man das Verhalten von Funktionen modifizieren. Ein
     Beispiel sind Vorbedingungen für die
     Ausführung einer Funktion, und Zusicherungen, die nach dem
     Ausführen einer Funktion gelten sollen:</p>
@@ -699,7 +706,7 @@ sub wurzel(Num $x){
 
     <p>Ein Wort zu den Namen: Reguläre Ausdrücke, auf Englisch
     "Regular Expressions", sind ein bekanntes Konzept in der Informatik.
-    Schon in Perl5 konnten die Regulären Ausdrücke mehr, als die
+    Schon in Perl 5 konnten die Regulären Ausdrücke mehr, als die
     Definition der Informatiker erlaubt, deswegen spricht man bei Perl von
     regexes, Singular regex. In Perl 6 können sie noch mehr (für Informatiker:
     sie entsprechen eher den Kontextfreien Sprachen), man nennt sie meistens
