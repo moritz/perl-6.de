@@ -8,6 +8,7 @@
 		http://moritz.faui2k3.org/en/mowyw" />
 	<meta http-equiv="Language" content="de" />
 	<meta name="page-topic" content="Programmieren, Perl 6" />
+    [% ifvar moreheader %][% readvar moreheader %][% endifvar %]
 	<title>Perl 6 - [[[readvar title]]]</title>
 	<link rel="stylesheet" href="/andreas09.css" type="text/css" media="screen" />
 	<link rel="icon" href="/favicon.ico" type="favicon.ico" />
