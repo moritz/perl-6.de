@@ -22,8 +22,8 @@
 
 <pre>[[[syntax perl6]]]
 my @list;
-@list.push("foo")   # wie push @list, "foo"
-"foo".print         # wie print "foo";
+@list.push("foo");   # wie push @list, "foo"
+"foo".print;         # wie print "foo";
 [[[endsyntax]]]</pre>
     <p>Die alte Notation ist immer noch unterstützt.</p>
     <p>Wenn man bei Methoden (also Funktionen, die zu einem Objekt gehören),
@@ -58,9 +58,9 @@ my %hash = (
     'foo' => 'bar',
     'baz' => 'qox',
     );
-@list[0]        #früher: $list[0]
-%hash{'foo'}    #früher: $hash{'foo'}
-%hash<foo>      #früher: $hash{foo}
+@list[0];        #früher: $list[0]
+%hash{'foo'};    #früher: $hash{'foo'}
+%hash<foo>;      #früher: $hash{foo}
 [[[endsyntax]]]</pre>
 
     <p>Außerdem gibt es auch noch das Sigil <code>&amp;</code> für
@@ -79,22 +79,22 @@ say func;
 
 <pre>[[[syntax perl6]]]
 my $str = "foo";
-%hash{$str}     # wie bisher
-%hash<foo>      # anstatt %hash{foo}
-%hash{'foo'}    # wie bisher
+%hash{$str};     # wie bisher
+%hash<foo>;      # anstatt %hash{foo}
+%hash{'foo'};    # wie bisher
 [[[endsyntax]]]</pre>
 
     <p>Man kann jetzt auch auf Elemente von Array- und Hashreferenzen ohne
     den Pfeil-Operator zugreifen:</p>
 <pre>[[[syntax perl6]]]
 my $a = [1, 2, [3, 4, 5], 6];
-$a[0]       # früher: $a->[0]
-$a[2][0]    # früher $a->[0]->[0] oder $a->[0][0]
+$a[0];       # früher: $a->[0]
+$a[2][0];    # früher $a->[0]->[0] oder $a->[0][0]
 
 my $b = { 'a' => 'b', 'c' => [1, 2, 3]};
-$b{'a'}     # früher $b->{a}
-$b<a>       # das gleiche
-$b<c>[0]    # früher: $b->{c}[0] oder $b->{c}->[0]
+$b{'a'};     # früher $b->{a}
+$b<a>;       # das gleiche
+$b<c>[0];    # früher: $b->{c}[0] oder $b->{c}->[0]
 [[[endsyntax]]]</pre>
 
     <p>Die Anzahl der Elemente eines Arrays bekommt man nun mit
@@ -122,7 +122,7 @@ if @list < 3 {
 <pre>[[[syntax perl6]]]
 my @list = <bla blubb>;     # früher: qw(bla blubb)
 my $str = "bla blubb";
-my @l2 = <<foo $str bar>>;  # liefert ['foo', 'bla', 'blubb', 'bar']
+my @l2 = <<foo $str bar>>;  # liefert ['foo', 'bla', 'blubb', 'bar'];
 [[[endsyntax]]]</pre>
 
     <h2>Twigils</h2>
