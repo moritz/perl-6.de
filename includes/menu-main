@@ -1,7 +1,6 @@
 <div id="mainmenu">
     <ul>
         [% item home  <li><a{{ class="current"}} href="/">Perl 6</a></li>              %]
-        [% item blog  <li><a{{ class="current"}} href="/blog/">Blog</a></li>           %]
         [% item tut   <li><a{{ class="current"}} href="/tutorials/">Tutorials</a></li> %]
         [% item links <li><a{{ class="current"}} href="/links/">Links</a></li>         %]
     </ul>
