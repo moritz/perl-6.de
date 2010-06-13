@@ -1,3 +1,0 @@
-Name: perl-6.de
-Author: Moritz Lenz
-Date: 30/3-2007
