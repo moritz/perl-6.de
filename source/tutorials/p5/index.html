@@ -5,7 +5,7 @@
 
     <p>Trotz vieler Änderungen von p5 zu p6 ist auch vieles gleich
     geblieben, was es alt eingesessenen Perl 5-Programmieren sicher
-    leichter macht Perl 6 zu lernen als anderen.</p>
+    leichter macht als anderen, Perl 6 zu lernen.</p>
 
     <p>Das hier ist ein Versuch, die wichtigsten Änderungen
     zusammenzufassen, die häufigsten am Anfang, danach grob nach
@@ -17,8 +17,8 @@
     sind Einzeiler die mit <code>perl -e '$code'</code> ausgeführt
     werden.</p>
 
-    <p>Für Objektmethoden gibt es jetzt die <code>.</code>-Notation (anstelle
-    von <code>-&gt;</code>), die meisten Builtins sind jetzt Methoden:</p>
+    <p>Für Methodenaufrufe gibt es jetzt die <code>.</code>-Notation (anstelle
+    von <code>-&gt;</code>), die meisten Builtins sind jetzt auch Methoden:</p>
 
 <pre>[[[syntax perl6]]]
 my @list;
@@ -26,8 +26,8 @@ my @list;
 "foo".print;         # wie print "foo";
 [[[endsyntax]]]</pre>
     <p>Die alte Notation ist immer noch unterstützt.</p>
-    <p>Wenn man bei Methoden (also Funktionen, die zu einem Objekt gehören),
-    die Klammern weglassen will, braucht man einen Doppelpunkt:</p>
+    <p>Wenn man beim Aufruf Methoden (also Routinen, die zu einem Objekt gehören)
+    mit Argumenten, die Klammern weglassen will, braucht man einen Doppelpunkt:</p>
  
 <pre>[[[syntax perl6]]]
 @list.push: 'foo';
@@ -53,11 +53,11 @@ $answer.say;
     <p>Allerdings bleibt bei Arrays und Hashes der Sigil beim Zugriff auf
     Elemente erhalten:</p>
 <pre>[[[syntax perl6]]]
-my @list = 1, 3, 5, 1, 2;
-my %hash = (
-    'foo' => 'bar',
-    'baz' => 'qox',
-    );
+my @list = 1, 3, 5, 1, 2; # keine Klammern noetig
+my %hash =
+    foo => 'bar',
+    baz => 'qox',
+    ;
 @list[0];        #früher: $list[0]
 %hash{'foo'};    #früher: $hash{'foo'}
 %hash<foo>;      #früher: $hash{foo}
@@ -101,7 +101,6 @@ $b<c>[0];    # früher: $b->{c}[0] oder $b->{c}->[0]
 	<code>elems</code>:</p>
 
 <pre>[[[syntax perl6]]]
-# man beachte, dass hier keine Klammern mehr nötig sind:
 my @list = 1, 2, 4, 5;
 
 my $num = @list.elems;            # früher: scalar @list;
@@ -197,7 +196,9 @@ loop (my $i = 0; $i < 10; $i++){
     <p><code>for</code>-Schleifen ohne eine explizite Variable benutzen
     auch weiterhin <code>$_</code> als Standard, allerdings wird sie niemals
 	von Funktionen wie <code>print</code> als Default verwendet. Dazu braucht 
-	man ein <code>.print</code>. Das gleiche gilt für Funktionen wie
+	man ein <code>.print</code> -- der Punkt zeigt an, dass die Methode mit
+    <code>$_</code> als Invocant aufgerufen wird.
+    Das gleiche gilt für Funktionen wie
     <code>uc</code> und <code>lc</code>:</p>
 
 <pre>[[[syntax perl6]]]
@@ -234,7 +235,8 @@ for 1 .. 4 {
     <h2>Funktionen</h2>
 
     <p>Funktionen werden immer noch mit <code>sub</code>-Keyword
-    deklariert, und können jetzt Parameterdeklarationen enthalten wie in
+    deklariert, und können jetzt Parameterdeklarationen (<em>Signatur</em>
+    genannt) enthalten wie in
     den meisten anderen Programmiersprachen.</p>
 
 <pre>[[[syntax perl6]]]
