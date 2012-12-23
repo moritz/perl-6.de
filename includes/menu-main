@@ -15,11 +15,8 @@
     </ul>
     <h1 style="margin-top:2ex">Perl 6 Projekte</h1>
     <ul>
-        [% item pugs    <li><a href="/pugs"                  class="nav{{ active}}">Pugs</a></li>                  %]
-        [% item parrot  <li><a href="/parrot"                class="nav{{ active}}">Parrot und Rakudo</a></li>     %]
-        [% item pge     <li><a href="/parrot-grammar-engine" class="nav{{ active}}">Parrot Grammar Engine</a></li> %]
-        [% item kp6     <li><a href="/kp6"                   class="nav{{ active}}">KindaPerl6</a></li>            %]
-        [% item weitere <li><a href="/weitere-projekte"      class="nav{{ active}}">Weitere Projekte</a></li>      %]
+        [% item rakudo <li><a href="/rakudo" class="nav{{ active}}">Rakudo Perl 6 Compiler</a></li>     %]
+        [% item niecza <li><a href="/niecza" class="nav{{ active}}">Niecza</a></li>     %]
     </ul>
     </div>
 
