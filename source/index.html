@@ -32,7 +32,7 @@
 
 <h2>Status</h2>
 
-<p>Die <a href="http://perlcabal.org/syn/?">Offizielle Spezifikation</a> für
+<p>Die <a href="http://design.perl6.org/">Offiziellen Design-Dokumente</a> für
 Perl 6, im Jargon "Synopsis" genannt, ist bereits für den Hauptteil der
 Sprache recht vollständig, einige Features wie Threading sind noch nicht spezifiziert.</p>
 
@@ -60,7 +60,7 @@ use v6;
 
 my $fn = $*PROGRAM_NAME;
 
-my $file = open($fn) err die "Can't read file '$fn': $!";
+my $file = open($fn) // die "Can't read file '$fn': $!";
 my %braces = '('  => ')',
         '{'         => '}',
         '['         => ']';
@@ -71,6 +71,8 @@ for $file.lines -> $line {
         if %braces{$match} {
             # öffnende Klammer gefunden
             push @stack, ~$match;
+        } elsif !@stack {
+            die "Closing bracket $match without opening bracket";
         } else {
             # schliessende Klammer gefunden
             my $expected = %braces{@stack.pop};
